@@ -8,6 +8,8 @@ namespace IntegrationClassLib
     {
        
         public  DbSet<Pharmacy.Model.Pharmacy> Pharmacies { get; set; }
+        public DbSet<News> News { get; set; }
+
         public MyDbContext()
         {
 
