@@ -9,5 +9,6 @@ namespace IntegrationClassLib.Pharmacy.Repository.PharmacyRepo
 {
     public interface IPharmacyRepository:IGenericRepository<Pharmacy.Model.Pharmacy, long>
     {
+        Pharmacy.Model.Pharmacy GetPharmacyByName(string name);
     }
 }
