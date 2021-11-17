@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntegrationClassLib.Parthership.Service.Interface;
 
 namespace IntegrationAPI
 {
@@ -52,9 +53,12 @@ namespace IntegrationAPI
             services.AddTransient<IPharmacyRepository, PharmacyRepository>();
             services.AddTransient<IObjectionRepository,ObjectionRepository>();
             services.AddTransient<IResponseRepository, ResponseRepository>();
+            services.AddTransient<INewsRepository, NewsRepository>();
             services.AddScoped<PharmacyService>();
             services.AddScoped<ObjectionService>();
             services.AddScoped<ResponseService>();
+            services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
+            services.AddScoped<IActionsAndNewsService, ActionsAndNewsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
