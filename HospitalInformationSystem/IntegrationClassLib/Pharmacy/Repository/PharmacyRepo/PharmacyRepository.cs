@@ -14,6 +14,12 @@ namespace IntegrationClassLib.Pharmacy.Repository.PharmacyRepo
 
         }
 
+        public Model.Pharmacy GetPharmacyByName(string name)
+        {
+            var pharmacy = context.Pharmacies.Where(p => p.Name.Equals(name)).FirstOrDefault();
+            return pharmacy;
+        }
+
         protected override long GetId(Model.Pharmacy entity)
         {
             return entity.Id;
