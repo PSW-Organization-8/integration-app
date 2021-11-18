@@ -28,7 +28,8 @@ namespace IntegrationAPI.Controllers
         }
 
        [HttpPost]
-       public Equipment CreateEquipments(Equipment equipment)
+        [Route("createEquipments")]
+        public Equipment CreateEquipments(Equipment equipment)
         {
             return equipmentService.CreateEquipments(equipment);
         }

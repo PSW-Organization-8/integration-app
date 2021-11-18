@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace IntegrationClassLib.Migrations
+namespace IntegrationAPI.Migrations
 {
-    public partial class Equipment : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,6 +19,21 @@ namespace IntegrationClassLib.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Buildings", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MedicationConsumption",
+                columns: table => new
+                {
+                    MedicineID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    MedicineName = table.Column<string>(type: "text", nullable: true),
+                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Quantity = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MedicationConsumption", x => x.MedicineID);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +174,16 @@ namespace IntegrationClassLib.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "MedicationConsumption",
+                columns: new[] { "MedicineID", "DateTime", "MedicineName", "Quantity" },
+                values: new object[,]
+                {
+                    { 1L, new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local), "Brufen", 32.0 },
+                    { 2L, new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local), "Vitamin C", 16.0 },
+                    { 3L, new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local), "Brufen", 56.0 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Medications",
                 columns: new[] { "MedicineID", "Name", "Quantity" },
                 values: new object[] { 1L, "Synthroid", 2 });
@@ -198,6 +223,9 @@ namespace IntegrationClassLib.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "MedicationConsumption");
 
             migrationBuilder.DropTable(
                 name: "Medications");
