@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using IntegrationClassLib.Pharmacy.Model;
+﻿using IntegrationClassLib.Pharmacy.Model;
 using SIMS.Repositories;
 
 namespace IntegrationClassLib.Pharmacy.Repository.MedicationRepo
 {
-    interface IMedicationRepository:IGenericRepository<Medication,String>
+    public interface IMedicationRepository : IGenericRepository<Medication, long>
     {
-        List<Medication> GetApprovedMedicine();
-        List<Medication> GetMedicineWaitingForApproval();
-        List<Medication> GetDeniedMedicine();
+        Medication GetMedicationByName(string name);
     }
 }

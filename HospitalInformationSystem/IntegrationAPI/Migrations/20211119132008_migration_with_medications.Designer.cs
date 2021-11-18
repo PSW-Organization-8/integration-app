@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211117143651_migrationWithNews")]
-    partial class migrationWithNews
+    [Migration("20211119132008_migration_with_medications")]
+    partial class migration_with_medications
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,32 @@ namespace IntegrationAPI.Migrations
                             Id = 1L,
                             ObjectionId = "1",
                             TextResponse = "Nije tacno"
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Medication", b =>
+                {
+                    b.Property<long>("MedicineID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MedicineID");
+
+                    b.ToTable("Medications");
+
+                    b.HasData(
+                        new
+                        {
+                            MedicineID = 1L,
+                            Name = "Synthroid",
+                            Quantity = 2
                         });
                 });
 

@@ -1,4 +1,5 @@
 ﻿using IntegrationClassLib.Parthership.Model;
+using IntegrationClassLib.Pharmacy.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -6,9 +7,10 @@ namespace IntegrationClassLib
 {
     public class MyDbContext : DbContext
     {
-       
-        public  DbSet<Pharmacy.Model.Pharmacy> Pharmacies { get; set; }
+
+        public DbSet<Pharmacy.Model.Pharmacy> Pharmacies { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Medication> Medications { get; set; }
 
         public MyDbContext()
         {
@@ -35,6 +37,7 @@ namespace IntegrationClassLib
             modelBuilder.Entity<Response>().HasData(
                new Response { Id = 1, ObjectionId = "1", TextResponse = "Nije tacno" }
            );
+            modelBuilder.Entity<Medication>().HasData(new Medication { MedicineID=1, Name = "Synthroid", Quantity = 2 });
         }
     }
 }
