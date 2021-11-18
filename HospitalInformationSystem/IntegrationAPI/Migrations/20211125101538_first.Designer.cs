@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace IntegrationClassLib.Migrations
+namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211124075615_Equipment")]
-    partial class Equipment
+    [Migration("20211125101538_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,6 +126,50 @@ namespace IntegrationClassLib.Migrations
                             MedicineID = 1L,
                             Name = "Synthroid",
                             Quantity = 2
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.MedicationConsumption", b =>
+                {
+                    b.Property<long>("MedicineID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("MedicineID");
+
+                    b.ToTable("MedicationConsumption");
+
+                    b.HasData(
+                        new
+                        {
+                            MedicineID = 1L,
+                            DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
+                            MedicineName = "Brufen",
+                            Quantity = 32.0
+                        },
+                        new
+                        {
+                            MedicineID = 2L,
+                            DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
+                            MedicineName = "Vitamin C",
+                            Quantity = 16.0
+                        },
+                        new
+                        {
+                            MedicineID = 3L,
+                            DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
+                            MedicineName = "Brufen",
+                            Quantity = 56.0
                         });
                 });
 

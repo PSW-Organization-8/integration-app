@@ -26,6 +26,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+        [Route("createBuildings")]
         public Building CreateBuildings(Building building)
         {
             return buildingService.CreateBuildings(building);
