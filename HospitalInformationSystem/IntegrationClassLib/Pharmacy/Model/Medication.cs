@@ -1,89 +1,19 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace IntegrationClassLib.Pharmacy.Model
 {
     public class Medication
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long MedicineID { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
 
-        public string MedicineID { get; set; }
-        public string MedicineName { get; set; }
-        public List<Component> Components { get; set; }
-        public string IDSubstitution { get; set; }
-
-        public MedicineApprovalStatus ApprovalStatus { get; set; }
-
-        public Medication()
-        {
-            Components = new List<Component>();
-            ApprovalStatus = MedicineApprovalStatus.Waiting;
-        }
-
-        public Medication(string id, string name, List<Component> components, string iDSubstitution)
-        {
-            MedicineID = id;
-            MedicineName = name;
-            Components = components;
-            ApprovalStatus = MedicineApprovalStatus.Waiting;
-            IDSubstitution = iDSubstitution; 
-        }
-
-        public String GetComponentsList()
-        {
-            string componentsString = "";
-            if (Components.Count == 0)
-                return "Nije navedeno";
-
-            foreach (var a in Components)
-                componentsString += a.Name + ", ";
-            return componentsString.Remove(componentsString.Length - 2);
-        }
-
- 
-        public String ApprovalStatusString
-        {
-            get
-            {
-                if (ApprovalStatus == MedicineApprovalStatus.Accepted)
-                    return "Prihvaćen";
-                else if (ApprovalStatus == MedicineApprovalStatus.Waiting)
-                    return "Na čekanju";
-                else return "Odbijen";
-            }
-        }
-
-        public Boolean IncludesAllergen(Component allergen) 
-        {
-            foreach(Component currentAllergen in Components)
-            {
-                if (currentAllergen.ID == allergen.ID)
-                    return true;
-            }
-
-            return false;
-        }
-
-        public void RemoveComponent(Component allergen)
-        {
-            for (int i = 0; i < Components.Count; i++)
-            {
-                Component currentComponent = Components[i];
-                if (currentComponent.ID == allergen.ID)
-                {
-                    Components.Remove(currentComponent);
-                    i--;
-                }
-            }
-        }
-    }
-
-    public enum MedicineApprovalStatus
-    {
-        Accepted = 0,
-        Denied, 
-        Waiting
-    }
-    
+    }    
 }

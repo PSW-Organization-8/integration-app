@@ -101,6 +101,32 @@ namespace IntegrationAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Medication", b =>
+                {
+                    b.Property<long>("MedicineID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MedicineID");
+
+                    b.ToTable("Medications");
+
+                    b.HasData(
+                        new
+                        {
+                            MedicineID = 1L,
+                            Name = "Synthroid",
+                            Quantity = 2
+                        });
+                });
+
             modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Pharmacy", b =>
                 {
                     b.Property<long>("Id")
