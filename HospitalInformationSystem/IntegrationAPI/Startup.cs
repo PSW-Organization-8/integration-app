@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationClassLib.Parthership.Service.Interface;
+using IntegrationClassLib.Pharmacy.Service.Interface;
 
 namespace IntegrationAPI
 {

@@ -14,6 +14,21 @@ namespace IntegrationClassLib.Pharmacy.Repository.PharmacyRepo
 
         }
 
+        public bool ExistsByApiKey(string key)
+        {
+            var pharmacy = context.Pharmacies.Where(p => p.ApiKey.Equals(key)).FirstOrDefault();
+            if (pharmacy == null) {
+                return false;
+            }
+            return true;
+        }
+
+        public Model.Pharmacy GetPharmacyByApiKey(string key)
+        {
+            var pharmacy = context.Pharmacies.Where(p => p.ApiKey.Equals(key)).FirstOrDefault();
+            return pharmacy;
+        }
+
         public Model.Pharmacy GetPharmacyByName(string name)
         {
             var pharmacy = context.Pharmacies.Where(p => p.Name.Equals(name)).FirstOrDefault();
