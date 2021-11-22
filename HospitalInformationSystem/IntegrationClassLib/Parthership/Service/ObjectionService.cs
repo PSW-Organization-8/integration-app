@@ -30,5 +30,9 @@ namespace IntegrationClassLib.Parthership.Service
             return objectionRepository.GetAll();
         }
 
+        public Objection GetObjection(long id) {
+            return objectionRepository.Get(id);
+        }
+
     }
 }
