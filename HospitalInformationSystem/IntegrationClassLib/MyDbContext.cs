@@ -1,5 +1,6 @@
 ﻿using IntegrationClassLib.Parthership.Model;
 using IntegrationClassLib.Pharmacy.Model;
+using IntegrationClassLib.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -11,6 +12,14 @@ namespace IntegrationClassLib
         public DbSet<Pharmacy.Model.Pharmacy> Pharmacies { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<Medication> Medications { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
+
+        public DbSet<Floor> Floors { get; set; }
+        public DbSet<Building> Buildings { get; set; }
+
+        public DbSet<Equipment> Equipments { get; set; }
+
 
         public MyDbContext()
         {
