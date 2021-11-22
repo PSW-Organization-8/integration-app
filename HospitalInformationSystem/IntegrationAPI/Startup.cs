@@ -58,7 +58,7 @@ namespace IntegrationAPI
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IMedicationRepository, MedicationRepository>();
             services.AddScoped<PharmacyService>();
-            services.AddScoped<MedicationService>();
+            services.AddScoped<IMedicationService, MedicationService>();
             services.AddScoped<ObjectionService>();
             services.AddScoped<ResponseService>();
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
