@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SOLUTION_DIRECTORY: HospitalInformationSystem
-      PROJECT_DIRECTORY: IntegrationClassLib
+      PROJECT_DIRECTORY: IntegrationAPI
     services:
       postgres:
         image: postgres
