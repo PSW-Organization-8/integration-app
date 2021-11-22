@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationClassLib.Parthership.Service.Interface;
+using IntegrationClassLib.Pharmacy.Service.Interface;
 
 namespace IntegrationAPI
 {
@@ -57,7 +58,7 @@ namespace IntegrationAPI
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IMedicationRepository, MedicationRepository>();
             services.AddScoped<PharmacyService>();
-            services.AddScoped<MedicationService>();
+            services.AddScoped<IMedicationService, MedicationService>();
             services.AddScoped<ObjectionService>();
             services.AddScoped<ResponseService>();
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
