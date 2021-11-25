@@ -1,4 +1,6 @@
-﻿using IntegrationClassLib.Equipment.Service;
+﻿using IntegrationClassLib.Equipment.Repository;
+using IntegrationClassLib.Equipment.Repository.IRepository;
+using IntegrationClassLib.Equipment.Service;
 using IntegrationClassLib.RelocationEquipment.Repository.IRepository;
 using IntegrationClassLib.SharedModel;
 using System;
@@ -12,12 +14,14 @@ namespace IntegrationClassLib.RelocationEquipment.Service
     public class MoveEquipmentService
     {
         private readonly IMoveEquipmentRepository moveEquipmentRepository;
+        private readonly IEquipmentRepository equipmentRepository;
+        private readonly EquipmentService equipmentService;
 
-
-        public MoveEquipmentService(IMoveEquipmentRepository moveEquipmentRepository)
+        public MoveEquipmentService(IMoveEquipmentRepository moveEquipmentRepository, IEquipmentRepository equipmentRepository, EquipmentService equipmentService)
         {
             this.moveEquipmentRepository = moveEquipmentRepository;
-
+            this.equipmentRepository = equipmentRepository;
+            this.equipmentService = equipmentService;
         }
 
         public List<IntegrationClassLib.SharedModel.MoveEquipment> GetAllEquipments()
@@ -45,14 +49,15 @@ namespace IntegrationClassLib.RelocationEquipment.Service
 
         public bool SubmitRelocation(long id,IntegrationClassLib.SharedModel.Equipment equipment, double amount, Room destination, DateTime time, String durationRel )
         {
+           
            if(equipment.Amount < amount)
-            {
+           {
                 return false;
-            }
+           }
 
             MoveEquipment me = new MoveEquipment(id, equipment, destination, time, durationRel);
             moveEquipmentRepository.Create(me);
-
+            equipmentService.MoveEquipment(equipment, destination, amount);
 
             return true;
 

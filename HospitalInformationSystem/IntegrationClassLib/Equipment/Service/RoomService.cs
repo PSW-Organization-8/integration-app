@@ -37,5 +37,19 @@ namespace IntegrationClassLib.Equipment.Service
             return roomRepository.Create(newRooms);
         }
 
+        public Room GetByID(long roomID)
+        {
+            List<Room> allRooms = GetAllRooms();
+            foreach (Room r in allRooms)
+            {
+                if (r.ID == roomID)
+                    return r;
+            }
+
+            return null;
+
+            //return roomRepository.Get(roomID);
+        }
+
     }
 }

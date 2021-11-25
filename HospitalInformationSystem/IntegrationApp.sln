@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationAPI", "Integrati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationClassLib", "IntegrationClassLib\IntegrationClassLib.csproj", "{B83327EB-69AC-4EE1-9996-E5FF8CB294C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{7F9888CB-7A62-4818-8283-A3343D3E880F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{7F9888CB-7A62-4818-8283-A3343D3E880F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagerTests", "ManagerTests\ManagerTests.csproj", "{17AC1D86-5BAC-4EDF-BE6A-0AE0FD0BEE0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7F9888CB-7A62-4818-8283-A3343D3E880F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F9888CB-7A62-4818-8283-A3343D3E880F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F9888CB-7A62-4818-8283-A3343D3E880F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AC1D86-5BAC-4EDF-BE6A-0AE0FD0BEE0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AC1D86-5BAC-4EDF-BE6A-0AE0FD0BEE0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AC1D86-5BAC-4EDF-BE6A-0AE0FD0BEE0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AC1D86-5BAC-4EDF-BE6A-0AE0FD0BEE0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
