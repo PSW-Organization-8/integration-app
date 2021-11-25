@@ -127,6 +127,50 @@ namespace IntegrationAPI.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.MedicationConsumption", b =>
+                {
+                    b.Property<long>("MedicineID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("MedicineName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Quantity")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("MedicineID");
+
+                    b.ToTable("MedicationConsumption");
+
+                    b.HasData(
+                        new
+                        {
+                            MedicineID = 1L,
+                            DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
+                            MedicineName = "Brufen",
+                            Quantity = 32.0
+                        },
+                        new
+                        {
+                            MedicineID = 2L,
+                            DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
+                            MedicineName = "Vitamin C",
+                            Quantity = 16.0
+                        },
+                        new
+                        {
+                            MedicineID = 3L,
+                            DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
+                            MedicineName = "Brufen",
+                            Quantity = 56.0
+                        });
+                });
+
             modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Pharmacy", b =>
                 {
                     b.Property<long>("Id")
@@ -159,6 +203,111 @@ namespace IntegrationAPI.Migrations
                             Port = "18013",
                             Url = "http://localhost"
                         });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Building", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Buildings");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Equipment", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<long?>("RoomID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("RoomID");
+
+                    b.ToTable("Equipments");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Floor", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long?>("BuildingID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BuildingID");
+
+                    b.ToTable("Floors");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Room", b =>
+                {
+                    b.Property<long>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long?>("FloorID")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("FloorID");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Equipment", b =>
+                {
+                    b.HasOne("IntegrationClassLib.SharedModel.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomID");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Floor", b =>
+                {
+                    b.HasOne("IntegrationClassLib.SharedModel.Building", "Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingID");
+
+                    b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.SharedModel.Room", b =>
+                {
+                    b.HasOne("IntegrationClassLib.SharedModel.Floor", "Floor")
+                        .WithMany()
+                        .HasForeignKey("FloorID");
+
+                    b.Navigation("Floor");
                 });
 #pragma warning restore 612, 618
         }

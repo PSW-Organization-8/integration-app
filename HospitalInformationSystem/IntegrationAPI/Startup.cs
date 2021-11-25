@@ -1,8 +1,8 @@
 using IntegrationClassLib;
 using IntegrationClassLib.Parthership.Repository;
 using IntegrationClassLib.Parthership.Service;
-using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Repository.MedicationRepo;
+using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +64,9 @@ namespace IntegrationAPI
             services.AddTransient<IFloorRepository, FloorRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IEquipmentRepository, EquipmentRepository>();
+            services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
+
+            services.AddScoped<MedicationConsumptionService>();
             services.AddScoped<PharmacyService>();
             services.AddScoped<IMedicationService, MedicationService>();
             services.AddScoped<ObjectionService>();
@@ -72,6 +75,8 @@ namespace IntegrationAPI
             services.AddScoped<RoomService>();
             services.AddScoped<FloorService>();
             services.AddScoped<BuildingService>();
+            services.AddScoped<MedicationSpecificationService>();
+
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
             services.AddScoped<IActionsAndNewsService, ActionsAndNewsService>();
         }

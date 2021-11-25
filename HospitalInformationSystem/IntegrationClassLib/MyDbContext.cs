@@ -3,6 +3,7 @@ using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Globalization;
 
 namespace IntegrationClassLib
 {
@@ -48,6 +49,11 @@ namespace IntegrationClassLib
                new Response { Id = 1, ObjectionId = "1", TextResponse = "Nije tacno" }
            );
             modelBuilder.Entity<Medication>().HasData(new Medication { MedicineID=1, Name = "Synthroid", Quantity = 2 });
+            modelBuilder.Entity<MedicationConsumption>().HasData(
+             new MedicationConsumption { MedicineID = 1, MedicineName = "Brufen", DateTime = DateTime.ParseExact("11/11/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal), Quantity = 32 },
+             new MedicationConsumption { MedicineID = 2, MedicineName = "Vitamin C", DateTime = DateTime.ParseExact("11/11/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal), Quantity = 16 },
+             new MedicationConsumption { MedicineID = 3, MedicineName = "Brufen", DateTime = DateTime.ParseExact("11/11/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal), Quantity = 56 }
+         );
         }
     }
 }

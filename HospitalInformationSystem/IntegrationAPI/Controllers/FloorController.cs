@@ -26,7 +26,9 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        [Route("/api/floors")]
+
+        [Route("createFloors")]
+
         public Floor CreateFloors(Floor floor)
         {
             return floorService.CreateFloors(floor);
