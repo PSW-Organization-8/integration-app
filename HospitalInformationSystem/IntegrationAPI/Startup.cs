@@ -65,7 +65,7 @@ namespace IntegrationAPI
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IEquipmentRepository, EquipmentRepository>();
             services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
-
+            
             services.AddScoped<MedicationConsumptionService>();
             services.AddScoped<PharmacyService>();
             services.AddScoped<IMedicationService, MedicationService>();
