@@ -18,9 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationClassLib.Parthership.Service.Interface;
-using IntegrationClassLib.Equipment.Service;
-using IntegrationClassLib.Equipment.Repository.IRepository;
-using IntegrationClassLib.Equipment.Repository;
 using IntegrationClassLib.Pharmacy.Service.Interface;
 
 namespace IntegrationAPI
@@ -60,18 +57,10 @@ namespace IntegrationAPI
             services.AddTransient<IResponseRepository, ResponseRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
             services.AddTransient<IMedicationRepository, MedicationRepository>();
-            services.AddTransient<IBuildingRepository, BuildingRepository>();
-            services.AddTransient<IFloorRepository, FloorRepository>();
-            services.AddTransient<IRoomRepository, RoomRepository>();
-            services.AddTransient<IEquipmentRepository, EquipmentRepository>();
             services.AddScoped<PharmacyService>();
             services.AddScoped<IMedicationService, MedicationService>();
             services.AddScoped<ObjectionService>();
             services.AddScoped<ResponseService>();
-            services.AddScoped<EquipmentService>();
-            services.AddScoped<RoomService>();
-            services.AddScoped<FloorService>();
-            services.AddScoped<BuildingService>();
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
             services.AddScoped<IActionsAndNewsService, ActionsAndNewsService>();
         }

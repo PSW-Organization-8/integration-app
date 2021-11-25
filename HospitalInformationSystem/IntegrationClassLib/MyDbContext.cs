@@ -18,7 +18,7 @@ namespace IntegrationClassLib
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
 
-        public DbSet<IntegrationClassLib.SharedModel.Equipment> Equipments { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
 
 
         public MyDbContext()
