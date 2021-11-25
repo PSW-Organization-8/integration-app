@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationClassLib.SharedModel;
-using Microsoft.EntityFrameworkCore;
+
 namespace IntegrationClassLib.Equipment.Repository
 {
     public class EquipmentRepository : AbstractSqlRepository<IntegrationClassLib.SharedModel.Equipment, long>, IEquipmentRepository
@@ -18,13 +18,6 @@ namespace IntegrationClassLib.Equipment.Repository
         {
             return entity.ID;
         }
-
-
-        public override List<IntegrationClassLib.SharedModel.Equipment> GetAll()
-        {
-            return context.Equipments.Include(x => x.Room).ToList();
-        }
-
 
     }
 
