@@ -23,7 +23,7 @@ namespace IntegrationClassLib
             this.dbSet = context.Set<Entity>();
         }
 
-        public List<Entity> GetAll()
+        public virtual List<Entity> GetAll()
         {
             return dbSet.ToList();
         }
