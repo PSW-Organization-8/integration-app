@@ -16,19 +16,8 @@ namespace IntegrationClassLib.Pharmacy.Service
         {
            
         }
-        public string RequestReport(MedicationSpecification req, Model.Pharmacy pharmacy)
-        {
-            RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/medicationSpecification");
-            RestRequest request = new RestRequest();
-            request.AddJsonBody(req.MedicationName);
 
-            var response = restClient.Post(request);
-            if (response.Content.ToString().Equals("\"OK\""))
-                GetSpecificationnReport(req.MedicationName);
-
-            return response.Content.ToString();
-        }
-        private void GetSpecificationnReport(String medicationName)
+        public void GetSpecificationnReport(String medicationName)
         {
             String fileName = "MedicationSpecification_" + medicationName + ".pdf";
             String localFile = Path.Combine(Directory.GetCurrentDirectory(), fileName);
