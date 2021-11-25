@@ -28,7 +28,7 @@ namespace IntegrationClassLib
             return dbSet.ToList();
         }
 
-        public Entity Get(long id)
+        public virtual Entity Get(long id)
         {
             return dbSet.Find(id);
         }

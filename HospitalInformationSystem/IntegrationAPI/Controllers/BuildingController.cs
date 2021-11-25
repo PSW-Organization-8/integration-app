@@ -26,13 +26,18 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        [Route("createBuildings")]
+
+        [Route("buildings")]
+
+       
+
         public Building CreateBuildings(Building building)
         {
             return buildingService.CreateBuildings(building);
         }
 
         [HttpPost]
+        [Route("allBuildings")]
         public void CreateAllBuildings(List<IntegrationClassLib.SharedModel.Building> buildings)
         {
             buildingService.CreateAllBuildings(buildings);

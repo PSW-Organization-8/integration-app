@@ -26,13 +26,16 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+
         [Route("createFloors")]
+
         public Floor CreateFloors(Floor floor)
         {
             return floorService.CreateFloors(floor);
         }
 
         [HttpPost]
+        [Route("/api/allFloors")]
         public void CreateAllFloors(List<IntegrationClassLib.SharedModel.Floor> floors)
         {
             floorService.CreateAllFloors(floors);

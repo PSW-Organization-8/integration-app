@@ -36,5 +36,10 @@ namespace IntegrationClassLib.Equipment.Service
             return equipmentRepository.Create(newEquipments);
         }
 
+        public IntegrationClassLib.SharedModel.Equipment Get(long id) 
+        {
+            return equipmentRepository.Get(id);
+        }
+
     }
 }
