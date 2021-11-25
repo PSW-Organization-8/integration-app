@@ -163,10 +163,8 @@ namespace IntegrationClassLib.Migrations
 
             modelBuilder.Entity("IntegrationClassLib.SharedModel.Building", b =>
                 {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("ID")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -178,10 +176,8 @@ namespace IntegrationClassLib.Migrations
 
             modelBuilder.Entity("IntegrationClassLib.SharedModel.Equipment", b =>
                 {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("ID")
+                        .HasColumnType("text");
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
@@ -189,8 +185,8 @@ namespace IntegrationClassLib.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("RoomID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("RoomID")
+                        .HasColumnType("text");
 
                     b.HasKey("ID");
 
@@ -201,13 +197,11 @@ namespace IntegrationClassLib.Migrations
 
             modelBuilder.Entity("IntegrationClassLib.SharedModel.Floor", b =>
                 {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("ID")
+                        .HasColumnType("text");
 
-                    b.Property<long?>("BuildingID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("BuildingID")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -221,13 +215,11 @@ namespace IntegrationClassLib.Migrations
 
             modelBuilder.Entity("IntegrationClassLib.SharedModel.Room", b =>
                 {
-                    b.Property<long>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("ID")
+                        .HasColumnType("text");
 
-                    b.Property<long?>("FloorID")
-                        .HasColumnType("bigint");
+                    b.Property<string>("FloorID")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

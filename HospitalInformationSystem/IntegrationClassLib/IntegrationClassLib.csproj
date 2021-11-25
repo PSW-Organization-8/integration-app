@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Equipment\Model\" />
-
-    <Folder Include="Migrations\" />
-
     <Folder Include="Tendering\Model\" />
     <Folder Include="Tendering\Service\" />
     <Folder Include="Tendering\Repository\" />

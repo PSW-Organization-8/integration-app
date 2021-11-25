@@ -12,8 +12,7 @@ namespace IntegrationClassLib.Migrations
                 name: "Buildings",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ID = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
@@ -101,10 +100,9 @@ namespace IntegrationClassLib.Migrations
                 name: "Floors",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ID = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    BuildingID = table.Column<long>(type: "bigint", nullable: true)
+                    BuildingID = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,10 +119,9 @@ namespace IntegrationClassLib.Migrations
                 name: "Rooms",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ID = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    FloorID = table.Column<long>(type: "bigint", nullable: true)
+                    FloorID = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -141,10 +138,9 @@ namespace IntegrationClassLib.Migrations
                 name: "Equipments",
                 columns: table => new
                 {
-                    ID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ID = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
-                    RoomID = table.Column<long>(type: "bigint", nullable: true),
+                    RoomID = table.Column<string>(type: "text", nullable: true),
                     Amount = table.Column<double>(type: "double precision", nullable: false)
                 },
                 constraints: table =>

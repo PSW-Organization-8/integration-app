@@ -18,7 +18,7 @@ namespace IntegrationClassLib
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
 
-        public DbSet<IntegrationClassLib.SharedModel.Equipment> Equipments { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
 
 
         public MyDbContext()
@@ -31,7 +31,7 @@ namespace IntegrationClassLib
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            String connectionString = "Server=localhost; Port =5432; Database =integration; User Id = postgres; Password =root;";
+            String connectionString = "Server=localhost; Port =5432; Database =Integration; User Id = postgres; Password =root;";
             optionsBuilder.UseNpgsql(connectionString);
         }
 
