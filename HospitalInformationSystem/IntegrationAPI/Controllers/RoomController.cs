@@ -27,12 +27,14 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+        [Route("/api/rooms")]
         public Room CreateRooms(Room room)
         {
             return roomService.CreateRooms(room);
         }
 
         [HttpPost]
+        [Route("/api/allRooms")]
         public void CreateAllRooms(List<IntegrationClassLib.SharedModel.Room> rooms)
         {
             roomService.CreateAllRooms(rooms);

@@ -28,15 +28,24 @@ namespace IntegrationAPI.Controllers
         }
 
        [HttpPost]
-       public Equipment CreateEquipments(Equipment equipment)
+        [Route("equipmentss")]
+        public Equipment CreateEquipments(Equipment equipment)
         {
             return equipmentService.CreateEquipments(equipment);
         }
 
         [HttpPost]
+        [Route("/api/allEquipments")]
         public void CreateAllEquipments(List<IntegrationClassLib.SharedModel.Equipment> equipments)
         {
            equipmentService.CreateAllEquipments(equipments);
+        }
+
+        [HttpGet]
+        [Route("equipment/{id}")]
+        public Equipment Get(long id)
+        {
+            return equipmentService.Get(id);
         }
 
 

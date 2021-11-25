@@ -20,6 +20,7 @@ namespace IntegrationClassLib
 
         public DbSet<IntegrationClassLib.SharedModel.Equipment> Equipments { get; set; }
 
+        public DbSet<IntegrationClassLib.SharedModel.MoveEquipment> MoveEquipments { get; set; }
 
         public MyDbContext()
         {

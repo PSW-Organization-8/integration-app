@@ -25,6 +25,11 @@ namespace IntegrationClassLib.Equipment.Repository
             return context.Equipments.Include(x => x.Room).ToList();
         }
 
+        public override IntegrationClassLib.SharedModel.Equipment Get(long id) 
+        {
+            return context.Equipments.Include(x => x.Room).Where(x => x.ID == id).SingleOrDefault();
+        }
+
     }
 
 }
