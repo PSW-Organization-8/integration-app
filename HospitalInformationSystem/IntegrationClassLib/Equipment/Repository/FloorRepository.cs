@@ -1,6 +1,8 @@
 ﻿using IntegrationClassLib.Equipment.Repository.IRepository;
 using IntegrationClassLib.SharedModel;
+
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +21,7 @@ namespace IntegrationClassLib.Equipment.Repository
         {
             return entity.ID;
         }
+
 
         public override List<IntegrationClassLib.SharedModel.Floor> GetAll()
         {
