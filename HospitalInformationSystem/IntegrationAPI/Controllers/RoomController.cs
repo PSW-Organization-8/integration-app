@@ -28,7 +28,7 @@ namespace IntegrationAPI.Controllers
 
         [HttpPost]
 
-        [Route("/api/rooms")]
+        
 
         [Route("createRooms")]
 

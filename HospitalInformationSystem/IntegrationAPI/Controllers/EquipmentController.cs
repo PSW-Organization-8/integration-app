@@ -31,8 +31,6 @@ namespace IntegrationAPI.Controllers
 
         [Route("equipmentsst")]
 
-        [Route("createEquipments")]
-
         public Equipment CreateEquipments(Equipment equipment)
         {
             return equipmentService.CreateEquipments(equipment);

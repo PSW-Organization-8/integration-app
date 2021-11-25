@@ -29,7 +29,7 @@ namespace IntegrationAPI.Controllers
 
         [Route("buildings")]
 
-        [Route("createBuildings")]
+       
 
         public Building CreateBuildings(Building building)
         {
