@@ -8,7 +8,7 @@ namespace IntegrationClassLib.SharedModel
 {
     public class Equipment
     {
-        public string ID { get; set; }
+        public long ID { get; set; }
         public string Name { get; set; }
 
         public Room Room { get; set; }
@@ -20,7 +20,7 @@ namespace IntegrationClassLib.SharedModel
 
         }
 
-        public Equipment(string id, string name, Room room, double amount)
+        public Equipment(long id, string name, Room room, double amount)
         {
             this.ID = id;
             this.Name = name;
