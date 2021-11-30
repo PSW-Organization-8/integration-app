@@ -18,6 +18,21 @@ namespace IntegrationClassLib.Pharmacy.Service
             return pharmacyRepository.Create(pharmacy);
         }
 
+        public Model.Pharmacy Update(Model.Pharmacy pharmacy)
+        {
+            return pharmacyRepository.Update(pharmacy);
+        }
+
+        public Model.Pharmacy SavePharmacyImage(string base64Image, long id)
+        {
+            Model.Pharmacy pharmacy = pharmacyRepository.Get(id);
+            if (pharmacy == null) return null;
+
+            pharmacy.Base64Image = base64Image;
+
+            return pharmacyRepository.Update(pharmacy);
+        }
+
         public List<Model.Pharmacy> GetAll()
         {
             return pharmacyRepository.GetAll();

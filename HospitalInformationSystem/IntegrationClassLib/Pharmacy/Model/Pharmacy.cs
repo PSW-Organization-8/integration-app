@@ -22,6 +22,10 @@ namespace IntegrationClassLib.Pharmacy.Model
 
         public String Port { get; set; }
 
+        public String Notes { get; set; }
+
+        public String Base64Image { get; set; }
+
         public Pharmacy(){}
 
         public Pharmacy(string name, string apiKey, string url, string port)
@@ -30,6 +34,27 @@ namespace IntegrationClassLib.Pharmacy.Model
             ApiKey = apiKey;
             Url = url;
             Port = port;
+        }
+
+        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes)
+        {
+            Id = id;
+            Name = name;
+            ApiKey = apiKey;
+            Url = url;
+            Port = port;
+            Notes = notes;
+        }
+
+        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes, string base64Image)
+        {
+            Id = id;
+            Name = name;
+            ApiKey = apiKey;
+            Url = url;
+            Port = port;
+            Notes = notes;
+            Base64Image = base64Image;
         }
     }
 }
