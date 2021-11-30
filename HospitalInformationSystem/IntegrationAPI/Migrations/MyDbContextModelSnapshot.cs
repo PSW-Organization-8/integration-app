@@ -155,7 +155,13 @@ namespace IntegrationAPI.Migrations
                     b.Property<string>("ApiKey")
                         .HasColumnType("text");
 
+                    b.Property<string>("Base64Image")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("text");
 
                     b.Property<string>("Port")
