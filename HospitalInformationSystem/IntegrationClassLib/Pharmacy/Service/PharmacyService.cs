@@ -1,5 +1,4 @@
 ﻿using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
-using IntegrationClassLib.Pharmacy.Service.Interface;
 using System;
 using System.Collections.Generic;
 

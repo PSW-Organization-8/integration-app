@@ -21,7 +21,6 @@ using IntegrationClassLib.Parthership.Service.Interface;
 using IntegrationClassLib.Equipment.Service;
 using IntegrationClassLib.Equipment.Repository.IRepository;
 using IntegrationClassLib.Equipment.Repository;
-using IntegrationClassLib.Pharmacy.Service.Interface;
 
 namespace IntegrationAPI
 {
@@ -59,7 +58,6 @@ namespace IntegrationAPI
             services.AddTransient<IObjectionRepository,ObjectionRepository>();
             services.AddTransient<IResponseRepository, ResponseRepository>();
             services.AddTransient<INewsRepository, NewsRepository>();
-            services.AddTransient<IMedicationRepository, MedicationRepository>();
             services.AddTransient<IBuildingRepository, BuildingRepository>();
             services.AddTransient<IFloorRepository, FloorRepository>();
             services.AddTransient<IRoomRepository, RoomRepository>();
@@ -68,7 +66,6 @@ namespace IntegrationAPI
             
             services.AddScoped<MedicationConsumptionService>();
             services.AddScoped<PharmacyService>();
-            services.AddScoped<IMedicationService, MedicationService>();
             services.AddScoped<ObjectionService>();
             services.AddScoped<ResponseService>();
             services.AddScoped<EquipmentService>();
@@ -92,7 +89,6 @@ namespace IntegrationAPI
             }
 
             app.UseRouting();
-            app.UseCors("MyPolicy");
 
             app.UseCors("MyPolicy");
 
