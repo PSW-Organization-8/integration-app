@@ -37,20 +37,6 @@ namespace IntegrationAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medications",
-                columns: table => new
-                {
-                    MedicineID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medications", x => x.MedicineID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
@@ -173,6 +159,34 @@ namespace IntegrationAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MoveEquipments",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    equipmentID = table.Column<long>(type: "bigint", nullable: true),
+                    destinationRoomID = table.Column<long>(type: "bigint", nullable: true),
+                    relocationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    duration = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MoveEquipments", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MoveEquipments_Equipments_equipmentID",
+                        column: x => x.equipmentID,
+                        principalTable: "Equipments",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MoveEquipments_Rooms_destinationRoomID",
+                        column: x => x.destinationRoomID,
+                        principalTable: "Rooms",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "MedicationConsumption",
                 columns: new[] { "MedicineID", "DateTime", "MedicineName", "Quantity" },
@@ -182,11 +196,6 @@ namespace IntegrationAPI.Migrations
                     { 2L, new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local), "Vitamin C", 16.0 },
                     { 3L, new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local), "Brufen", 56.0 }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Medications",
-                columns: new[] { "MedicineID", "Name", "Quantity" },
-                values: new object[] { 1L, "Synthroid", 2 });
 
             migrationBuilder.InsertData(
                 table: "Objection",
@@ -214,6 +223,16 @@ namespace IntegrationAPI.Migrations
                 column: "BuildingID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MoveEquipments_destinationRoomID",
+                table: "MoveEquipments",
+                column: "destinationRoomID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MoveEquipments_equipmentID",
+                table: "MoveEquipments",
+                column: "equipmentID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rooms_FloorID",
                 table: "Rooms",
                 column: "FloorID");
@@ -222,13 +241,10 @@ namespace IntegrationAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Equipments");
-
-            migrationBuilder.DropTable(
                 name: "MedicationConsumption");
 
             migrationBuilder.DropTable(
-                name: "Medications");
+                name: "MoveEquipments");
 
             migrationBuilder.DropTable(
                 name: "News");
@@ -241,6 +257,9 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Response");
+
+            migrationBuilder.DropTable(
+                name: "Equipments");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

@@ -1,7 +1,6 @@
 ﻿using IntegrationAPI.Dto;
 using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.Pharmacy.Service;
-using IntegrationClassLib.Pharmacy.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 using System.Collections.Generic;
@@ -13,11 +12,9 @@ namespace IntegrationAPI.Controllers
     public class MedicationController : ControllerBase
     {
         private readonly PharmacyService pharmacyService;
-        private readonly IMedicationService medicationService;
-        public MedicationController(PharmacyService pharmacyService, IMedicationService medicationService)
+        public MedicationController(PharmacyService pharmacyService)
         {
             this.pharmacyService = pharmacyService;
-            this.medicationService = medicationService;
         }
 
         [HttpGet]
@@ -60,9 +57,18 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
 
-            Medication newMedication = new Medication { Name = orderMedicationDto.MedicationName, Quantity = orderMedicationDto.Quantity };
 
-            if(medicationService.AddMedicationFromPharmacy(newMedication) == null)
+
+            MedicationDto newMedication = new MedicationDto { Name = orderMedicationDto.MedicationName, Quantity = orderMedicationDto.Quantity };
+
+            RestClient restClientHospital = new RestClient("http://localhost:16934/api/Medcation/save_medication"); 
+            RestRequest requestHospital = new RestRequest();
+
+            requestHospital.AddJsonBody(newMedication);
+
+            var dataHospital = restClientHospital.Post<IActionResult>(requestHospital);
+
+            if (dataHospital.StatusCode == System.Net.HttpStatusCode.BadRequest)
             {
                 return BadRequest();
             }
