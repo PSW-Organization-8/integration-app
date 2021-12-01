@@ -20,6 +20,8 @@ namespace IntegrationClassLib.Pharmacy.Service
 
         public Model.Pharmacy Update(Model.Pharmacy pharmacy)
         {
+            Model.Pharmacy pharmacyFromBase = pharmacyRepository.Get(pharmacy.Id);
+            pharmacy.Base64Image = pharmacyFromBase.Base64Image;
             return pharmacyRepository.Update(pharmacy);
         }
 
