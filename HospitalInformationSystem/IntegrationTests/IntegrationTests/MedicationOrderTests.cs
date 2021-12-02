@@ -46,7 +46,7 @@ namespace IntegrationTests
             MyDbContext dbContext = new MyDbContext();
             IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
             PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
-            MedicationController controller = new MedicationController(pharmacyService, new PharmacyHTTPConnection());
+            MedicationController controller = new MedicationController(pharmacyService, new PharmacyHTTPConnection(), new PharmacyGrpcConnection(), new HospitalHttpConnection());
             return controller;
         }
     }

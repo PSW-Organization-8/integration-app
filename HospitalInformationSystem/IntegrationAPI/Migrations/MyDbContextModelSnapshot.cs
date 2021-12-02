@@ -158,6 +158,9 @@ namespace IntegrationAPI.Migrations
                     b.Property<string>("Base64Image")
                         .HasColumnType("text");
 
+                    b.Property<bool>("ComunicateWithGrpc")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -179,9 +182,19 @@ namespace IntegrationAPI.Migrations
                         {
                             Id = 1L,
                             ApiKey = "fds15d4fs6",
+                            ComunicateWithGrpc = false,
                             Name = "Apoteka1",
                             Port = "18013",
                             Url = "http://localhost"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            ApiKey = "fds15d4fs6",
+                            ComunicateWithGrpc = true,
+                            Name = "Apoteka2",
+                            Port = "4111",
+                            Url = "localhost"
                         });
                 });
 

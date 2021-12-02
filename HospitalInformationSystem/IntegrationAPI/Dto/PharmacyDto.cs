@@ -19,10 +19,11 @@ namespace IntegrationAPI.Dto
         public String Notes { get; set; }
 
         public String Base64Image { get; set; }
+        public bool ComunicateWithGrpc { get; set; }
 
         public PharmacyDto() { }
 
-        public PharmacyDto(long id, string name, string apiKey, string url, string port, string notes, string base64Image)
+        public PharmacyDto(long id, string name, string apiKey, string url, string port, string notes, string base64Image, bool grpc)
         {
             Id = id;
             Name = name;
@@ -31,6 +32,7 @@ namespace IntegrationAPI.Dto
             Port = port;
             Notes = notes;
             Base64Image = base64Image;
+            ComunicateWithGrpc = grpc;
         }
     }
 }

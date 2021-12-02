@@ -80,6 +80,8 @@ namespace IntegrationAPI
 
             services.AddScoped<IPharmacyHTTPConnection, PharmacyHTTPConnection>();
             services.AddScoped<IPharmacySFTPConnection, PharmacySFTPConnection>();
+            services.AddScoped<IPharmacyGrpcConnection, PharmacyGrpcConnection>();
+            services.AddScoped<IHospitalHttpConnection, HospitalHttpConnection>();
 
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
             services.AddScoped<IActionsAndNewsService, ActionsAndNewsService>();

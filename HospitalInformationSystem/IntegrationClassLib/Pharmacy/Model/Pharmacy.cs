@@ -21,6 +21,7 @@ namespace IntegrationClassLib.Pharmacy.Model
         public String Url { get; set; }
 
         public String Port { get; set; }
+        public bool ComunicateWithGrpc { get; set; }
 
         public String Notes { get; set; }
 
@@ -28,12 +29,13 @@ namespace IntegrationClassLib.Pharmacy.Model
 
         public Pharmacy(){}
 
-        public Pharmacy(string name, string apiKey, string url, string port)
+        public Pharmacy(string name, string apiKey, string url, string port, bool comunicateWithGrpc=false)
         {
             Name = name;
             ApiKey = apiKey;
             Url = url;
             Port = port;
+            ComunicateWithGrpc = comunicateWithGrpc;
         }
 
         public Pharmacy(long id, string name, string apiKey, string url, string port, string notes)
@@ -46,7 +48,7 @@ namespace IntegrationClassLib.Pharmacy.Model
             Notes = notes;
         }
 
-        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes, string base64Image)
+        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes, string base64Image, bool grpc)
         {
             Id = id;
             Name = name;
@@ -55,6 +57,7 @@ namespace IntegrationClassLib.Pharmacy.Model
             Port = port;
             Notes = notes;
             Base64Image = base64Image;
+            ComunicateWithGrpc = grpc;
         }
     }
 }

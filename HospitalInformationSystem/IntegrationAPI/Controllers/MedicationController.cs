@@ -1,10 +1,8 @@
-﻿using IntegrationAPI.Connection;
-using IntegrationAPI.Connection.Interface;
+﻿using IntegrationAPI.Connection.Interface;
 using IntegrationAPI.Dto;
 using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.Pharmacy.Service;
 using Microsoft.AspNetCore.Mvc;
-using RestSharp;
 using System.Collections.Generic;
 
 namespace IntegrationAPI.Controllers
@@ -15,10 +13,15 @@ namespace IntegrationAPI.Controllers
     {
         private readonly PharmacyService pharmacyService;
         private readonly IPharmacyHTTPConnection hTTPConnection;
-        public MedicationController(PharmacyService pharmacyService, IPharmacyHTTPConnection hTTPConnection)
+        private readonly IPharmacyGrpcConnection grpcConnection;
+        private readonly IHospitalHttpConnection hospitalHttpConnection;
+
+        public MedicationController(PharmacyService pharmacyService, IPharmacyHTTPConnection hTTPConnection, IPharmacyGrpcConnection grpcConnection, IHospitalHttpConnection hospitalHttpConnection)
         {
             this.pharmacyService = pharmacyService;
             this.hTTPConnection = hTTPConnection;
+            this.grpcConnection = grpcConnection;
+            this.hospitalHttpConnection = hospitalHttpConnection;
         }
 
         [HttpGet]
@@ -26,7 +29,14 @@ namespace IntegrationAPI.Controllers
         public List<PharmacyWithInventoryDTO> CheckMedicationQuantity([FromQuery(Name = "Name")] string Name, [FromQuery(Name = "Quantity")] string Quantity, [FromQuery(Name = "Pharmacy")] string Pharmacy)
         {
             Pharmacy pharmacy = pharmacyService.GetByName(Pharmacy);
-            return hTTPConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
+            if (pharmacy.ComunicateWithGrpc)
+            {
+                return grpcConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
+            }
+            else
+            {
+                return hTTPConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
+            }
         }
 
         [HttpPut]
@@ -39,37 +49,39 @@ namespace IntegrationAPI.Controllers
                 return BadRequest();
             }
 
-            RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/inventory/remove_medication");
-            RestRequest request = new RestRequest();
+            MedicationDto medicationDto = new MedicationDto { Name = orderMedicationDto.MedicationName, Quantity = orderMedicationDto.Quantity };
 
-            var order = new OrderForPharmacyDto { PhamracyID = orderMedicationDto.PharmacyId, MedicationID = orderMedicationDto.MedicationId, Quantity = orderMedicationDto.Quantity };
-            request.AddJsonBody(order);
-
-            request.AddHeader("ApiKey", pharmacy.ApiKey);
-            var data = restClient.Put<bool>(request);
-
-            if(data.StatusCode != System.Net.HttpStatusCode.OK || data.Content.Equals("false"))
+            if (pharmacy.ComunicateWithGrpc)
             {
-                return BadRequest();
+                if (grpcConnection.OrderMedication(pharmacy, orderMedicationDto))
+                {
+                    if (hospitalHttpConnection.SaveMedication(medicationDto, pharmacy, orderMedicationDto))
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        hTTPConnection.ReturnMedication(pharmacy, orderMedicationDto);
+                    }
+                }
+
+            }
+            else
+            {
+                if (hTTPConnection.OrderMedication(pharmacy, orderMedicationDto))
+                {
+                    if (hospitalHttpConnection.SaveMedication(medicationDto, pharmacy, orderMedicationDto))
+                    {
+                        return Ok();
+                    }
+                    else
+                    {
+                        hTTPConnection.ReturnMedication(pharmacy, orderMedicationDto);
+                    }
+                }
             }
 
-
-
-            MedicationDto newMedication = new MedicationDto { Name = orderMedicationDto.MedicationName, Quantity = orderMedicationDto.Quantity };
-
-            RestClient restClientHospital = new RestClient("http://localhost:16934/api/Medcation/save_medication"); 
-            RestRequest requestHospital = new RestRequest();
-
-            requestHospital.AddJsonBody(newMedication);
-
-            var dataHospital = restClientHospital.Post<IActionResult>(requestHospital);
-
-            if (dataHospital.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
+            return BadRequest();
         }
     }
 }

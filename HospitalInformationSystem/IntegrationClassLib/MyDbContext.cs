@@ -34,7 +34,7 @@ namespace IntegrationClassLib
             String server = Environment.GetEnvironmentVariable("SERVER") ?? "localhost";
             String port = Environment.GetEnvironmentVariable("PORT") ?? "5432";
             String databaseName = Environment.GetEnvironmentVariable("DATABASE") ?? "Integration";
-            String username = Environment.GetEnvironmentVariable("USERNAME") ?? "postgres";
+            String username = Environment.GetEnvironmentVariable("USERNAME_DB") ?? "postgres";
             String password = Environment.GetEnvironmentVariable("PASSWORD") ?? "root";
             String connectionString = $"Server={server}; Port ={port}; Database ={databaseName}; User Id = {username}; Password ={password};";
             optionsBuilder.UseNpgsql(connectionString);
@@ -43,7 +43,8 @@ namespace IntegrationClassLib
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pharmacy.Model.Pharmacy>().HasData(
-                new Pharmacy.Model.Pharmacy { Id = 1, Name = "Apoteka1", ApiKey= "fds15d4fs6", Url="http://localhost", Port= "18013" }
+                new Pharmacy.Model.Pharmacy { Id = 1, Name = "Apoteka1", ApiKey = "fds15d4fs6", Url = "http://localhost", Port = "18013" },
+                new Pharmacy.Model.Pharmacy { Id = 2, Name = "Apoteka2", ApiKey = "fds15d4fs6", Url = "localhost", Port = "4111", ComunicateWithGrpc=true }
             );
             modelBuilder.Entity<Objection>().HasData(
                 new Objection { Id = 1, PharmacyName = "Apoteka1", TextObjection = "Lose usluge" }
