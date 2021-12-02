@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using RestSharp;
 using IntegrationClassLib.Pharmacy.Service;
 using IntegrationClassLib.Pharmacy.Model;
+using IntegrationAPI.Connection.Interface;
+using IntegrationAPI.Connection;
 
 namespace IntegrationAPI.Controllers
 {
@@ -24,12 +26,14 @@ namespace IntegrationAPI.Controllers
         private readonly ObjectionService objectionService;
         private readonly ResponseService responseService;
         private readonly PharmacyService pharmacyService;
+        private readonly IPharmacyHTTPConnection hTTPConnection;
 
-        public ObjectionController(ObjectionService objectionService, ResponseService responseService, PharmacyService pharmacyService)
+        public ObjectionController(ObjectionService objectionService, ResponseService responseService, PharmacyService pharmacyService, IPharmacyHTTPConnection hTTPConnection)
         {
             this.objectionService = objectionService;
             this.responseService = responseService;
             this.pharmacyService = pharmacyService;
+            this.hTTPConnection = hTTPConnection;
         }
 
         [HttpGet]
@@ -42,12 +46,7 @@ namespace IntegrationAPI.Controllers
         {
             Objection newObjection = objectionService.Add(ObjectionMapper.ObjectionDTOToObjection(objectionDTO));
             Pharmacy pharmacy = pharmacyService.GetByName(objectionDTO.PharmacyName);
-
-            RestClient restClient = new RestClient(pharmacy.Url+":"+pharmacy.Port+"/api/Objection");
-            RestRequest request = new RestRequest();
-            request.AddJsonBody(newObjection);
-            request.AddHeader("ApiKey", pharmacy.ApiKey);
-            restClient.Post(request);
+            hTTPConnection.SendObjectionToPharmacy(pharmacy, newObjection);
             return newObjection;
         }
 

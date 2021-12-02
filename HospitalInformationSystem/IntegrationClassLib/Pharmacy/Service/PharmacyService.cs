@@ -50,5 +50,9 @@ namespace IntegrationClassLib.Pharmacy.Service
         public bool ExistsByApiKey(string key) {
             return pharmacyRepository.ExistsByApiKey(key);
         }
+
+        public Model.Pharmacy GetById(long id) {
+            return pharmacyRepository.Get(id);
+        }
     }
 }

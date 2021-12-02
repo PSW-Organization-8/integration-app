@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Controllers;
+﻿using IntegrationAPI.Connection;
+using IntegrationAPI.Controllers;
 using IntegrationAPI.Dto;
 using IntegrationClassLib;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
@@ -17,7 +18,7 @@ namespace IntegrationTests
             MyDbContext dbContext = new MyDbContext();
             IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
             PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
-            MedicationController contoller = new MedicationController(pharmacyService);
+            MedicationController contoller = new MedicationController(pharmacyService, new PharmacyHTTPConnection());
 
             List<PharmacyWithInventoryDTO> retVal = contoller.CheckMedicationQuantity("Ventolin", "25", "Apoteka1");
 

@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Controllers;
+﻿using IntegrationAPI.Connection;
+using IntegrationAPI.Controllers;
 using IntegrationClassLib;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
@@ -45,7 +46,7 @@ namespace IntegrationTests
             MyDbContext dbContext = new MyDbContext();
             IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
             PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
-            MedicationController controller = new MedicationController(pharmacyService);
+            MedicationController controller = new MedicationController(pharmacyService, new PharmacyHTTPConnection());
             return controller;
         }
     }

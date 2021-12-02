@@ -21,6 +21,9 @@ using IntegrationClassLib.Parthership.Service.Interface;
 using IntegrationClassLib.Equipment.Service;
 using IntegrationClassLib.Equipment.Repository.IRepository;
 using IntegrationClassLib.Equipment.Repository;
+using IntegrationClassLib.Pharmacy.Service.Interface;
+using IntegrationAPI.Connection.Interface;
+using IntegrationAPI.Connection;
 
 namespace IntegrationAPI
 {
@@ -73,6 +76,10 @@ namespace IntegrationAPI
             services.AddScoped<FloorService>();
             services.AddScoped<BuildingService>();
             services.AddScoped<MedicationSpecificationService>();
+            services.AddScoped<IReceiptService, ReceiptService>();
+
+            services.AddScoped<IPharmacyHTTPConnection, PharmacyHTTPConnection>();
+            services.AddScoped<IPharmacySFTPConnection, PharmacySFTPConnection>();
 
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
             services.AddScoped<IActionsAndNewsService, ActionsAndNewsService>();
