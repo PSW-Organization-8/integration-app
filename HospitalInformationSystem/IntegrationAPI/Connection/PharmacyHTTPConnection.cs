@@ -49,6 +49,42 @@ namespace IntegrationAPI.Connection
             return JsonSerializer.Deserialize<bool>(data.Content);
         }
 
+        public bool OrderMedication(Pharmacy pharmacy, OrderMedicationDto orderMedicationDto)
+        {
+            RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/inventory/remove_medication");
+            RestRequest request = new RestRequest();
+
+            var order = new OrderForPharmacyDto { PhamracyID = orderMedicationDto.PharmacyId, MedicationID = orderMedicationDto.MedicationId, Quantity = orderMedicationDto.Quantity };
+            request.AddJsonBody(order);
+
+            request.AddHeader("ApiKey", pharmacy.ApiKey);
+            var data = restClient.Put<bool>(request);
+
+            if (data.StatusCode != System.Net.HttpStatusCode.OK || data.Content.Equals("false"))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool ReturnMedication(Pharmacy pharmacy, OrderMedicationDto orderMedicationDto)
+        {
+            RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/inventory/append_medication");
+            RestRequest request = new RestRequest();
+
+            var order = new OrderForPharmacyDto { PhamracyID = orderMedicationDto.PharmacyId, MedicationID = orderMedicationDto.MedicationId, Quantity = orderMedicationDto.Quantity };
+            request.AddJsonBody(order);
+
+            request.AddHeader("ApiKey", pharmacy.ApiKey);
+            var data = restClient.Put<bool>(request);
+
+            if (data.StatusCode != System.Net.HttpStatusCode.OK || data.Content.Equals("false"))
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void SendObjectionToPharmacy(Pharmacy pharmacy, Objection newObjection)
         {
             RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/Objection");
