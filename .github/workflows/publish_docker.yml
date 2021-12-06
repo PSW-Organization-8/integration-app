@@ -1,8 +1,9 @@
 name: Publish Docker image
 
 on:
-  push:
-    branches: [develop]
+  create:
+    tags:
+      - di*
 
 jobs:
   push_to_registry:
