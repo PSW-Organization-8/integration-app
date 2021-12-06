@@ -36,12 +36,36 @@ namespace IntegrationTests.UnitTests
             Pharmacy test2 = pharmacyService.Update(updatedPharmacy2);
 
             
-            IsPharmaciesEquals(updatedPharmacy1, test1).ShouldBeTrue();
-            IsPharmaciesEquals(updatedPharmacy2, test2).ShouldBeTrue();
-            IsPharmaciesEquals(updatedPharmacy1, test2).ShouldBeFalse();
+            IsPharmaciesEqualsWithoutImage(updatedPharmacy1, test1).ShouldBeTrue();
+            IsPharmaciesEqualsWithoutImage(updatedPharmacy2, test2).ShouldBeTrue();
+            IsPharmaciesEqualsWithoutImage(updatedPharmacy1, test2).ShouldBeFalse();
         }
 
-        private bool IsPharmaciesEquals(Pharmacy firstPharmacy, Pharmacy secondPharmacy)
+        [Fact]
+        public void Pharmacy_picture_update()
+        {
+            Pharmacy pharmacy = pharmacyRepository.Get(1);
+
+            Pharmacy testPharmacy = pharmacyService.SavePharmacyImage("data:image/png;base64,iVBORw0", 1);
+
+            IsPharmaciesEqualsWithoutImage(pharmacy, testPharmacy).ShouldBeTrue();
+            pharmacyRepository.Get(1).Base64Image.Equals("data:image/png;base64,iVBORw0").ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Pharmacy_image_dont_change_on_information_update()
+        {
+            Pharmacy pharmacy = pharmacyRepository.Get(1);
+            pharmacy.ApiKey = "promenjen ApiKey sa frontenda";
+            pharmacy.Base64Image = "prosledjene informacije za sliku koje ne bi trebale da uticu na pravu sliku u bazi";
+
+            pharmacyService.SavePharmacyImage("data:image/png;base64,iVBORw0", 1);
+            pharmacyService.Update(pharmacy);
+
+            pharmacyRepository.Get(1).Base64Image.Equals("data:image/png;base64,iVBORw0").ShouldBeTrue();
+        }
+
+        private bool IsPharmaciesEqualsWithoutImage(Pharmacy firstPharmacy, Pharmacy secondPharmacy)
         {
             return firstPharmacy.Id.Equals(secondPharmacy.Id) && firstPharmacy.ApiKey.Equals(secondPharmacy.ApiKey) &&
                     firstPharmacy.Name.Equals(secondPharmacy.Name) && firstPharmacy.Url.Equals(secondPharmacy.Url) &&
