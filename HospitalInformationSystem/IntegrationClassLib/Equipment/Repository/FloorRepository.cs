@@ -20,7 +20,6 @@ namespace IntegrationClassLib.Equipment.Repository
             return entity.ID;
         }
 
-
         public override List<IntegrationClassLib.SharedModel.Floor> GetAll()
         {
             return context.Floors.Include(x => x.Building).ToList();

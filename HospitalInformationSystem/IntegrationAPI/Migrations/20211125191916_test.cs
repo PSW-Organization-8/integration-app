@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class first : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -173,6 +173,34 @@ namespace IntegrationAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MoveEquipments",
+                columns: table => new
+                {
+                    ID = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    equipmentID = table.Column<long>(type: "bigint", nullable: true),
+                    destinationRoomID = table.Column<long>(type: "bigint", nullable: true),
+                    relocationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    duration = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MoveEquipments", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_MoveEquipments_Equipments_equipmentID",
+                        column: x => x.equipmentID,
+                        principalTable: "Equipments",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_MoveEquipments_Rooms_destinationRoomID",
+                        column: x => x.destinationRoomID,
+                        principalTable: "Rooms",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "MedicationConsumption",
                 columns: new[] { "MedicineID", "DateTime", "MedicineName", "Quantity" },
@@ -214,6 +242,16 @@ namespace IntegrationAPI.Migrations
                 column: "BuildingID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MoveEquipments_destinationRoomID",
+                table: "MoveEquipments",
+                column: "destinationRoomID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MoveEquipments_equipmentID",
+                table: "MoveEquipments",
+                column: "equipmentID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rooms_FloorID",
                 table: "Rooms",
                 column: "FloorID");
@@ -222,13 +260,13 @@ namespace IntegrationAPI.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Equipments");
-
-            migrationBuilder.DropTable(
                 name: "MedicationConsumption");
 
             migrationBuilder.DropTable(
                 name: "Medications");
+
+            migrationBuilder.DropTable(
+                name: "MoveEquipments");
 
             migrationBuilder.DropTable(
                 name: "News");
@@ -241,6 +279,9 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Response");
+
+            migrationBuilder.DropTable(
+                name: "Equipments");
 
             migrationBuilder.DropTable(
                 name: "Rooms");

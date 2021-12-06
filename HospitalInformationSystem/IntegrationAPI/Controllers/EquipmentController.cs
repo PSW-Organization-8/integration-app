@@ -28,9 +28,7 @@ namespace IntegrationAPI.Controllers
         }
 
        [HttpPost]
-
         [Route("equipmentsst")]
-
         public Equipment CreateEquipments(Equipment equipment)
         {
             return equipmentService.CreateEquipments(equipment);
@@ -44,12 +42,18 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet]
-        [Route("equipment/{id}")]
+        [Route("{id?}")]
         public Equipment Get(long id)
         {
             return equipmentService.Get(id);
         }
 
+        [HttpGet]
+        [Route("search")]
+        public List<IntegrationClassLib.SharedModel.Equipment> Search(string str)
+        {
+            return equipmentService.Search(str);
+        }
 
 
 

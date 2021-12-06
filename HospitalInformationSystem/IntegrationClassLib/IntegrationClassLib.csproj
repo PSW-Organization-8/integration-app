@@ -7,8 +7,6 @@
   <ItemGroup>
     <Folder Include="Equipment\Model\" />
 
-
-
     <Folder Include="Tendering\Model\" />
     <Folder Include="Tendering\Service\" />
     <Folder Include="Tendering\Repository\" />

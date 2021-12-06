@@ -55,11 +55,11 @@ namespace IntegrationClassLib.RelocationEquipment.Service
                 return false;
            }
 
-            MoveEquipment me = new MoveEquipment(id, equipment, destination, time, durationRel);
+            MoveEquipment me = new MoveEquipment(id, equipment, destination, time, durationRel, amount);
             moveEquipmentRepository.Create(me);
-            equipmentService.MoveEquipment(equipment, destination, amount);
+           return equipmentService.MoveEquipment(equipment, destination, amount);
 
-            return true;
+         
 
 
         }

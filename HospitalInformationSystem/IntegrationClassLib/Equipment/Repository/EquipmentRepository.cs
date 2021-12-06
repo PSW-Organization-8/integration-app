@@ -20,18 +20,15 @@ namespace IntegrationClassLib.Equipment.Repository
             return entity.ID;
         }
 
-
         public override List<IntegrationClassLib.SharedModel.Equipment> GetAll()
         {
             return context.Equipments.Include(x => x.Room).ToList();
         }
 
-
         public override IntegrationClassLib.SharedModel.Equipment Get(long id) 
         {
             return context.Equipments.Include(x => x.Room).Where(x => x.ID == id).SingleOrDefault();
         }
-
 
     }
 

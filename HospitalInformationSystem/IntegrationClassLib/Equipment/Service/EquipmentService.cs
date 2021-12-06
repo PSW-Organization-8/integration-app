@@ -80,22 +80,25 @@ namespace IntegrationClassLib.Equipment.Service
                     e.Amount += amount;
                     equipmentRepository.Update(e);
                     equipment.Amount -= amount;
-
+                    equipmentRepository.Update(equipment);
                     if (equipment.Amount == 0)
                     {
                         allEquipment.Remove(equipment);
+                        equipmentRepository.Delete(equipment.ID);
                     }
                     return true;
                 }
             }
-
-            allEquipment.Add(new IntegrationClassLib.SharedModel.Equipment(GetNextID(), equipment.Name, room, amount));
-
+            IntegrationClassLib.SharedModel.Equipment eq = new IntegrationClassLib.SharedModel.Equipment(GetNextID(), equipment.Name, room, amount);
+            allEquipment.Add(eq);
+            equipmentRepository.Create(eq);
             equipment.Amount -= amount;
+            equipmentRepository.Update(equipment);
 
             if (equipment.Amount == 0)
             {
                 allEquipment.Remove(equipment);
+                equipmentRepository.Delete(equipment.ID);
             }
             return true;
         }
@@ -123,6 +126,20 @@ namespace IntegrationClassLib.Equipment.Service
                     max = e.ID;
             }
             return max + 1;
+        }
+
+        public List<IntegrationClassLib.SharedModel.Equipment> Search(string str)
+        {
+            List<IntegrationClassLib.SharedModel.Equipment> foundEquipment = new List<IntegrationClassLib.SharedModel.Equipment>();
+
+            foreach (IntegrationClassLib.SharedModel.Equipment e in GetAllEquipments())
+            {
+                if (e.Name.Contains(str))
+                    foundEquipment.Add(e);
+
+            }
+
+            return foundEquipment;
         }
 
     }

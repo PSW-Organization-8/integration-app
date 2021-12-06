@@ -45,5 +45,13 @@ namespace IntegrationAPI.Controllers
         {
             return moveEquipmentService.Get(id);
         }
+
+        [HttpPost]
+        [Route("/api/submitRelocation")]
+        public bool SubmitRelocation(MoveEquipment me)
+        {
+            return moveEquipmentService.SubmitRelocation(me.ID,me.equipment, me.amount, me.destinationRoom, me.relocationTime, me.duration);
+        }
+
     }
 }

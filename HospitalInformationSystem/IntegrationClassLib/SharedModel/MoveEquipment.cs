@@ -12,6 +12,7 @@ namespace IntegrationClassLib.SharedModel
 
         public Equipment equipment { get; set; }
 
+        public double amount { get; set; }
         public Room destinationRoom { get; set; }
 
         public DateTime relocationTime { get; set; }
@@ -24,13 +25,14 @@ namespace IntegrationClassLib.SharedModel
 
         }
 
-        public MoveEquipment(long id, Equipment eq, Room destination, DateTime time, string durationRel)
+        public MoveEquipment(long id, Equipment eq, Room destination, DateTime time, string durationRel, double amountt)
         {
             this.ID = id;
             this.equipment= eq;
             this.destinationRoom = destination;
             this.relocationTime = time;
             this.duration = durationRel;
+            this.amount = amountt;
         }
     }
 }

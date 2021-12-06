@@ -20,11 +20,13 @@ namespace IntegrationClassLib.Equipment.Repository
             return entity.ID;
         }
 
+
         public override List<IntegrationClassLib.SharedModel.Room> GetAll()
         {
             return context.Rooms.Include(x => x.Floor).ToList();
         }
 
+      
 
     }
 
