@@ -37,20 +37,6 @@ namespace IntegrationAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medications",
-                columns: table => new
-                {
-                    MedicineID = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: true),
-                    Quantity = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medications", x => x.MedicineID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "News",
                 columns: table => new
                 {
@@ -91,7 +77,8 @@ namespace IntegrationAPI.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     ApiKey = table.Column<string>(type: "text", nullable: true),
                     Url = table.Column<string>(type: "text", nullable: true),
-                    Port = table.Column<string>(type: "text", nullable: true)
+                    Port = table.Column<string>(type: "text", nullable: true),
+                    Notes = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -212,19 +199,14 @@ namespace IntegrationAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Medications",
-                columns: new[] { "MedicineID", "Name", "Quantity" },
-                values: new object[] { 1L, "Synthroid", 2 });
-
-            migrationBuilder.InsertData(
                 table: "Objection",
                 columns: new[] { "Id", "PharmacyName", "TextObjection" },
                 values: new object[] { 1L, "Apoteka1", "Lose usluge" });
 
             migrationBuilder.InsertData(
                 table: "Pharmacies",
-                columns: new[] { "Id", "ApiKey", "Name", "Port", "Url" },
-                values: new object[] { 1L, "fds15d4fs6", "Apoteka1", "18013", "http://localhost" });
+                columns: new[] { "Id", "ApiKey", "Name", "Notes", "Port", "Url" },
+                values: new object[] { 1L, "fds15d4fs6", "Apoteka1", null, "18013", "http://localhost" });
 
             migrationBuilder.InsertData(
                 table: "Response",
@@ -263,7 +245,7 @@ namespace IntegrationAPI.Migrations
                 name: "MedicationConsumption");
 
             migrationBuilder.DropTable(
-                name: "Medications");
+                name: "MoveEquipments");
 
             migrationBuilder.DropTable(
                 name: "MoveEquipments");

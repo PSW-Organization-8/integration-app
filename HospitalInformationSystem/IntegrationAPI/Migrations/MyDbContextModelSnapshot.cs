@@ -101,32 +101,6 @@ namespace IntegrationAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Medication", b =>
-                {
-                    b.Property<long>("MedicineID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("MedicineID");
-
-                    b.ToTable("Medications");
-
-                    b.HasData(
-                        new
-                        {
-                            MedicineID = 1L,
-                            Name = "Synthroid",
-                            Quantity = 2
-                        });
-                });
-
             modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.MedicationConsumption", b =>
                 {
                     b.Property<long>("MedicineID")
@@ -181,7 +155,13 @@ namespace IntegrationAPI.Migrations
                     b.Property<string>("ApiKey")
                         .HasColumnType("text");
 
+                    b.Property<string>("Base64Image")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("text");
 
                     b.Property<string>("Port")

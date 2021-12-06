@@ -10,10 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211125191916_test")]
-    partial class test
+    [Migration("20211130205244_first")]
+    partial class first
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,32 +103,6 @@ namespace IntegrationAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Medication", b =>
-                {
-                    b.Property<long>("MedicineID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("MedicineID");
-
-                    b.ToTable("Medications");
-
-                    b.HasData(
-                        new
-                        {
-                            MedicineID = 1L,
-                            Name = "Synthroid",
-                            Quantity = 2
-                        });
-                });
-
             modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.MedicationConsumption", b =>
                 {
                     b.Property<long>("MedicineID")
@@ -184,6 +158,9 @@ namespace IntegrationAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Notes")
                         .HasColumnType("text");
 
                     b.Property<string>("Port")

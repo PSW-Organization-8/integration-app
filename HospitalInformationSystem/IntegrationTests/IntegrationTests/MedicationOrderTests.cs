@@ -1,16 +1,9 @@
 ﻿using IntegrationAPI.Controllers;
 using IntegrationClassLib;
-using IntegrationClassLib.Pharmacy.Repository.MedicationRepo;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
-using IntegrationClassLib.Pharmacy.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace IntegrationTests
@@ -42,7 +35,7 @@ namespace IntegrationTests
         {
             MedicationController medicationController = GetMedicationController();
 
-            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = "Apoteka1", PharmacyId = 1, MedicationId=1, Quantity=0 });
+            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = "Apoteka1", PharmacyId = 1, MedicationId = 1, Quantity = 0 });
 
             retVal.ShouldBeOfType<OkResult>();
         }
@@ -50,11 +43,9 @@ namespace IntegrationTests
         private MedicationController GetMedicationController()
         {
             MyDbContext dbContext = new MyDbContext();
-            IMedicationRepository medicationRepository = new MedicationRepository(dbContext);
             IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
-            IMedicationService medicationService = new MedicationService(medicationRepository);
             PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
-            MedicationController controller = new MedicationController(pharmacyService, medicationService);
+            MedicationController controller = new MedicationController(pharmacyService);
             return controller;
         }
     }

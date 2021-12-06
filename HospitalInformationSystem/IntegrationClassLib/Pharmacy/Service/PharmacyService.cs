@@ -1,5 +1,4 @@
 ﻿using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
-using IntegrationClassLib.Pharmacy.Service.Interface;
 using System;
 using System.Collections.Generic;
 
@@ -17,6 +16,23 @@ namespace IntegrationClassLib.Pharmacy.Service
         public Model.Pharmacy Add(Model.Pharmacy pharmacy)
         {
             return pharmacyRepository.Create(pharmacy);
+        }
+
+        public Model.Pharmacy Update(Model.Pharmacy pharmacy)
+        {
+            Model.Pharmacy pharmacyFromBase = pharmacyRepository.Get(pharmacy.Id);
+            pharmacy.Base64Image = pharmacyFromBase.Base64Image;
+            return pharmacyRepository.Update(pharmacy);
+        }
+
+        public Model.Pharmacy SavePharmacyImage(string base64Image, long id)
+        {
+            Model.Pharmacy pharmacy = pharmacyRepository.Get(id);
+            if (pharmacy == null) return null;
+
+            pharmacy.Base64Image = base64Image;
+
+            return pharmacyRepository.Update(pharmacy);
         }
 
         public List<Model.Pharmacy> GetAll()

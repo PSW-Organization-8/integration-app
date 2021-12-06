@@ -12,7 +12,6 @@ namespace IntegrationClassLib
 
         public DbSet<Pharmacy.Model.Pharmacy> Pharmacies { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<Medication> Medications { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
 
@@ -48,7 +47,6 @@ namespace IntegrationClassLib
             modelBuilder.Entity<Response>().HasData(
                new Response { Id = 1, ObjectionId = "1", TextResponse = "Nije tacno" }
            );
-            modelBuilder.Entity<Medication>().HasData(new Medication { MedicineID=1, Name = "Synthroid", Quantity = 2 });
             modelBuilder.Entity<MedicationConsumption>().HasData(
              new MedicationConsumption { MedicineID = 1, MedicineName = "Brufen", DateTime = DateTime.ParseExact("11/11/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal), Quantity = 32 },
              new MedicationConsumption { MedicineID = 2, MedicineName = "Vitamin C", DateTime = DateTime.ParseExact("11/11/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal), Quantity = 16 },
