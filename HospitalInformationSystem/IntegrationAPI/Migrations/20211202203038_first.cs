@@ -78,7 +78,8 @@ namespace IntegrationAPI.Migrations
                     ApiKey = table.Column<string>(type: "text", nullable: true),
                     Url = table.Column<string>(type: "text", nullable: true),
                     Port = table.Column<string>(type: "text", nullable: true),
-                    Notes = table.Column<string>(type: "text", nullable: true)
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    Base64Image = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -205,8 +206,8 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pharmacies",
-                columns: new[] { "Id", "ApiKey", "Name", "Notes", "Port", "Url" },
-                values: new object[] { 1L, "fds15d4fs6", "Apoteka1", null, "18013", "http://localhost" });
+                columns: new[] { "Id", "ApiKey", "Base64Image", "Name", "Notes", "Port", "Url" },
+                values: new object[] { 1L, "fds15d4fs6", null, "Apoteka1", null, "18013", "http://localhost" });
 
             migrationBuilder.InsertData(
                 table: "Response",

@@ -1,4 +1,6 @@
-﻿using IntegrationAPI.Dto;
+﻿using IntegrationAPI.Connection;
+using IntegrationAPI.Connection.Interface;
+using IntegrationAPI.Dto;
 using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.Pharmacy.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +14,11 @@ namespace IntegrationAPI.Controllers
     public class MedicationController : ControllerBase
     {
         private readonly PharmacyService pharmacyService;
-        public MedicationController(PharmacyService pharmacyService)
+        private readonly IPharmacyHTTPConnection hTTPConnection;
+        public MedicationController(PharmacyService pharmacyService, IPharmacyHTTPConnection hTTPConnection)
         {
             this.pharmacyService = pharmacyService;
+            this.hTTPConnection = hTTPConnection;
         }
 
         [HttpGet]
@@ -22,15 +26,7 @@ namespace IntegrationAPI.Controllers
         public List<PharmacyWithInventoryDTO> CheckMedicationQuantity([FromQuery(Name = "Name")] string Name, [FromQuery(Name = "Quantity")] string Quantity, [FromQuery(Name = "Pharmacy")] string Pharmacy)
         {
             Pharmacy pharmacy = pharmacyService.GetByName(Pharmacy);
-            RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/inventory");
-            RestRequest request = new RestRequest();
-            Parameter parameter = new Parameter("name", Name, ParameterType.GetOrPost);
-            request.AddParameter(parameter);
-            parameter = new Parameter("quantity", Quantity, ParameterType.GetOrPost);
-            request.AddParameter(parameter);
-            request.AddHeader("ApiKey", pharmacy.ApiKey);
-            var data = restClient.Get<List<PharmacyWithInventoryDTO>>(request);
-            return data.Data;
+            return hTTPConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
         }
 
         [HttpPut]
