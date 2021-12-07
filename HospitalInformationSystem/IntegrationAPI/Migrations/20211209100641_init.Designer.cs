@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211206150221_init")]
+    [Migration("20211209100641_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,6 +172,9 @@ namespace IntegrationAPI.Migrations
                     b.Property<string>("Port")
                         .HasColumnType("text");
 
+                    b.Property<bool>("Sftp")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Url")
                         .HasColumnType("text");
 
@@ -187,6 +190,7 @@ namespace IntegrationAPI.Migrations
                             ComunicateWithGrpc = false,
                             Name = "Apoteka1",
                             Port = "18013",
+                            Sftp = false,
                             Url = "http://localhost"
                         },
                         new
@@ -196,7 +200,18 @@ namespace IntegrationAPI.Migrations
                             ComunicateWithGrpc = true,
                             Name = "Apoteka2",
                             Port = "4111",
+                            Sftp = true,
                             Url = "localhost"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            ApiKey = "fds15d4fs6",
+                            ComunicateWithGrpc = true,
+                            Name = "Apoteka3",
+                            Port = "18013",
+                            Sftp = true,
+                            Url = "http://localhost"
                         });
                 });
 

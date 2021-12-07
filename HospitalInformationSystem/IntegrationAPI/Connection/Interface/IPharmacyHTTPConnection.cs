@@ -13,7 +13,9 @@ namespace IntegrationAPI.Connection.Interface
     {
         bool MedicationQuantityExists(string name, int quantity, Pharmacy pharmacy);
 
-        IActionResult DownloadReceiptToPharmacy(Pharmacy pharmacy, string patientName);
+        IActionResult DownloadReceiptToPharmacy(Pharmacy pharmacy, ReceiptDto receipt);
+
+        bool SendQRCodeToPharmacy(Pharmacy pharmacy, ReceiptDto receipt, string path);
 
         void SendObjectionToPharmacy(Pharmacy pharmacy, Objection newObjection);
 

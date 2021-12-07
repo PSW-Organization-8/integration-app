@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "USERNAME": "postgres",
+        "USERNAME_DB": "postgres",
         "SERVER": "localhost",
         "DATABASE": "Integration",
         "ASPNETCORE_ENVIRONMENT": "Development",

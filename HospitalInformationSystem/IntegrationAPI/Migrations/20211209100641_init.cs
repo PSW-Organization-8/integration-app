@@ -79,6 +79,7 @@ namespace IntegrationAPI.Migrations
                     Url = table.Column<string>(type: "text", nullable: true),
                     Port = table.Column<string>(type: "text", nullable: true),
                     ComunicateWithGrpc = table.Column<bool>(type: "boolean", nullable: false),
+                    Sftp = table.Column<bool>(type: "boolean", nullable: false),
                     Notes = table.Column<string>(type: "text", nullable: true),
                     Base64Image = table.Column<string>(type: "text", nullable: true)
                 },
@@ -207,11 +208,12 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pharmacies",
-                columns: new[] { "Id", "ApiKey", "Base64Image", "ComunicateWithGrpc", "Name", "Notes", "Port", "Url" },
+                columns: new[] { "Id", "ApiKey", "Base64Image", "ComunicateWithGrpc", "Name", "Notes", "Port", "Sftp", "Url" },
                 values: new object[,]
                 {
-                    { 1L, "fds15d4fs6", null, false, "Apoteka1", null, "18013", "http://localhost" },
-                    { 2L, "fds15d4fs6", null, true, "Apoteka2", null, "4111", "localhost" }
+                    { 1L, "fds15d4fs6", null, false, "Apoteka1", null, "18013", false, "http://localhost" },
+                    { 2L, "fds15d4fs6", null, true, "Apoteka2", null, "4111", true, "localhost" },
+                    { 3L, "fds15d4fs6", null, true, "Apoteka3", null, "18013", true, "http://localhost" }
                 });
 
             migrationBuilder.InsertData(
