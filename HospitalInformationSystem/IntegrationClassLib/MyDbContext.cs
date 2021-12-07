@@ -43,8 +43,9 @@ namespace IntegrationClassLib
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Pharmacy.Model.Pharmacy>().HasData(
-                new Pharmacy.Model.Pharmacy { Id = 1, Name = "Apoteka1", ApiKey = "fds15d4fs6", Url = "http://localhost", Port = "18013" },
-                new Pharmacy.Model.Pharmacy { Id = 2, Name = "Apoteka2", ApiKey = "fds15d4fs6", Url = "localhost", Port = "4111", ComunicateWithGrpc=true }
+                new Pharmacy.Model.Pharmacy { Id = 1, Name = "Apoteka1", ApiKey = "fds15d4fs6", Url = "http://localhost", Port = "18013", Sftp = false },
+                new Pharmacy.Model.Pharmacy { Id = 2, Name = "Apoteka2", ApiKey = "fds15d4fs6", Url = "localhost", Port = "4111", ComunicateWithGrpc=true, Sftp = true },
+                new Pharmacy.Model.Pharmacy { Id = 3, Name = "Apoteka3", ApiKey = "fds15d4fs6", Url = "http://localhost", Port = "18013", ComunicateWithGrpc = true, Sftp = true }
             );
             modelBuilder.Entity<Objection>().HasData(
                 new Objection { Id = 1, PharmacyName = "Apoteka1", TextObjection = "Lose usluge" }

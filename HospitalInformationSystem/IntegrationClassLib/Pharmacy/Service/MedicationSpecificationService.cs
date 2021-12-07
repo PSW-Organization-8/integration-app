@@ -26,6 +26,10 @@ namespace IntegrationClassLib.Pharmacy.Service
             using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
             {
                 client.Connect();
+                if (File.Exists(localFile))
+                {
+                    File.Delete(localFile);
+                }
                 using (Stream stream = File.OpenWrite(localFile))
                 {
                     client.DownloadFile(serverFile, stream, null);

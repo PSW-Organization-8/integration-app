@@ -23,6 +23,8 @@ namespace IntegrationClassLib.Pharmacy.Model
         public String Port { get; set; }
         public bool ComunicateWithGrpc { get; set; }
 
+        public bool Sftp { get; set; }
+
         public String Notes { get; set; }
 
         public String Base64Image { get; set; }
@@ -58,6 +60,19 @@ namespace IntegrationClassLib.Pharmacy.Model
             Notes = notes;
             Base64Image = base64Image;
             ComunicateWithGrpc = grpc;
+        }
+
+        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes, string base64Image, bool grpc, bool sftp)
+        {
+            Id = id;
+            Name = name;
+            ApiKey = apiKey;
+            Url = url;
+            Port = port;
+            Notes = notes;
+            Base64Image = base64Image;
+            ComunicateWithGrpc = grpc;
+            Sftp = sftp;
         }
     }
 }

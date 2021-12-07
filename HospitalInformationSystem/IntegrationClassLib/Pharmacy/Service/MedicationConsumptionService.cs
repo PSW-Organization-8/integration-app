@@ -39,6 +39,10 @@ namespace IntegrationClassLib.Pharmacy.Service
             PdfDocument doc = new PdfDocument();
             PdfPageBase page = doc.Pages.Add();
             page.Canvas.DrawString(WriteContent(duration), new PdfFont(PdfFontFamily.Helvetica, 11f), new PdfSolidBrush(Color.Black),10, 10);
+            if (System.IO.File.Exists(Path.Combine(filePath, fileName)))
+            {
+                System.IO.File.Delete(Path.Combine(filePath, fileName));
+            }
             StreamWriter File = new StreamWriter(Path.Combine(filePath, fileName), true);
             doc.SaveToStream(File.BaseStream);
            // File.Write(WriteContent(duration));
@@ -150,7 +154,6 @@ namespace IntegrationClassLib.Pharmacy.Service
             using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
             {
                 client.Connect();
-
                 using (Stream stream = File.OpenRead(filePath))
                 {
                     client.UploadFile(stream, @"\public\" + Path.GetFileName(filePath), null);

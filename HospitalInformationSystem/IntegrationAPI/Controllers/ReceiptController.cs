@@ -41,8 +41,14 @@ namespace IntegrationAPI.Controllers
             Pharmacy pharmacy = pharmacyService.GetById(receipt.PharmacyId);
             if (hTTPConnection.MedicationQuantityExists(receipt.MedicineName, receipt.Amount, pharmacy) == false) { return BadRequest(); }
             string path = receiptService.CreateReceipt(ReceiptMapper.ReceiptToReceiptDto(receipt), pharmacy);
-            sFTPConnection.SendReceiptToPharmacy(path);
-            hTTPConnection.DownloadReceiptToPharmacy(pharmacy, receipt.Patient);
+            if (pharmacy.Sftp == true)
+            {
+                sFTPConnection.SendReceiptToPharmacy(path);
+                hTTPConnection.DownloadReceiptToPharmacy(pharmacy, receipt);
+            }
+            else {
+                hTTPConnection.SendQRCodeToPharmacy(pharmacy, receipt, path);
+            }
             return Ok();
         }
 
