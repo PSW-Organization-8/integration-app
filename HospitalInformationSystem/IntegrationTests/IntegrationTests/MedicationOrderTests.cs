@@ -5,40 +5,23 @@ using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
 using Microsoft.AspNetCore.Mvc;
 using Shouldly;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace IntegrationTests
 {
     public class MedicationOrderTests
     {
-        [Fact]
-        public void Primary_pharmacy_name_is_not_available()
+        [Theory]
+        [MemberData(nameof(MedicationOrderTestData))]
+        public void Ordering_medication(string PharmacyName, int PharmacyId, int MedicationId, int Quantity, StatusCodeResult ResultType)
         {
             MedicationController medicationController = GetMedicationController();
 
-            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = "alksdsaasd" });
+            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = PharmacyName, PharmacyId = PharmacyId, MedicationId = MedicationId, Quantity = Quantity });
 
-            retVal.ShouldBeOfType<BadRequestResult>();
-        }
-
-        [Fact]
-        public void Pharmacy_id_is_not_good()
-        {
-            MedicationController medicationController = GetMedicationController();
-
-            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = "Apoteka1", PharmacyId = -1 });
-
-            retVal.ShouldBeOfType<BadRequestResult>();
-        }
-
-        [Fact]
-        public void Medication_order_is_successfully()
-        {
-            MedicationController medicationController = GetMedicationController();
-
-            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = "Apoteka1", PharmacyId = 1, MedicationId = 1, Quantity = 0 });
-
-            retVal.ShouldBeOfType<OkResult>();
+            retVal.ShouldBeOfType(ResultType.GetType());
         }
 
         private MedicationController GetMedicationController()
@@ -48,6 +31,18 @@ namespace IntegrationTests
             PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
             MedicationController controller = new MedicationController(pharmacyService, new PharmacyHTTPConnection(), new PharmacyGrpcConnection(), new HospitalHttpConnection());
             return controller;
+        }
+
+        public static IEnumerable<object[]> MedicationOrderTestData()
+        {
+            var retVal = new List<object[]>();
+
+            retVal.Add(new object[] { "asdasdasfas", 0, 0, 0, new BadRequestResult() });
+            retVal.Add(new object[] { "Apoteka1", -1, 0, 0, new BadRequestResult() });
+            //retVal.Add(new object[] { "Apoteka1", 1, 1, 0, new OkResult() });
+            //retVal.Add(new object[] { "Apoteka2", 1, 1, 0, new OkResult() });
+
+            return retVal;
         }
     }
 }

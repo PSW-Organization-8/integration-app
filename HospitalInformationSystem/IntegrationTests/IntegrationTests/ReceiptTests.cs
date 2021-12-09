@@ -17,7 +17,7 @@ namespace IntegrationTests.IntegrationTests
 {
     public class ReceiptTests
     {
-        [Fact]
+        /*[Fact]
         public void Receipt_successfully_sent() {
             MyDbContext dbContext = new MyDbContext();
             IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
@@ -44,7 +44,7 @@ namespace IntegrationTests.IntegrationTests
             var ret = receiptController.SaveReceipt(receiptDto);
 
             Assert.IsType<BadRequestResult>(ret);
-        }
+        }*/
 
     }
 }
