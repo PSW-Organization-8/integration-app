@@ -14,12 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "USERNAME_DB": "postgres",
-        "SERVER": "localhost",
-        "DATABASE": "Integration",
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "PORT": "5432",
-        "PASSWORD": "root"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IntegrationAPI": {

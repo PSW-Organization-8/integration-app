@@ -31,11 +31,14 @@ namespace IntegrationClassLib
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             String server = Environment.GetEnvironmentVariable("SERVER") ?? "localhost";
-            String port = Environment.GetEnvironmentVariable("PORT") ?? "5432";
-            String databaseName = Environment.GetEnvironmentVariable("DATABASE") ?? "Integration";
-            String username = Environment.GetEnvironmentVariable("USERNAME_DB") ?? "postgres";
-            String password = Environment.GetEnvironmentVariable("PASSWORD") ?? "root";
+            String port = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
+            String databaseName = Environment.GetEnvironmentVariable("DB_NAME") ?? "Integration";
+            String username = Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
+            String password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "root";
+
+
             String connectionString = $"Server={server}; Port ={port}; Database ={databaseName}; User Id = {username}; Password ={password};";
             optionsBuilder.UseNpgsql(connectionString);
         }

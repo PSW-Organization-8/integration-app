@@ -96,6 +96,25 @@ namespace IntegrationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IntegrationAPI v1"));
             }
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<MyDbContext>();
+                try
+                {
+                    Console.WriteLine("###############################################################################");
+                    Console.WriteLine("Migriram bazu podataka za integracije");
+                    context.Database.Migrate();
+                    Console.WriteLine("###############################################################################");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("###############################################################################");
+                    Console.WriteLine("Greska prilikom kreiranja baze podataka za integracije");
+                    Console.WriteLine(e.Data);
+                    Console.WriteLine("###############################################################################");
+                }
+
+            }
 
             app.UseRouting();
 
