@@ -7,7 +7,7 @@
         "SERVER": "localhost",
         "DATABASE": "Integration",
         "PORT": "5432",
-        "PASSWORD": "root"
+        "PASSWORD": "saska"
       }
     }
   }

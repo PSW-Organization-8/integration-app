@@ -25,12 +25,13 @@ namespace IntegrationAPI.Controllers
             this.pharmacyService = pharmacyService;
         }
         [HttpPost]
-        public string MakeReport(MedicationSpecificationDTO medicationSpecificationDTO)
+        public NotificationDTO MakeReport(MedicationSpecificationDTO medicationSpecificationDTO)
         {
             Pharmacy pharmacy = pharmacyService.GetByName(medicationSpecificationDTO.PharmacyName);
             if (pharmacy == null)
             {
-                return "pharmacyNameNotExists";
+                NotificationDTO notification = new NotificationDTO("pharmacyNameNotExists");
+                return notification;
             }
 
             RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/medicationSpecification");
@@ -39,9 +40,12 @@ namespace IntegrationAPI.Controllers
 
             var response = restClient.Post(request);
             if (response.Content.ToString().Equals("\"OK\""))
-                medicationSpecificationService.GetSpecificationnReport(medicationSpecificationDTO.MedicationName);
-
-            return response.Content.ToString();
+            {
+                NotificationDTO notification= new NotificationDTO (medicationSpecificationService.GetSpecificationnReport(medicationSpecificationDTO.MedicationName));
+                return notification;
+            }
+            NotificationDTO notificationDTO = new NotificationDTO("");
+            return notificationDTO;
             
         }
     }

@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211209100641_init")]
-    partial class init
+    [Migration("20211212003651_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -144,6 +144,40 @@ namespace IntegrationAPI.Migrations
                             DateTime = new DateTime(2021, 11, 11, 1, 0, 0, 0, DateTimeKind.Local),
                             MedicineName = "Brufen",
                             Quantity = 56.0
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Pharmacy.Model.Notification", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ContentNotification")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Read")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notification");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            ContentNotification = "Ovde ce da bude tekst nekog izvestaja",
+                            FileName = "MedicationSpecifiation.pdf",
+                            Read = true,
+                            Title = "Izvestaj"
                         });
                 });
 

@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class init : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,6 +52,22 @@ namespace IntegrationAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_News", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notification",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    Read = table.Column<bool>(type: "boolean", nullable: false),
+                    ContentNotification = table.Column<string>(type: "text", nullable: true),
+                    FileName = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notification", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,6 +218,11 @@ namespace IntegrationAPI.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Notification",
+                columns: new[] { "Id", "ContentNotification", "FileName", "Read", "Title" },
+                values: new object[] { 1L, "Ovde ce da bude tekst nekog izvestaja", "MedicationSpecifiation.pdf", true, "Izvestaj" });
+
+            migrationBuilder.InsertData(
                 table: "Objection",
                 columns: new[] { "Id", "PharmacyName", "TextObjection" },
                 values: new object[] { 1L, "Apoteka1", "Lose usluge" });
@@ -257,6 +278,9 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "News");
+
+            migrationBuilder.DropTable(
+                name: "Notification");
 
             migrationBuilder.DropTable(
                 name: "Objection");
