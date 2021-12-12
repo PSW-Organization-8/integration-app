@@ -24,6 +24,7 @@ using IntegrationClassLib.Equipment.Repository;
 using IntegrationClassLib.Pharmacy.Service.Interface;
 using IntegrationAPI.Connection.Interface;
 using IntegrationAPI.Connection;
+using IntegrationClassLib.Pharmacy.Repository.NotificationRepository;
 
 namespace IntegrationAPI
 {
@@ -66,7 +67,10 @@ namespace IntegrationAPI
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IEquipmentRepository, EquipmentRepository>();
             services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
-            
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
+            services.AddScoped<INotificationService, NotificationService>();
+
             services.AddScoped<MedicationConsumptionService>();
             services.AddScoped<PharmacyService>();
             services.AddScoped<ObjectionService>();

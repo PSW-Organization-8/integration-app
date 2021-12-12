@@ -14,6 +14,8 @@ namespace IntegrationClassLib
         public DbSet<News> News { get; set; }
 
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<Notification> Notification { get; set; }
+
 
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
@@ -36,7 +38,7 @@ namespace IntegrationClassLib
             String port = Environment.GetEnvironmentVariable("DB_PORT") ?? "5432";
             String databaseName = Environment.GetEnvironmentVariable("DB_NAME") ?? "Integration";
             String username = Environment.GetEnvironmentVariable("DB_USER") ?? "postgres";
-            String password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "root";
+            String password = Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "saska";
 
 
             String connectionString = $"Server={server}; Port ={port}; Database ={databaseName}; User Id = {username}; Password ={password};";
@@ -53,6 +55,9 @@ namespace IntegrationClassLib
             modelBuilder.Entity<Objection>().HasData(
                 new Objection { Id = 1, PharmacyName = "Apoteka1", TextObjection = "Lose usluge" }
             );
+            modelBuilder.Entity<Notification>().HasData(
+               new Notification(1, "Izvestaj", true, "Ovde ce da bude tekst nekog izvestaja", "MedicationSpecifiation.pdf")
+               );
             modelBuilder.Entity<Response>().HasData(
                new Response { Id = 1, ObjectionId = "1", TextResponse = "Nije tacno" }
            );

@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI.Controllers;
+using IntegrationAPI.Dto;
 using IntegrationClassLib;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
@@ -19,9 +20,9 @@ namespace IntegrationTests
         {
             MedicationSpecificationController medicationSpecificationController = GetMedicationSpecificationController();
 
-            string retVal = medicationSpecificationController.MakeReport(new IntegrationAPI.Dto.MedicationSpecificationDTO { PharmacyName = "asdasdsafsa" });
+            NotificationDTO retVal =medicationSpecificationController.MakeReport(new IntegrationAPI.Dto.MedicationSpecificationDTO { PharmacyName = "asdasdsafsa" });
 
-            retVal.ShouldBe("pharmacyNameNotExists");
+            retVal.FileName.ShouldBe("pharmacyNameNotExists");
         }
 
         [Fact]

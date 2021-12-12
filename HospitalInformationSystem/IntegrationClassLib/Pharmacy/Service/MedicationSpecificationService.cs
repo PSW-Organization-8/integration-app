@@ -17,7 +17,7 @@ namespace IntegrationClassLib.Pharmacy.Service
            
         }
 
-        public void GetSpecificationnReport(String medicationName)
+        public string GetSpecificationnReport(String medicationName)
         {
             String fileName = "MedicationSpecification_" + medicationName + ".pdf";
             String localFile = Path.Combine(Directory.GetCurrentDirectory(), fileName);
@@ -36,6 +36,8 @@ namespace IntegrationClassLib.Pharmacy.Service
                 }
                 client.Disconnect();
             }
+
+            return fileName;
         }
     }
 }
