@@ -30,6 +30,10 @@ namespace IntegrationClassLib.Equipment.Repository
             return context.Equipments.Include(x => x.Room).Where(x => x.ID == id).SingleOrDefault();
         }
 
+        public SharedModel.Equipment GetByIdAndRoomId(long id, long roomId)
+        {
+            return context.Equipments.Include(x => x.Room).Where(x => x.ID == id && x.Room.ID == roomId).SingleOrDefault();
+        }
     }
 
 }

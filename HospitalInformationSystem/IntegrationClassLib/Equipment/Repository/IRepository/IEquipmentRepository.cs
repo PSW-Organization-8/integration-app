@@ -9,5 +9,6 @@ namespace IntegrationClassLib.Equipment.Repository.IRepository
 {
     public interface IEquipmentRepository : IGenericRepository<IntegrationClassLib.SharedModel.Equipment, long>
     {
+        public IntegrationClassLib.SharedModel.Equipment GetByIdAndRoomId(long id, long roomId);
     }
 }

@@ -63,7 +63,8 @@ namespace IntegrationClassLib.RelocationEquipment.Service
 
             MoveEquipmentDTO meDTO = new MoveEquipmentDTO();
             
-           return equipmentService.MoveEquipment(equipmentRepository.Get(idEq), roomRepository.Get(destinationRoom), amount);
+           return equipmentService.MoveEquipment(equipmentRepository.Get(idEq), roomRepository.Get(idRoom),
+               roomRepository.Get(destinationRoom), amount);
 
          
 

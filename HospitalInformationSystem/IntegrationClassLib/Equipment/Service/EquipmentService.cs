@@ -67,39 +67,39 @@ namespace IntegrationClassLib.Equipment.Service
             return null;
         }
 
-        public bool MoveEquipment(SharedModel.Equipment equipment, Room room, double amount)
+        public bool MoveEquipment(SharedModel.Equipment equipment, Room startRoom, Room destinationRoom, double amount)
         {
             if (equipment.Amount < amount)
                 return false;
 
-            List<IntegrationClassLib.SharedModel.Equipment> allEquipment = GetAllEquipments();
-            foreach (IntegrationClassLib.SharedModel.Equipment e in allEquipment)
-            {
-                if (room != null && e.Name == equipment.Name && e.Room.ID == room.ID)
-                {
-                    e.Amount += amount;
-                    equipmentRepository.Update(e);
-                    equipment.Amount -= amount;
-                    equipmentRepository.Update(equipment);
-                    if (equipment.Amount == 0)
-                    {
-                        allEquipment.Remove(equipment);
-                        equipmentRepository.Delete(equipment.ID);
-                    }
-                    return true;
-                }
-            }
-            IntegrationClassLib.SharedModel.Equipment eq = new IntegrationClassLib.SharedModel.Equipment(GetNextID(), equipment.Name, room, amount);
-            allEquipment.Add(eq);
-            equipmentRepository.Create(eq);
-            equipment.Amount -= amount;
-            equipmentRepository.Update(equipment);
+            SharedModel.Equipment fromEquipment = equipmentRepository.GetByIdAndRoomId(equipment.ID, startRoom.ID);
+            SharedModel.Equipment toEquipment = equipmentRepository.GetByIdAndRoomId(equipment.ID, destinationRoom.ID);
 
-            if (equipment.Amount == 0)
-            {
-                allEquipment.Remove(equipment);
-                equipmentRepository.Delete(equipment.ID);
+            if (fromEquipment == null) {
+                return false;
             }
+
+            if (toEquipment == null)
+            {
+                fromEquipment.Amount -= amount;
+                equipmentRepository.Update(fromEquipment);
+
+                toEquipment = new SharedModel.Equipment();
+                toEquipment.Name = equipment.Name;
+                toEquipment.Room = equipment.Room;
+                toEquipment.Amount = amount;
+                equipmentRepository.Create(toEquipment);
+                
+            }
+            else 
+            {
+                fromEquipment.Amount -= amount;
+                toEquipment.Amount += amount;
+                equipmentRepository.Update(fromEquipment);
+                equipmentRepository.Update(toEquipment);
+            }
+
+
             return true;
         }
 
