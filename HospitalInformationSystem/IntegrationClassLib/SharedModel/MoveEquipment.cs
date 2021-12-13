@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,8 @@ namespace IntegrationClassLib.SharedModel
         public DateTime relocationTime { get; set; }
 
         public string duration { get; set; }
+
+       // public ArrayList freeTrerms { get; set; }
 
 
         public MoveEquipment()

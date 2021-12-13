@@ -21,6 +21,9 @@ using IntegrationClassLib.Parthership.Service.Interface;
 using IntegrationClassLib.Equipment.Service;
 using IntegrationClassLib.Equipment.Repository.IRepository;
 using IntegrationClassLib.Equipment.Repository;
+using IntegrationClassLib.RelocationEquipment.Service;
+using IntegrationClassLib.RelocationEquipment.Repository.IRepository;
+using IntegrationClassLib.RelocationEquipment.Repository;
 
 namespace IntegrationAPI
 {
@@ -63,7 +66,8 @@ namespace IntegrationAPI
             services.AddTransient<IRoomRepository, RoomRepository>();
             services.AddTransient<IEquipmentRepository, EquipmentRepository>();
             services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
-            
+            services.AddTransient<IMoveEquipmentRepository, MoveEquipmentRepository>();
+
             services.AddScoped<MedicationConsumptionService>();
             services.AddScoped<PharmacyService>();
             services.AddScoped<ObjectionService>();
@@ -73,6 +77,7 @@ namespace IntegrationAPI
             services.AddScoped<FloorService>();
             services.AddScoped<BuildingService>();
             services.AddScoped<MedicationSpecificationService>();
+            services.AddScoped<MoveEquipmentService>();
 
             services.AddScoped<IReceivingNewsService, ReceivingNewsRabbitMQService>();
             services.AddScoped<IActionsAndNewsService, ActionsAndNewsService>();

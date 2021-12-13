@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace IntegrationClassLib.RelocationEquipment.Service
 {
     public class MoveEquipmentService
@@ -16,12 +17,15 @@ namespace IntegrationClassLib.RelocationEquipment.Service
         private readonly IMoveEquipmentRepository moveEquipmentRepository;
         private readonly IEquipmentRepository equipmentRepository;
         private readonly EquipmentService equipmentService;
+        private readonly IRoomRepository roomRepository;
 
-        public MoveEquipmentService(IMoveEquipmentRepository moveEquipmentRepository, IEquipmentRepository equipmentRepository, EquipmentService equipmentService)
+
+        public MoveEquipmentService(IMoveEquipmentRepository moveEquipmentRepository, IEquipmentRepository equipmentRepository, EquipmentService equipmentService, IRoomRepository roomRepository)
         {
             this.moveEquipmentRepository = moveEquipmentRepository;
             this.equipmentRepository = equipmentRepository;
             this.equipmentService = equipmentService;
+            this.roomRepository = roomRepository;
         }
 
         public List<IntegrationClassLib.SharedModel.MoveEquipment> GetAllEquipments()
@@ -47,17 +51,19 @@ namespace IntegrationClassLib.RelocationEquipment.Service
             return moveEquipmentRepository.Get(id);
         }
 
-        public bool SubmitRelocation(long id,IntegrationClassLib.SharedModel.Equipment equipment, double amount, Room destination, DateTime time, String durationRel )
+        public bool SubmitRelocation(long idEq,long idRoom, double amount, long destinationRoom, DateTime time, string duration)
         {
-           
-           if(equipment.Amount < amount)
+            IntegrationClassLib.SharedModel.Equipment equipment = equipmentRepository.Get(idEq);
+
+
+           if (equipment != null && equipmentRepository.Get(idEq).Amount < amount)
            {
                 return false;
            }
 
-            MoveEquipment me = new MoveEquipment(id, equipment, destination, time, durationRel, amount);
-            moveEquipmentRepository.Create(me);
-           return equipmentService.MoveEquipment(equipment, destination, amount);
+            MoveEquipmentDTO meDTO = new MoveEquipmentDTO();
+            
+           return equipmentService.MoveEquipment(equipmentRepository.Get(idEq), roomRepository.Get(destinationRoom), amount);
 
          
 

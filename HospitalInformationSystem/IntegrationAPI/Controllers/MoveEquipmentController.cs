@@ -1,4 +1,5 @@
-﻿using IntegrationClassLib.RelocationEquipment.Service;
+﻿using IntegrationAPI.Dto;
+using IntegrationClassLib.RelocationEquipment.Service;
 using IntegrationClassLib.SharedModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -48,9 +49,9 @@ namespace IntegrationAPI.Controllers
 
         [HttpPost]
         [Route("/api/submitRelocation")]
-        public bool SubmitRelocation(MoveEquipment me)
+        public bool SubmitRelocation(MoveEquipmentDTO meDTO)
         {
-            return moveEquipmentService.SubmitRelocation(me.ID,me.equipment, me.amount, me.destinationRoom, me.relocationTime, me.duration);
+            return moveEquipmentService.SubmitRelocation(meDTO.IDeq ,meDTO.IDroom, meDTO.Amount, meDTO.DestinationRoom, meDTO.RelocationTime, meDTO.Duration);
         }
 
     }

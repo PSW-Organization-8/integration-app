@@ -250,6 +250,9 @@ namespace IntegrationAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<double>("amount")
+                        .HasColumnType("double precision");
+
                     b.Property<long?>("destinationRoomID")
                         .HasColumnType("bigint");
 

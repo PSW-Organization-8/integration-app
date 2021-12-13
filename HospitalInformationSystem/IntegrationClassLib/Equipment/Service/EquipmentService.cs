@@ -75,7 +75,7 @@ namespace IntegrationClassLib.Equipment.Service
             List<IntegrationClassLib.SharedModel.Equipment> allEquipment = GetAllEquipments();
             foreach (IntegrationClassLib.SharedModel.Equipment e in allEquipment)
             {
-                if (e.Name == equipment.Name && e.Room.ID == room.ID)
+                if (room != null && e.Name == equipment.Name && e.Room.ID == room.ID)
                 {
                     e.Amount += amount;
                     equipmentRepository.Update(e);

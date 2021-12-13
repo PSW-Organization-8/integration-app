@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class test : Migration
+    public partial class Equipment : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,7 +78,8 @@ namespace IntegrationAPI.Migrations
                     ApiKey = table.Column<string>(type: "text", nullable: true),
                     Url = table.Column<string>(type: "text", nullable: true),
                     Port = table.Column<string>(type: "text", nullable: true),
-                    Notes = table.Column<string>(type: "text", nullable: true)
+                    Notes = table.Column<string>(type: "text", nullable: true),
+                    Base64Image = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -167,6 +168,7 @@ namespace IntegrationAPI.Migrations
                     ID = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     equipmentID = table.Column<long>(type: "bigint", nullable: true),
+                    amount = table.Column<double>(type: "double precision", nullable: false),
                     destinationRoomID = table.Column<long>(type: "bigint", nullable: true),
                     relocationTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     duration = table.Column<string>(type: "text", nullable: true)
@@ -205,8 +207,8 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pharmacies",
-                columns: new[] { "Id", "ApiKey", "Name", "Notes", "Port", "Url" },
-                values: new object[] { 1L, "fds15d4fs6", "Apoteka1", null, "18013", "http://localhost" });
+                columns: new[] { "Id", "ApiKey", "Base64Image", "Name", "Notes", "Port", "Url" },
+                values: new object[] { 1L, "fds15d4fs6", null, "Apoteka1", null, "18013", "http://localhost" });
 
             migrationBuilder.InsertData(
                 table: "Response",
@@ -243,9 +245,6 @@ namespace IntegrationAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "MedicationConsumption");
-
-            migrationBuilder.DropTable(
-                name: "MoveEquipments");
 
             migrationBuilder.DropTable(
                 name: "MoveEquipments");
