@@ -8,17 +8,19 @@ using System.Threading.Tasks;
 
 namespace IntegrationClassLib.Equipment.Repository
 {
-    public class BuildingRepository : AbstractSqlRepository<Building, long>, IBuildingRepository
+
+    class AppointmentRepository : AbstractSqlRepository<Appointment, long>, IAppointmentRepository
     {
-        public BuildingRepository(MyDbContext dbContext) : base(dbContext)
+        public AppointmentRepository(MyDbContext dbContext) : base(dbContext)
         {
 
         }
-        protected override long GetId(Building entity)
+        protected override long GetId(Appointment entity)
         {
             return entity.ID;
         }
 
     }
 
+    
 }
