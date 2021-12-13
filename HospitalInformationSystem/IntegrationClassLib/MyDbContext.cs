@@ -15,6 +15,8 @@ namespace IntegrationClassLib
 
         public DbSet<Room> Rooms { get; set; }
 
+        public DbSet<Appointment> Appointments { get; set; }
+
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Building> Buildings { get; set; }
 
