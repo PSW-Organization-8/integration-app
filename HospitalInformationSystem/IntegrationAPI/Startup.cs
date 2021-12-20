@@ -1,5 +1,6 @@
 using IntegrationClassLib;
 using IntegrationClassLib.Parthership.Repository;
+using IntegrationClassLib.Parthership.Repository.TenderingRepository;
 using IntegrationClassLib.Parthership.Service;
 using IntegrationClassLib.Pharmacy.Repository.MedicationRepo;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
@@ -68,6 +69,7 @@ namespace IntegrationAPI
             services.AddTransient<IEquipmentRepository, EquipmentRepository>();
             services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
+            services.AddTransient<ITenderingRepository, TenderingRepository>();
 
             services.AddScoped<INotificationService, NotificationService>();
 
@@ -81,6 +83,7 @@ namespace IntegrationAPI
             services.AddScoped<BuildingService>();
             services.AddScoped<MedicationSpecificationService>();
             services.AddScoped<IReceiptService, ReceiptService>();
+            services.AddScoped<ITenderService, TenderService>();
 
             services.AddScoped<IPharmacyHTTPConnection, PharmacyHTTPConnection>();
             services.AddScoped<IPharmacySFTPConnection, PharmacySFTPConnection>();

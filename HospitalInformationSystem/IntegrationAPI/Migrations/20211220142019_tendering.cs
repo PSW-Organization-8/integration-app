@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class first : Migration
+    public partial class tendering : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -119,6 +119,21 @@ namespace IntegrationAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Tenders",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: true),
+                    StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Floors",
                 columns: table => new
                 {
@@ -136,6 +151,27 @@ namespace IntegrationAPI.Migrations
                         principalTable: "Buildings",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenderMedications",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    MedicationName = table.Column<string>(type: "text", nullable: true),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    TenderId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderMedications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenderMedications_Tenders_TenderId",
+                        column: x => x.TenderId,
+                        principalTable: "Tenders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +278,25 @@ namespace IntegrationAPI.Migrations
                 columns: new[] { "Id", "ObjectionId", "TextResponse" },
                 values: new object[] { 1L, "1", "Nije tacno" });
 
+            migrationBuilder.InsertData(
+                table: "Tenders",
+                columns: new[] { "Id", "EndDate", "Name", "StartDate" },
+                values: new object[,]
+                {
+                    { 1L, new DateTime(2021, 12, 23, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(2150), "Hitno", new DateTime(2021, 12, 20, 15, 20, 18, 140, DateTimeKind.Local).AddTicks(9666) },
+                    { 2L, new DateTime(2021, 12, 25, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3574), "Veoma hitno", new DateTime(2021, 12, 20, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3550) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TenderMedications",
+                columns: new[] { "Id", "MedicationName", "Quantity", "TenderId" },
+                values: new object[,]
+                {
+                    { 1L, "brufen", 1, 1L },
+                    { 2L, "ventolin", 1, 1L },
+                    { 3L, "brufen", 1, 2L }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Equipments_RoomID",
                 table: "Equipments",
@@ -266,6 +321,11 @@ namespace IntegrationAPI.Migrations
                 name: "IX_Rooms_FloorID",
                 table: "Rooms",
                 column: "FloorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderMedications_TenderId",
+                table: "TenderMedications",
+                column: "TenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -292,7 +352,13 @@ namespace IntegrationAPI.Migrations
                 name: "Response");
 
             migrationBuilder.DropTable(
+                name: "TenderMedications");
+
+            migrationBuilder.DropTable(
                 name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "Tenders");
 
             migrationBuilder.DropTable(
                 name: "Rooms");
