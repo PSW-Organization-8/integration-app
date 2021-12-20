@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211212003651_first")]
-    partial class first
+    [Migration("20211220142019_tendering")]
+    partial class tendering
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,6 +100,89 @@ namespace IntegrationAPI.Migrations
                             Id = 1L,
                             ObjectionId = "1",
                             TextResponse = "Nije tacno"
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.Tender", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            EndDate = new DateTime(2021, 12, 23, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(2150),
+                            Name = "Hitno",
+                            StartDate = new DateTime(2021, 12, 20, 15, 20, 18, 140, DateTimeKind.Local).AddTicks(9666)
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            EndDate = new DateTime(2021, 12, 25, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3574),
+                            Name = "Veoma hitno",
+                            StartDate = new DateTime(2021, 12, 20, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3550)
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.TenderMedication", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MedicationName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("TenderId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderMedications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            MedicationName = "brufen",
+                            Quantity = 1,
+                            TenderId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            MedicationName = "ventolin",
+                            Quantity = 1,
+                            TenderId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            MedicationName = "brufen",
+                            Quantity = 1,
+                            TenderId = 2L
                         });
                 });
 
@@ -355,6 +438,15 @@ namespace IntegrationAPI.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.TenderMedication", b =>
+                {
+                    b.HasOne("IntegrationClassLib.Parthership.Model.Tendering.Tender", null)
+                        .WithMany("TenderMedications")
+                        .HasForeignKey("TenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("IntegrationClassLib.SharedModel.Equipment", b =>
                 {
                     b.HasOne("IntegrationClassLib.SharedModel.Room", "Room")
@@ -395,6 +487,11 @@ namespace IntegrationAPI.Migrations
                         .HasForeignKey("FloorID");
 
                     b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.Tender", b =>
+                {
+                    b.Navigation("TenderMedications");
                 });
 #pragma warning restore 612, 618
         }
