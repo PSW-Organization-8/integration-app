@@ -9,11 +9,10 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-focal AS build
 WORKDIR /src
-COPY ["IntegrationAPI/IntegrationAPI.csproj", "IntegrationAPI/"]
-COPY ["IntegrationClassLib/IntegrationClassLib.csproj", "IntegrationClassLib/"]
-RUN dotnet restore "IntegrationAPI/IntegrationAPI.csproj"
+COPY ["IntegrationAPI.csproj", "./"]
+RUN dotnet restore "./IntegrationAPI.csproj"
 COPY . .
-WORKDIR "/src/IntegrationAPI"
+WORKDIR "/src/."
 RUN dotnet build "IntegrationAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
