@@ -10,6 +10,8 @@ using Spire.Pdf.OPC;
 using System.IO;
 using System.Drawing;
 using System;
+using IntegrationClassLib.Parthership.Service;
+using IntegrationClassLib.Parthership.Service.Interface;
 
 namespace IntegrationAPI.Controllers
 {

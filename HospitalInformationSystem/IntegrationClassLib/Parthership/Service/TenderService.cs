@@ -12,10 +12,12 @@ namespace IntegrationClassLib.Parthership.Service
     public class TenderService: ITenderService
     {
         private readonly ITenderingRepository tenderingRepository;
+        private readonly TenderCommunicationRabbitMQService tenderCommunicationRabbitMqService;
 
-        public TenderService(ITenderingRepository tenderingRepository)
+        public TenderService(ITenderingRepository tenderingRepository, TenderCommunicationRabbitMQService tenderCommunicationRabbitMqService)
         {
             this.tenderingRepository = tenderingRepository;
+            this.tenderCommunicationRabbitMqService = tenderCommunicationRabbitMqService;
         }
 
         public List<Tender> GetAll()
@@ -25,7 +27,9 @@ namespace IntegrationClassLib.Parthership.Service
 
         public Tender Create(Tender tender)
         {
-            return this.tenderingRepository.Create(tender);
+            Tender createdTender = this.tenderingRepository.Create(tender);
+            tenderCommunicationRabbitMqService.SendTenderToRegistratedPharmacies(createdTender);
+            return createdTender;
         }
 
         public Tender CloseTender(long id)

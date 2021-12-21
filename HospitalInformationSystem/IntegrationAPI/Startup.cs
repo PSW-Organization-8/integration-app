@@ -70,6 +70,7 @@ namespace IntegrationAPI
             services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
             services.AddTransient<ITenderingRepository, TenderingRepository>();
+            services.AddTransient<IChannelsForCommunication, RabbitMQChannelsForCommunication>();
 
             services.AddScoped<INotificationService, NotificationService>();
 
@@ -84,6 +85,7 @@ namespace IntegrationAPI
             services.AddScoped<MedicationSpecificationService>();
             services.AddScoped<IReceiptService, ReceiptService>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<TenderCommunicationRabbitMQService>();
 
             services.AddScoped<IPharmacyHTTPConnection, PharmacyHTTPConnection>();
             services.AddScoped<IPharmacySFTPConnection, PharmacySFTPConnection>();
@@ -133,6 +135,22 @@ namespace IntegrationAPI
             {
                 endpoints.MapControllers();
             });
+
+            // kreiranje svih RabbitMQ kanala i exchange-ova
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                try
+                {
+                    serviceScope.ServiceProvider.GetService<IChannelsForCommunication>().CreateAllChannels();
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine("*******************************************************************************");
+                    System.Diagnostics.Debug.WriteLine("Greska prilikom kreiranja konekcija za RabbitMQ");
+                    System.Diagnostics.Debug.WriteLine(e.Data);
+                    System.Diagnostics.Debug.WriteLine("*******************************************************************************");
+                }
+            }
         }
     }
 }

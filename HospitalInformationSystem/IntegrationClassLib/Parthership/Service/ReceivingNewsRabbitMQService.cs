@@ -13,8 +13,8 @@ namespace IntegrationClassLib.Parthership.Service
 {
     public class ReceivingNewsRabbitMQService : IReceivingNewsService
     {
-        private readonly string _hostName = "localhost";
-        private readonly string _hospitalName = "Cura Infinita";
+        private readonly string _hostName = Environment.GetEnvironmentVariable("RabbitHostName") ?? "localhost";
+        private readonly string _hospitalName = "Bolnica1";
 
         public List<News> ReceiveActionsAndNews()
         {

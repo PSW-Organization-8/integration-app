@@ -25,7 +25,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult createTender(TenderDto tenderDto)
+        public IActionResult CreateTender(TenderDto tenderDto)
         {
             Tender tender = TenderMapper.TenderDtoToTender(tenderDto);
             if(tender == null)
@@ -45,7 +45,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult closeTender(long id)
+        public IActionResult CloseTender(long id)
         {
             return Ok(tenderService.CloseTender(id));
         }
