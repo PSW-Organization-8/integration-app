@@ -111,6 +111,9 @@ namespace IntegrationAPI.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("HospitalName")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -125,16 +128,18 @@ namespace IntegrationAPI.Migrations
                         new
                         {
                             Id = 1L,
-                            EndDate = new DateTime(2021, 12, 23, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(2150),
+                            EndDate = new DateTime(2021, 12, 25, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1359),
+                            HospitalName = "Bolnica1",
                             Name = "Hitno",
-                            StartDate = new DateTime(2021, 12, 20, 15, 20, 18, 140, DateTimeKind.Local).AddTicks(9666)
+                            StartDate = new DateTime(2021, 12, 22, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(159)
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 12, 25, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3574),
+                            EndDate = new DateTime(2021, 12, 27, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1896),
+                            HospitalName = "Bolnica1",
                             Name = "Veoma hitno",
-                            StartDate = new DateTime(2021, 12, 20, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3550)
+                            StartDate = new DateTime(2021, 12, 22, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1888)
                         });
                 });
 

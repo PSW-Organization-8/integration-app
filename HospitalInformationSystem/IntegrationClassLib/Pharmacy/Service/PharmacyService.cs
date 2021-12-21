@@ -1,20 +1,24 @@
 ﻿using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using System;
 using System.Collections.Generic;
+using IntegrationClassLib.Parthership.Service.Interface;
 
 namespace IntegrationClassLib.Pharmacy.Service
 {
     public class PharmacyService
     {
         private readonly IPharmacyRepository pharmacyRepository;
+        private readonly IChannelsForCommunication channelsForCommunication;
 
-        public PharmacyService(IPharmacyRepository pharmacyRepository)
+        public PharmacyService(IPharmacyRepository pharmacyRepository, IChannelsForCommunication channelsForCommunication = null)
         {
             this.pharmacyRepository = pharmacyRepository;
+            this.channelsForCommunication = channelsForCommunication;
         }
 
         public Model.Pharmacy Add(Model.Pharmacy pharmacy)
         {
+            if (channelsForCommunication != null) channelsForCommunication.CreateChannelsForPharmacy(pharmacy);
             return pharmacyRepository.Create(pharmacy);
         }
 

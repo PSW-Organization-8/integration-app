@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class tendering : Migration
+    public partial class firsttendering : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -125,6 +125,7 @@ namespace IntegrationAPI.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    HospitalName = table.Column<string>(type: "text", nullable: true),
                     StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
@@ -280,11 +281,11 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tenders",
-                columns: new[] { "Id", "EndDate", "Name", "StartDate" },
+                columns: new[] { "Id", "EndDate", "HospitalName", "Name", "StartDate" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2021, 12, 23, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(2150), "Hitno", new DateTime(2021, 12, 20, 15, 20, 18, 140, DateTimeKind.Local).AddTicks(9666) },
-                    { 2L, new DateTime(2021, 12, 25, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3574), "Veoma hitno", new DateTime(2021, 12, 20, 15, 20, 18, 141, DateTimeKind.Local).AddTicks(3550) }
+                    { 1L, new DateTime(2021, 12, 25, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1359), "Bolnica1", "Hitno", new DateTime(2021, 12, 22, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(159) },
+                    { 2L, new DateTime(2021, 12, 27, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1896), "Bolnica1", "Veoma hitno", new DateTime(2021, 12, 22, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1888) }
                 });
 
             migrationBuilder.InsertData(
