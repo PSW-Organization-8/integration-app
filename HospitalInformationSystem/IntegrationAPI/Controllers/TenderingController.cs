@@ -4,6 +4,7 @@ using IntegrationClassLib.Parthership.Model.Tendering;
 using IntegrationClassLib.Parthership.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using IntegrationClassLib.Parthership.Service;
 
 namespace IntegrationAPI.Controllers
 {
@@ -48,6 +49,15 @@ namespace IntegrationAPI.Controllers
         public IActionResult CloseTender(long id)
         {
             return Ok(tenderService.CloseTender(id));
+        }
+
+        [HttpGet]
+        [Route("receiveTenderOffersTest")]
+        public IActionResult ReceiveTenderOffers()
+        {
+            TenderCommunicationRabbitMQService tenderCommunicationRabbitMq = new TenderCommunicationRabbitMQService();
+            tenderCommunicationRabbitMq.GetReceivedTenderOffers();
+            return Ok();
         }
     }
 }
