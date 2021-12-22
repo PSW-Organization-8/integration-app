@@ -28,7 +28,7 @@ namespace IntegrationClassLib.Parthership.Service
                 News newNews = null;
                 do
                 {
-                    var basicGetResult = channel.BasicGet(_hospitalName, true);
+                    var basicGetResult = channel.BasicGet(_hospitalName, true);     // prvi parametar je od kojeg reda se uzima poruka
                     if (basicGetResult == null)
                     {
                         newNews = null;
