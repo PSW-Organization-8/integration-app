@@ -22,9 +22,9 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet]
-        public List<News> GetAllActionsAndNews()
+        public List<NewsDto> GetAllActionsAndNews()
         {
-            return actionsAndNewsService.GetAllActionsAndNews();
+            return actionsAndNewsService.GetAllActionsAndNews().Select(NewsMapper.NewsToNewsDto).ToList();
         }
 
         [HttpPut]
