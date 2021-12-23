@@ -15,7 +15,7 @@ namespace IntegrationAPI.Mapper
         }
         public static NewsDto NewsToNewsDto(News news)
         {
-            return new NewsDto(news.Id, news.IdFromPharmacy, news.Title, news.Text, news.DurationStart, news.DurationEnd, news.Posted);
+            return new NewsDto(news.Id, news.IdFromPharmacy, news.Title, news.Text, news.DateRange.Start, news.DateRange.End, news.Posted);
         }
     }
 }

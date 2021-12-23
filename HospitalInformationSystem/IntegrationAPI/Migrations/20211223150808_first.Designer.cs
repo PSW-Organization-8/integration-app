@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211222102139_first-tendering")]
-    partial class firsttendering
+    [Migration("20211223150808_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,12 +27,6 @@ namespace IntegrationAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("DurationEnd")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("DurationStart")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<long>("IdFromPharmacy")
                         .HasColumnType("bigint");
@@ -130,18 +124,18 @@ namespace IntegrationAPI.Migrations
                         new
                         {
                             Id = 1L,
-                            EndDate = new DateTime(2021, 12, 25, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1359),
+                            EndDate = new DateTime(2021, 12, 26, 16, 8, 7, 576, DateTimeKind.Local).AddTicks(9665),
                             HospitalName = "Bolnica1",
                             Name = "Hitno",
-                            StartDate = new DateTime(2021, 12, 22, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(159)
+                            StartDate = new DateTime(2021, 12, 23, 16, 8, 7, 576, DateTimeKind.Local).AddTicks(6769)
                         },
                         new
                         {
                             Id = 2L,
-                            EndDate = new DateTime(2021, 12, 27, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1896),
+                            EndDate = new DateTime(2021, 12, 28, 16, 8, 7, 577, DateTimeKind.Local).AddTicks(1309),
                             HospitalName = "Bolnica1",
                             Name = "Veoma hitno",
-                            StartDate = new DateTime(2021, 12, 22, 11, 21, 39, 24, DateTimeKind.Local).AddTicks(1888)
+                            StartDate = new DateTime(2021, 12, 23, 16, 8, 7, 577, DateTimeKind.Local).AddTicks(1285)
                         });
                 });
 
@@ -441,6 +435,32 @@ namespace IntegrationAPI.Migrations
                     b.HasIndex("FloorID");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.News", b =>
+                {
+                    b.OwnsOne("IntegrationClassLib.Model.DateRange", "DateRange", b1 =>
+                        {
+                            b1.Property<long>("NewsId")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bigint")
+                                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                            b1.Property<DateTime>("End")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.Property<DateTime>("Start")
+                                .HasColumnType("timestamp without time zone");
+
+                            b1.HasKey("NewsId");
+
+                            b1.ToTable("News");
+
+                            b1.WithOwner()
+                                .HasForeignKey("NewsId");
+                        });
+
+                    b.Navigation("DateRange");
                 });
 
             modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.TenderMedication", b =>

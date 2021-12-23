@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationClassLib.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,8 +17,7 @@ namespace IntegrationClassLib.Parthership.Model
         public long IdFromPharmacy { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
-        public DateTime DurationStart { get; set; }
-        public DateTime DurationEnd { get; set; }
+        public DateRange DateRange { get; set; }
         public bool Posted { get; set; }
 
         public News()
@@ -30,8 +30,7 @@ namespace IntegrationClassLib.Parthership.Model
             IdFromPharmacy = idFromPharmacy;
             Title = title;
             Text = text;
-            DurationStart = start;
-            DurationEnd = end;
+            DateRange = new DateRange(start, end);
             Posted = false;
         }
 
@@ -41,8 +40,7 @@ namespace IntegrationClassLib.Parthership.Model
             IdFromPharmacy = idFromPharmacy;
             Title = title;
             Text = text;
-            DurationStart = start;
-            DurationEnd = end;
+            DateRange = new DateRange(start, end);
             Posted = false;
         }
 
@@ -52,8 +50,7 @@ namespace IntegrationClassLib.Parthership.Model
             IdFromPharmacy = idFromPharmacy;
             Title = title;
             Text = text;
-            DurationStart = start;
-            DurationEnd = end;
+            DateRange = new DateRange(start, end);
             Posted = posted;
         }
     }

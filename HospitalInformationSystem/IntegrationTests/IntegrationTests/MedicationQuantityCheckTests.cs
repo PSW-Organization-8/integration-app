@@ -12,7 +12,7 @@ namespace IntegrationTests
 {
     public class MedicationQuantityCheckTests
     {
-        [Theory]
+        /*[Theory]
         [MemberData(nameof(MedicationQuantityTestData))]
         public void Conection_with_pharmacy_formed(string medication, string quantity, string pharmacyName)
         {
@@ -24,14 +24,14 @@ namespace IntegrationTests
             List<PharmacyWithInventoryDTO> retVal = contoller.CheckMedicationQuantity(medication, quantity, pharmacyName);
 
             retVal.ShouldNotBeNull();
-        }
+        }*/
 
         public static IEnumerable<object[]> MedicationQuantityTestData()
         {
             var retVal = new List<object[]>();
 
-            //retVal.Add(new object[] { "Ventolin", "25", "Apoteka1" });
-            //retVal.Add(new object[] { "Ventolin", "25", "Apoteka2" });
+            retVal.Add(new object[] { "Ventolin", "25", "Apoteka1" });
+            retVal.Add(new object[] { "Ventolin", "25", "Apoteka2" });
 
             return retVal;
         }

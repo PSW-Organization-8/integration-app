@@ -1,4 +1,6 @@
-﻿using IntegrationClassLib.Parthership.Model;
+﻿using IntegrationClassLib.Model;
+using IntegrationClassLib.ModelConfiguration;
+using IntegrationClassLib.Parthership.Model;
 using IntegrationClassLib.Parthership.Model.Tendering;
 using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.SharedModel;
@@ -50,6 +52,10 @@ namespace IntegrationClassLib
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new NewsConfiguration());
+            
+
+
             modelBuilder.Entity<Pharmacy.Model.Pharmacy>().HasData(
                 new Pharmacy.Model.Pharmacy { Id = 1, Name = "Apoteka1", ApiKey = "fds15d4fs6", Url = "http://localhost", Port = "18013", Sftp = false },
                 new Pharmacy.Model.Pharmacy { Id = 2, Name = "Apoteka2", ApiKey = "fds15d4fs6", Url = "localhost", Port = "4111", ComunicateWithGrpc = true, Sftp = true },
@@ -70,11 +76,12 @@ namespace IntegrationClassLib
              new MedicationConsumption { MedicineID = 3, MedicineName = "Brufen", DateTime = DateTime.ParseExact("11/11/2021", "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal), Quantity = 56 }
          );
             modelBuilder.Entity<Tender>().HasData(
-                new Tender { Id = 1, Name="Hitno", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(3) },
+                new Tender { Id = 1, Name = "Hitno", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(3) },
                 new Tender { Id = 2, Name = "Veoma hitno", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(5) }
                 )
                 ;
             modelBuilder.Entity<Tender>().Property(tender => tender.EndDate).IsRequired(false);
+
 
             modelBuilder.Entity<TenderMedication>().HasData(
                 new TenderMedication { Id = 1, MedicationName = "brufen", Quantity = 1, TenderId = 1 },

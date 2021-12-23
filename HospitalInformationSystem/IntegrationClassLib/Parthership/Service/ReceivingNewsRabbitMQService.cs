@@ -42,8 +42,7 @@ namespace IntegrationClassLib.Parthership.Service
                         IdFromPharmacy = arrivedNews.Id,
                         Title = arrivedNews.Title,
                         Text = arrivedNews.Text,
-                        DurationStart = arrivedNews.DurationStart,
-                        DurationEnd = arrivedNews.DurationEnd,
+                        DateRange = new IntegrationClassLib.Model.DateRange(arrivedNews.DateRange.Start, arrivedNews.DateRange.End),
                         Posted = false
                     };
                     receivedNews.Add(newNews);
