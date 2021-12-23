@@ -35,6 +35,11 @@ namespace IntegrationClassLib.Equipment.Service
         public Room CreateRooms(Room newRooms)
         {
             return roomRepository.Create(newRooms);
+        }   
+
+        public Room UpdateRoom(Room room)
+        {
+            return roomRepository.Update(room);
         }
 
         public Room GetByID(long roomID)
@@ -51,5 +56,23 @@ namespace IntegrationClassLib.Equipment.Service
             //return roomRepository.Get(roomID);
         }
 
+        public long GetNextID()
+        {
+            List<Room> allRooms = GetAllRooms();
+            long max = 0;
+
+            foreach (Room r in allRooms)
+            {
+                if (r.ID > max)
+                    max = r.ID;
+            }
+
+            return max + 1;
+        }
+
+        public bool Delete(Room room)
+        {
+            return roomRepository.Delete(room.ID);
+        }
     }
 }

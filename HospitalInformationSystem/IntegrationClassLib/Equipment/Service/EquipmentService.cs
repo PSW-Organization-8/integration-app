@@ -142,5 +142,6 @@ namespace IntegrationClassLib.Equipment.Service
             return foundEquipment;
         }
 
+
     }
 }

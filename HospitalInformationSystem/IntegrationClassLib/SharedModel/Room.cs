@@ -10,8 +10,8 @@ namespace IntegrationClassLib.SharedModel
     {
         public long ID { get; set; }
         public string Name { get; set; }
-
         public Floor Floor { get; set; }
+        public RoomGraphics Graphics { get; set; }
 
         public Room()
         {

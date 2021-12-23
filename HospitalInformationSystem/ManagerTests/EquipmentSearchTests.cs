@@ -7,6 +7,13 @@ using System.Collections.Generic;
 using Xunit;
 using Shouldly;
 using Moq;
+using Microsoft.Extensions.Configuration;
+using System.IO;
+using Microsoft.EntityFrameworkCore;
+using IntegrationClassLib;
+using IntegrationAPI.Controllers;
+using IntegrationClassLib.RelocationEquipment.Service;
+using IntegrationClassLib.RelocationEquipment.Repository;
 
 namespace ManagerTests
 {
@@ -114,6 +121,42 @@ namespace ManagerTests
             equipmentService.GetEquipmentByNameAndRoom(equipmentName, roomService.GetByID(roomToMoveInID)).Amount.ShouldBe(toAmountBefore + amountToMove);
 
         }
+        [Fact]
+        public void Move_equipment_integration()
+        {
+            //var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.josn");
+            //var configuration = builder.Build();
+            //var optionsBuilder = new DbContextOptionsBuilder<HospitalDbContext>();
+            //optionsBuilder.UseNpgsql(configuration.GetConnectionString("HospitalDbConnectionString"));
+            //var _context = new HospitalDbContext(optionsBuilder.Options);
+
+            MyDbContext dbContext = new MyDbContext();
+            MoveEquipmentRepository moveEquipmentRepository = new MoveEquipmentRepository(dbContext);
+            equipmentRepository = new EquipmentRepository(dbContext);
+            RoomRepository roomRepository = new RoomRepository(dbContext);
+            EquipmentService equipmentService = new EquipmentService(equipmentRepository);
+            MoveEquipmentService moveEquipmentService = new MoveEquipmentService(moveEquipmentRepository, equipmentRepository, equipmentService);
+            RoomService roomService = new RoomService(roomRepository);
+
+            MoveEquipmentController controller = new MoveEquipmentController(moveEquipmentService);
+
+            int equipmentToMoveID = 1;
+            string equipmentName = equipmentService.GetByID(equipmentToMoveID).Name;
+            int roomToMoveInID = 3;
+            double amountToMove = 14;
+            double fromAmountBefore = equipmentService.GetByID(equipmentToMoveID).Amount;
+            double toAmountBefore = 0;
+
+            if (equipmentService.GetEquipmentByNameAndRoom(equipmentService.GetByID(equipmentToMoveID).Name, roomService.GetByID(roomToMoveInID)) != null)
+                toAmountBefore = equipmentService.GetEquipmentByNameAndRoom(equipmentService.GetByID(equipmentToMoveID).Name, roomService.GetByID(roomToMoveInID)).Amount;
+
+            MoveEquipment me = new MoveEquipment(100, equipmentService.GetByID(1), roomService.GetByID(roomToMoveInID), new DateTime(2021, 12, 28, 9, 0, 0), "60", amountToMove);
+            controller.SubmitRelocation(me);
+
+            controller.Get(equipmentToMoveID).ShouldBeNull();
+            equipmentService.GetEquipmentByNameAndRoom(equipmentName, roomService.GetByID(roomToMoveInID)).Amount.ShouldBe(toAmountBefore + amountToMove);
+        }
+
 
         private static IRoomRepository CreateRoomStubRepository()
         {
@@ -153,6 +196,9 @@ namespace ManagerTests
             return stubEquipmentRepository.Object;
 
         }
+
+
+
 
     }
 }
