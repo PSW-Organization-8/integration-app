@@ -55,7 +55,7 @@ namespace IntegrationAPI.Controllers
             {
                 if (grpcConnection.OrderMedication(pharmacy, orderMedicationDto))
                 {
-                    if (hospitalHttpConnection.SaveMedication(medicationDto, pharmacy, orderMedicationDto))
+                    if (hospitalHttpConnection.SaveMedication(medicationDto))
                     {
                         return Ok();
                     }
@@ -70,7 +70,7 @@ namespace IntegrationAPI.Controllers
             {
                 if (hTTPConnection.OrderMedication(pharmacy, orderMedicationDto))
                 {
-                    if (hospitalHttpConnection.SaveMedication(medicationDto, pharmacy, orderMedicationDto))
+                    if (hospitalHttpConnection.SaveMedication(medicationDto))
                     {
                         return Ok();
                     }

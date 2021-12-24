@@ -1,9 +1,9 @@
 ﻿using IntegrationAPI.Dto;
-using IntegrationClassLib.Parthership.Model.Tendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntegrationClassLib.Tendering.Model;
 
 namespace IntegrationAPI.Mapper
 {

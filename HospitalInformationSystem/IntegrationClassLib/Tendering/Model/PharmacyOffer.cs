@@ -13,15 +13,17 @@ namespace IntegrationClassLib.Tendering.Model
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
+
         public long OfferIdInPharmacy { get; set; }
         public long PharmacyId { get; set; }
         public long TenderId { get; set; }
         public long TenderIdInHospital { get; set; }
         public string PharmacyName { get; set; }
         public DateTime TimePosted { get; set; }
-        public virtual IEnumerable<PharmacyOfferComponent> Components { get; set; }
+        public IEnumerable<PharmacyOfferComponent> Components { get; set; }
 
-        public PharmacyOffer() { }
-
+        public PharmacyOffer()
+        {
+        }
     }
 }
