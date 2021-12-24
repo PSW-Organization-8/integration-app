@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationClassLib.Parthership.Model.Tendering;
+using IntegrationClassLib.Tendering.Model;
 using Newtonsoft.Json;
 
 namespace IntegrationClassLib.Parthership.Service
@@ -30,16 +31,16 @@ namespace IntegrationClassLib.Parthership.Service
             }
         }
 
-        public List<string> GetReceivedTenderOffers()
+        public List<PharmacyOffer> GetReceivedTenderOffers()
         {
-            List<string> receivedTenderOffers = new List<string>();
+            List<PharmacyOffer> receivedTenderOffers = new();
             var factory = new ConnectionFactory() { HostName = _hostName };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
                 channel.ExchangeDeclare(exchange: "tenderOfferExchange", type: ExchangeType.Fanout);
 
-                string newTenderOffer = null;
+                PharmacyOffer newTenderOffer = null;
                 do
                 {
                     var basicGetResult = channel.BasicGet(_hospitalName + "TenderOffer", true);     // prvi parametar je od kojeg reda se uzima poruka
@@ -50,18 +51,18 @@ namespace IntegrationClassLib.Parthership.Service
                     }
                     var body = basicGetResult.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
-                    string arrivedTenderOffer = message; //JsonConvert.DeserializeObject<News>(message);
-                    /*
-                    newTenderOffer = new News()
+                    PharmacyOffer arrivedPharmacyOffer = JsonConvert.DeserializeObject<PharmacyOffer>(message);
+                    newTenderOffer = new PharmacyOffer()
                     {
-                        IdFromPharmacy = arrivedNews.Id,
-                        Title = arrivedNews.Title,
-                        Text = arrivedNews.Text,
-                        DurationStart = arrivedNews.DurationStart,
-                        DurationEnd = arrivedNews.DurationEnd,
-                        Posted = false
+                        OfferIdInPharmacy = arrivedPharmacyOffer.Id,
+                        PharmacyId = arrivedPharmacyOffer.PharmacyId,
+                        TenderId = arrivedPharmacyOffer.TenderIdInHospital,
+                        PharmacyName = arrivedPharmacyOffer.PharmacyName,
+                        TimePosted = arrivedPharmacyOffer.TimePosted,
+                        Components = arrivedPharmacyOffer.Components
                     };
-                    */
+                    newTenderOffer.Components.ToList().ForEach(component => component.Id = 0);
+
                     receivedTenderOffers.Add(newTenderOffer);
                 } while (newTenderOffer != null);
             }
