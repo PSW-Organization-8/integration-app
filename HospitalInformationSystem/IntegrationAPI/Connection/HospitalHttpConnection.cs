@@ -14,7 +14,7 @@ namespace IntegrationAPI.Connection
     {
         public const string HospitalUrl = "http://localhost:16934/api/";
 
-        public bool SaveMedication(MedicationDto newMedication, Pharmacy pharmacy, OrderMedicationDto orderMedicationDto)
+        public bool SaveMedication(MedicationDto newMedication)
         {
             RestClient restClientHospital = new RestClient(HospitalUrl + "Medcation/save_medication");
             RestRequest requestHospital = new RestRequest();

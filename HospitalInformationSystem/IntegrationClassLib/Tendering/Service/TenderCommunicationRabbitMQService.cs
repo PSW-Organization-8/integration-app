@@ -1,14 +1,12 @@
-﻿using RabbitMQ.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using IntegrationClassLib.Parthership.Model.Tendering;
 using IntegrationClassLib.Tendering.Model;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
 
-namespace IntegrationClassLib.Parthership.Service
+namespace IntegrationClassLib.Tendering.Service
 {
     public class TenderCommunicationRabbitMQService
     {

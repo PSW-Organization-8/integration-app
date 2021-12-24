@@ -1,12 +1,12 @@
 ﻿using IntegrationClassLib.Model;
 using IntegrationClassLib.ModelConfiguration;
 using IntegrationClassLib.Parthership.Model;
-using IntegrationClassLib.Parthership.Model.Tendering;
 using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.SharedModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Globalization;
+using IntegrationClassLib.Tendering.Model;
 
 namespace IntegrationClassLib
 {
@@ -29,6 +29,8 @@ namespace IntegrationClassLib
 
         public DbSet<Tender> Tenders { get; set; }
         public DbSet<TenderMedication> TenderMedications { get; set; }
+        public DbSet<PharmacyOffer> PharmacyOffers { get; set; }
+        public DbSet<PharmacyOfferComponent> PharmacyOfferComponents { get; set; }
 
         public MyDbContext()
         {

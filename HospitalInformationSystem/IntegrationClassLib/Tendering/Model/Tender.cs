@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace IntegrationClassLib.Parthership.Model.Tendering
+namespace IntegrationClassLib.Tendering.Model
 {
     public class Tender
     {
@@ -22,8 +19,12 @@ namespace IntegrationClassLib.Parthership.Model.Tendering
 
         public DateTime? EndDate { get; set; }
 
+        public bool IsAceptedOffer { get; set; } = false;
+
         public List<TenderMedication> TenderMedications { get; set; }
 
-        public Tender() { }
+        public Tender()
+        {
+        }
     }
 }

@@ -9,6 +9,6 @@ namespace IntegrationAPI.Connection.Interface
 {
     public interface IHospitalHttpConnection
     {
-        bool SaveMedication(MedicationDto newMedication, Pharmacy pharmacy, OrderMedicationDto orderMedicationDto);
+        bool SaveMedication(MedicationDto newMedication);
     }
 }

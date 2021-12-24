@@ -1,13 +1,10 @@
-﻿using IntegrationClassLib.Parthership.Model.Tendering;
-using IntegrationClassLib.Parthership.Repository.TenderingRepository;
-using IntegrationClassLib.Parthership.Service.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IntegrationClassLib.Tendering.Model;
+using IntegrationClassLib.Tendering.Repository;
+using IntegrationClassLib.Tendering.Service.Interface;
 
-namespace IntegrationClassLib.Parthership.Service
+namespace IntegrationClassLib.Tendering.Service
 {
     public class TenderService: ITenderService
     {
@@ -39,6 +36,18 @@ namespace IntegrationClassLib.Parthership.Service
             {
                 tender.EndDate = DateTime.Now;
                 return tenderingRepository.Update(tender);
+            }
+            return null;
+        }
+
+        public Tender AcceptOfferAndCloseTender(long tenderId)
+        {
+            Tender tender = tenderingRepository.Get(tenderId);
+            if (tender != null)
+            {
+                tender.IsAceptedOffer = true;
+                tenderingRepository.Update(tender);
+                return CloseTender(tenderId);
             }
             return null;
         }
