@@ -1,12 +1,9 @@
-﻿using IntegrationClassLib.Parthership.Model.Tendering;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IntegrationClassLib.Tendering.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace IntegrationClassLib.Parthership.Repository.TenderingRepository
+namespace IntegrationClassLib.Tendering.Repository
 {
     public class TenderingRepository: AbstractSqlRepository<Tender, long>, ITenderingRepository
     {

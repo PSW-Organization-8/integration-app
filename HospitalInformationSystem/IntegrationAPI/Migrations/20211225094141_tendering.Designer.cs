@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20211223150808_first")]
-    partial class first
+    [Migration("20211225094141_tendering")]
+    partial class tendering
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,94 +94,6 @@ namespace IntegrationAPI.Migrations
                             Id = 1L,
                             ObjectionId = "1",
                             TextResponse = "Nije tacno"
-                        });
-                });
-
-            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.Tender", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("HospitalName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tenders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            EndDate = new DateTime(2021, 12, 26, 16, 8, 7, 576, DateTimeKind.Local).AddTicks(9665),
-                            HospitalName = "Bolnica1",
-                            Name = "Hitno",
-                            StartDate = new DateTime(2021, 12, 23, 16, 8, 7, 576, DateTimeKind.Local).AddTicks(6769)
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            EndDate = new DateTime(2021, 12, 28, 16, 8, 7, 577, DateTimeKind.Local).AddTicks(1309),
-                            HospitalName = "Bolnica1",
-                            Name = "Veoma hitno",
-                            StartDate = new DateTime(2021, 12, 23, 16, 8, 7, 577, DateTimeKind.Local).AddTicks(1285)
-                        });
-                });
-
-            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.TenderMedication", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("MedicationName")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.Property<long>("TenderId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TenderId");
-
-                    b.ToTable("TenderMedications");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            MedicationName = "brufen",
-                            Quantity = 1,
-                            TenderId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            MedicationName = "ventolin",
-                            Quantity = 1,
-                            TenderId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            MedicationName = "brufen",
-                            Quantity = 1,
-                            TenderId = 2L
                         });
                 });
 
@@ -437,6 +349,160 @@ namespace IntegrationAPI.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.PharmacyOffer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long>("OfferIdInPharmacy")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("PharmacyId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("PharmacyName")
+                        .HasColumnType("text");
+
+                    b.Property<long>("TenderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("TenderIdInHospital")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("TimePosted")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PharmacyOffers");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.PharmacyOfferComponent", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MedicationName")
+                        .HasColumnType("text");
+
+                    b.Property<long>("PharmacyOfferId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
+
+                    b.Property<long>("Quantity")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PharmacyOfferId");
+
+                    b.ToTable("PharmacyOfferComponents");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.Tender", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("HospitalName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsAceptedOffer")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<long>("WinnerOfferId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            EndDate = new DateTime(2021, 12, 28, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(4265),
+                            HospitalName = "Bolnica1",
+                            IsAceptedOffer = false,
+                            Name = "Hitno",
+                            StartDate = new DateTime(2021, 12, 25, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(2073),
+                            WinnerOfferId = 0L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            EndDate = new DateTime(2021, 12, 30, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(5655),
+                            HospitalName = "Bolnica1",
+                            IsAceptedOffer = false,
+                            Name = "Veoma hitno",
+                            StartDate = new DateTime(2021, 12, 25, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(5633),
+                            WinnerOfferId = 0L
+                        });
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.TenderMedication", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("MedicationName")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<long>("TenderId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderMedications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            MedicationName = "brufen",
+                            Quantity = 1,
+                            TenderId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            MedicationName = "ventolin",
+                            Quantity = 1,
+                            TenderId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            MedicationName = "brufen",
+                            Quantity = 1,
+                            TenderId = 2L
+                        });
+                });
+
             modelBuilder.Entity("IntegrationClassLib.Parthership.Model.News", b =>
                 {
                     b.OwnsOne("IntegrationClassLib.Model.DateRange", "DateRange", b1 =>
@@ -461,15 +527,6 @@ namespace IntegrationAPI.Migrations
                         });
 
                     b.Navigation("DateRange");
-                });
-
-            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.TenderMedication", b =>
-                {
-                    b.HasOne("IntegrationClassLib.Parthership.Model.Tendering.Tender", null)
-                        .WithMany("TenderMedications")
-                        .HasForeignKey("TenderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("IntegrationClassLib.SharedModel.Equipment", b =>
@@ -514,7 +571,30 @@ namespace IntegrationAPI.Migrations
                     b.Navigation("Floor");
                 });
 
-            modelBuilder.Entity("IntegrationClassLib.Parthership.Model.Tendering.Tender", b =>
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.PharmacyOfferComponent", b =>
+                {
+                    b.HasOne("IntegrationClassLib.Tendering.Model.PharmacyOffer", null)
+                        .WithMany("Components")
+                        .HasForeignKey("PharmacyOfferId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.TenderMedication", b =>
+                {
+                    b.HasOne("IntegrationClassLib.Tendering.Model.Tender", null)
+                        .WithMany("TenderMedications")
+                        .HasForeignKey("TenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.PharmacyOffer", b =>
+                {
+                    b.Navigation("Components");
+                });
+
+            modelBuilder.Entity("IntegrationClassLib.Tendering.Model.Tender", b =>
                 {
                     b.Navigation("TenderMedications");
                 });

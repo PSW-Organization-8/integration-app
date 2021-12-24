@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class first : Migration
+    public partial class tendering : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -105,6 +105,24 @@ namespace IntegrationAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PharmacyOffers",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    OfferIdInPharmacy = table.Column<long>(type: "bigint", nullable: false),
+                    PharmacyId = table.Column<long>(type: "bigint", nullable: false),
+                    TenderId = table.Column<long>(type: "bigint", nullable: false),
+                    TenderIdInHospital = table.Column<long>(type: "bigint", nullable: false),
+                    PharmacyName = table.Column<string>(type: "text", nullable: true),
+                    TimePosted = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PharmacyOffers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Response",
                 columns: table => new
                 {
@@ -127,7 +145,9 @@ namespace IntegrationAPI.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     HospitalName = table.Column<string>(type: "text", nullable: true),
                     StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
+                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    IsAceptedOffer = table.Column<bool>(type: "boolean", nullable: false),
+                    WinnerOfferId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,6 +172,28 @@ namespace IntegrationAPI.Migrations
                         principalTable: "Buildings",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PharmacyOfferComponents",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    MedicationName = table.Column<string>(type: "text", nullable: true),
+                    Quantity = table.Column<long>(type: "bigint", nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
+                    PharmacyOfferId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PharmacyOfferComponents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PharmacyOfferComponents_PharmacyOffers_PharmacyOfferId",
+                        column: x => x.PharmacyOfferId,
+                        principalTable: "PharmacyOffers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,11 +323,11 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Tenders",
-                columns: new[] { "Id", "EndDate", "HospitalName", "Name", "StartDate" },
+                columns: new[] { "Id", "EndDate", "HospitalName", "IsAceptedOffer", "Name", "StartDate", "WinnerOfferId" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2021, 12, 26, 16, 8, 7, 576, DateTimeKind.Local).AddTicks(9665), "Bolnica1", "Hitno", new DateTime(2021, 12, 23, 16, 8, 7, 576, DateTimeKind.Local).AddTicks(6769) },
-                    { 2L, new DateTime(2021, 12, 28, 16, 8, 7, 577, DateTimeKind.Local).AddTicks(1309), "Bolnica1", "Veoma hitno", new DateTime(2021, 12, 23, 16, 8, 7, 577, DateTimeKind.Local).AddTicks(1285) }
+                    { 1L, new DateTime(2021, 12, 28, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(4265), "Bolnica1", false, "Hitno", new DateTime(2021, 12, 25, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(2073), 0L },
+                    { 2L, new DateTime(2021, 12, 30, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(5655), "Bolnica1", false, "Veoma hitno", new DateTime(2021, 12, 25, 10, 41, 40, 313, DateTimeKind.Local).AddTicks(5633), 0L }
                 });
 
             migrationBuilder.InsertData(
@@ -319,6 +361,11 @@ namespace IntegrationAPI.Migrations
                 column: "equipmentID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PharmacyOfferComponents_PharmacyOfferId",
+                table: "PharmacyOfferComponents",
+                column: "PharmacyOfferId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Rooms_FloorID",
                 table: "Rooms",
                 column: "FloorID");
@@ -350,6 +397,9 @@ namespace IntegrationAPI.Migrations
                 name: "Pharmacies");
 
             migrationBuilder.DropTable(
+                name: "PharmacyOfferComponents");
+
+            migrationBuilder.DropTable(
                 name: "Response");
 
             migrationBuilder.DropTable(
@@ -357,6 +407,9 @@ namespace IntegrationAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Equipments");
+
+            migrationBuilder.DropTable(
+                name: "PharmacyOffers");
 
             migrationBuilder.DropTable(
                 name: "Tenders");

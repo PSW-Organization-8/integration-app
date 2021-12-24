@@ -1,6 +1,5 @@
 using IntegrationClassLib;
 using IntegrationClassLib.Parthership.Repository;
-using IntegrationClassLib.Parthership.Repository.TenderingRepository;
 using IntegrationClassLib.Parthership.Service;
 using IntegrationClassLib.Pharmacy.Repository.MedicationRepo;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
@@ -26,6 +25,9 @@ using IntegrationClassLib.Pharmacy.Service.Interface;
 using IntegrationAPI.Connection.Interface;
 using IntegrationAPI.Connection;
 using IntegrationClassLib.Pharmacy.Repository.NotificationRepository;
+using IntegrationClassLib.Tendering.Repository;
+using IntegrationClassLib.Tendering.Service;
+using IntegrationClassLib.Tendering.Service.Interface;
 
 namespace IntegrationAPI
 {
@@ -70,6 +72,7 @@ namespace IntegrationAPI
             services.AddTransient<IMedicationConsumptionRepository, MedicationConsumptionRepository>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
             services.AddTransient<ITenderingRepository, TenderingRepository>();
+            services.AddTransient<IPharmacyOfferRepository, PharmacyOfferRepository>();
             services.AddTransient<IChannelsForCommunication, RabbitMQChannelsForCommunication>();
 
             services.AddScoped<INotificationService, NotificationService>();
@@ -85,6 +88,7 @@ namespace IntegrationAPI
             services.AddScoped<MedicationSpecificationService>();
             services.AddScoped<IReceiptService, ReceiptService>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IPharmacyOfferService, PharmacyOfferService>();
             services.AddScoped<TenderCommunicationRabbitMQService>();
 
             services.AddScoped<IPharmacyHTTPConnection, PharmacyHTTPConnection>();
