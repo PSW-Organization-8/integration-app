@@ -63,7 +63,11 @@ namespace IntegrationAPI.Controllers
         [Route("tenders")]
         public IActionResult CloseTender(long id)
         {
-            return Ok(tenderService.CloseTender(id));
+            if (tenderService.CloseTender(id) != null)
+            {
+                return Ok();
+            };
+            return BadRequest();
         }
 
         [HttpGet]
