@@ -41,6 +41,8 @@ namespace IntegrationClassLib.Parthership.Service
         private void CreateChannelForSendingTenders(Pharmacy.Model.Pharmacy pharmacy)
         {
             var factory = new ConnectionFactory() { HostName = _hostName };
+            Console.WriteLine(_hostName);
+            Console.WriteLine(factory.Port);
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
