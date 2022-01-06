@@ -69,7 +69,7 @@ namespace IntegrationTests.IntegrationTests
             IPharmacyOfferService pharmacyOfferService =
                 new PharmacyOfferService(offerRepository, tenderService, tenderCommunicationRabbitMqService);
             TenderingController controller =
-                new TenderingController(tenderService, pharmacyOfferService, new HospitalHttpConnection());
+                new TenderingController(tenderService, pharmacyOfferService, new HospitalHttpConnection(), new PharmacyHTTPConnection(new PharmacyService(new PharmacyTestRepository())));
             return controller;
         }
 

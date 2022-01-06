@@ -10,11 +10,19 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using IntegrationClassLib.Pharmacy.Service;
+using IntegrationClassLib.Tendering.Model;
 
 namespace IntegrationAPI.Connection
 {
     public class PharmacyHTTPConnection : IPharmacyHTTPConnection
     {
+        private readonly PharmacyService pharmacyService;
+        public PharmacyHTTPConnection(PharmacyService pharmacyService)
+        {
+            this.pharmacyService = pharmacyService;
+        }
+
         public IActionResult DownloadReceiptToPharmacy(Pharmacy pharmacy, ReceiptDto receipt)
         {
             RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/receipt");
@@ -120,6 +128,49 @@ namespace IntegrationAPI.Connection
             
             var data =  restClient.Post(request);
             return true;
+        }
+
+        public bool SendTenderOutcomeToWinnerPharmacy(PharmacyOffer pharmacyOffer)
+        {
+            Pharmacy winnerPharmacy = pharmacyService.GetById(pharmacyOffer.PharmacyId);
+            RestClient restClient = new RestClient(winnerPharmacy.Url + ":" + winnerPharmacy.Port + "/api/tender/receiveTenderOutcome");
+            RestRequest request = new RestRequest();
+            request.AddHeader("ApiKey", winnerPharmacy.ApiKey);
+            TenderOutcomeDTO tenderOutcomeDto = new TenderOutcomeDTO(pharmacyOffer.OfferIdInPharmacy, true);
+            request.AddJsonBody(tenderOutcomeDto);
+
+            var data = restClient.Post(request);
+
+            if (data.StatusCode != System.Net.HttpStatusCode.OK || data.Content.Equals("false"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void SendTenderOutcomeToAllLoserPharmacies(List<PharmacyOffer> pharmacyOffers, long winnerOfferId)
+        {
+            foreach (PharmacyOffer offer in pharmacyOffers)
+            {
+                // sending to all pharmacies that did not win
+                if (!offer.Id.Equals(winnerOfferId))
+                {
+                    Pharmacy pharmacy = pharmacyService.GetById(offer.PharmacyId);
+                    SendTenderOutcomeToLoserPharmacy(pharmacy, offer);
+                }
+            }
+        }
+
+        private void SendTenderOutcomeToLoserPharmacy(Pharmacy pharmacy, PharmacyOffer pharmacyOffer)
+        {
+            RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/tender/receiveTenderOutcome");
+            RestRequest request = new RestRequest();
+            request.AddHeader("ApiKey", pharmacy.ApiKey);
+            TenderOutcomeDTO tenderOutcomeDto = new TenderOutcomeDTO(pharmacyOffer.OfferIdInPharmacy, false);
+            request.AddJsonBody(tenderOutcomeDto);
+
+            restClient.Post(request);
         }
     }
 }
