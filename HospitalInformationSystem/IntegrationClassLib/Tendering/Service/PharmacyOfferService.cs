@@ -13,14 +13,12 @@ namespace IntegrationClassLib.Tendering.Service
     public class PharmacyOfferService : IPharmacyOfferService
     {
         private readonly IPharmacyOfferRepository offerRepository;
-        private readonly ITenderService tenderService;
         private readonly TenderCommunicationRabbitMQService tenderCommunicationRabbitMqService;
 
         public PharmacyOfferService(IPharmacyOfferRepository offerRepository, ITenderService tenderService,
             TenderCommunicationRabbitMQService tenderCommunicationRabbitMqService)
         {
             this.offerRepository = offerRepository;
-            this.tenderService = tenderService;
             this.tenderCommunicationRabbitMqService = tenderCommunicationRabbitMqService;
         }
 
@@ -35,25 +33,9 @@ namespace IntegrationClassLib.Tendering.Service
             return GetAllPharmacyOffers().Where(pharmacyOffer => pharmacyOffer.TenderId == id).ToList();
         }
 
-        public PharmacyOffer AcceptOffer(long id)
+        public PharmacyOffer GetPharmacyOfferById(long id)
         {
-            PharmacyOffer pharmacyOffer = offerRepository.GetAllWithComponents().Find(offer => offer.Id == id);
-            if (tenderService.AcceptOfferAndCloseTender(pharmacyOffer.TenderId, id) == null)
-            {
-                throw new Exception("Closing tender error");
-            }
-
-            // TODO: obavesti sve apoteke o zatvaranju
-
-            // TODO: salji podatke apoteci koja je pobedila, ona treba da vrati da li ima te lekove
-            // TODO: otkomentarisi if
-
-            //if (imaLekove)
-            //{
-                return pharmacyOffer;
-            //}
-
-            throw new Exception("Accepting offer gone wrong");
+            return offerRepository.GetAllWithComponents().Find(offer => offer.Id == id);
         }
 
         private void CreateAllRecievedPharmacyOffer()

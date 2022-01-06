@@ -8,6 +8,6 @@ namespace IntegrationClassLib.Tendering.Service.Interface
     {
         List<PharmacyOffer> GetAllPharmacyOffers();
         List<PharmacyOffer> GetAllPharmacyOffersByTenderId(long id);
-        PharmacyOffer AcceptOffer(long id);
+        PharmacyOffer GetPharmacyOfferById(long id);
     }
 }

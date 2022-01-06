@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using IntegrationAPI.Connection.Interface;
 using IntegrationClassLib.Parthership.Service;
+using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.Tendering.Model;
 using IntegrationClassLib.Tendering.Service;
 using IntegrationClassLib.Tendering.Service.Interface;
@@ -19,14 +20,15 @@ namespace IntegrationAPI.Controllers
         private readonly ITenderService tenderService;
         private readonly IPharmacyOfferService pharmacyOfferService;
         private readonly IHospitalHttpConnection hospitalHttpConnection;
-
+        private readonly IPharmacyHTTPConnection pharmacyHttpConnection;
 
         public TenderingController(ITenderService tenderService, IPharmacyOfferService pharmacyOfferService,
-            IHospitalHttpConnection hospitalHttpConnection)
+            IHospitalHttpConnection hospitalHttpConnection, IPharmacyHTTPConnection pharmacyHttpConnection)
         {
             this.tenderService = tenderService;
             this.pharmacyOfferService = pharmacyOfferService;
             this.hospitalHttpConnection = hospitalHttpConnection;
+            this.pharmacyHttpConnection = pharmacyHttpConnection;
         }
 
         [HttpGet]
@@ -90,7 +92,7 @@ namespace IntegrationAPI.Controllers
         {
             try
             {
-                PharmacyOffer pharmacyOffer = pharmacyOfferService.AcceptOffer(id);
+                PharmacyOffer pharmacyOffer = TryOfferClosing(id);
 
                 foreach (PharmacyOfferComponent component in pharmacyOffer.Components)
                 {
@@ -104,6 +106,27 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        private PharmacyOffer TryOfferClosing(long id)
+        {
+            PharmacyOffer pharmacyOffer = pharmacyOfferService.GetPharmacyOfferById(id);
+            List<PharmacyOffer> pharmacyOffers =
+                pharmacyOfferService.GetAllPharmacyOffersByTenderId(pharmacyOffer.TenderId);
+
+            bool pharmacyHasMedicines = pharmacyHttpConnection.SendTenderOutcomeToWinnerPharmacy(pharmacyOffer);
+            if (pharmacyHasMedicines)
+            {
+                pharmacyHttpConnection.SendTenderOutcomeToAllLoserPharmacies(pharmacyOffers, id);
+                if (tenderService.AcceptOfferAndCloseTender(pharmacyOffer.TenderId, id) == null)
+                {
+                    throw new Exception("Closing tender error");
+                }
+
+                return pharmacyOffer;
+            }
+
+            throw new Exception("Accepting offer gone wrong");
         }
     }
 }

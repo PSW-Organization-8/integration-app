@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntegrationClassLib.Tendering.Model;
 
 namespace IntegrationAPI.Connection.Interface
 {
@@ -23,5 +24,9 @@ namespace IntegrationAPI.Connection.Interface
 
         bool OrderMedication(Pharmacy pharmacy, OrderMedicationDto orderMedicationDto);
         bool ReturnMedication(Pharmacy pharmacy, OrderMedicationDto orderMedicationDto);
+
+        bool SendTenderOutcomeToWinnerPharmacy(PharmacyOffer pharmacyOffer);
+
+        void SendTenderOutcomeToAllLoserPharmacies(List<PharmacyOffer> pharmacyOffers, long winnerOfferId);
     }
 }
