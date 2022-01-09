@@ -108,7 +108,7 @@ namespace IntegrationAPI.Controllers
             }
         }
 
-        private PharmacyOffer TryOfferClosing(long id)
+        public PharmacyOffer TryOfferClosing(long id)
         {
             PharmacyOffer pharmacyOffer = pharmacyOfferService.GetPharmacyOfferById(id);
             List<PharmacyOffer> pharmacyOffers =
