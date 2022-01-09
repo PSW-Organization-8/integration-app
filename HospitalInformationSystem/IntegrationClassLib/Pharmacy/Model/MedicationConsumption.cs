@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IntegrationClassLib.Pharmacy.Model
 {
 
-    public class MedicationConsumption
+    public class MedicationConsumption: Entity
     {
 
         [Key]
@@ -37,6 +37,19 @@ namespace IntegrationClassLib.Pharmacy.Model
             DateTime = dateTime;
             Quantity = quantity;
         }
-        
+
+        public override string GenerateStringForPdf()
+        {
+            string content = "Medication name: " + this.MedicineName + "\n Quantity: " + this.Quantity + "\n Date: " + this.DateTime.Date + "\n\n";
+            content += "--------------------------------------------------------------------------------------------\n\n";
+            return content;
+        }
+
+        public string GenerateStringForPdfWithoutDate() {
+
+            string content = "Medication name: " + this.MedicineName + "\n Quantity: " + this.Quantity + "\n\n\n";
+            content += "--------------------------------------------------------------------------------------------\n\n";
+            return content;
+        }
     }
 }

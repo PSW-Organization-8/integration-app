@@ -35,12 +35,7 @@ namespace IntegrationClassLib.Pharmacy.Service
 
 
         private string CreateQRCode(Receipt receipt, string pathImage, string pathPdf) {
-            string qrText = WriteContent(receipt);
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrText,
-            QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            Bitmap qrCodeImage = receipt.GenerateQRCode();
             using (MemoryStream memory = new MemoryStream())
             {
                 using (FileStream fs = new FileStream(pathImage, FileMode.Create, FileAccess.ReadWrite))
@@ -80,7 +75,7 @@ namespace IntegrationClassLib.Pharmacy.Service
         private string CreatePdfReceipt(Receipt receipt, string path) {
             PdfDocument doc = new PdfDocument();
             PdfPageBase page = doc.Pages.Add();
-            page.Canvas.DrawString(WriteContent(receipt), new PdfFont(PdfFontFamily.Helvetica, 11f), new PdfSolidBrush(Color.Black), 10, 10);
+            page.Canvas.DrawString(receipt.GenerateStringForPdf(), new PdfFont(PdfFontFamily.Helvetica, 11f), new PdfSolidBrush(Color.Black), 10, 10);
             StreamWriter File = new StreamWriter(path, true);
             doc.SaveToStream(File.BaseStream);
 
@@ -88,13 +83,6 @@ namespace IntegrationClassLib.Pharmacy.Service
             doc.Close();
 
             return path;
-        }
-
-        private string WriteContent(Receipt receipt)
-        {
-            string content = "\n\n\n Medication name: " + receipt.MedicineName + "\n Quantity: " + receipt.Amount + "\n Date of prescription: " + receipt.Date + "\n\n";
-            content += "Prescribed to patient: " + receipt.Patient + "\n By doctor " + receipt.Doctor;
-            return content;
         }
     }
 }
