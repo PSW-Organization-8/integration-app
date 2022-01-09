@@ -59,8 +59,7 @@ namespace IntegrationClassLib.Pharmacy.Service
             List<MedicationConsumption> medicationConsumptions = AllMedicationConsumptionInDuration(duration);
             foreach(MedicationConsumption medication in medicationConsumptions)
             {
-                content += "Medication name: " + medication.MedicineName + "\n Quantity: " + medication.Quantity + "\n Date: " + medication.DateTime.Date + "\n\n";
-                content += "--------------------------------------------------------------------------------------------\n\n";
+                content += medication.GenerateStringForPdf();
             }
             content += WriteTotalMedicationConsumption(duration);
             return content;
@@ -104,8 +103,7 @@ namespace IntegrationClassLib.Pharmacy.Service
             string content = "\n\n Total medication consumption: \n\n";
             foreach (MedicationConsumption medication in medications)
             {
-                content += "Medication name: " + medication.MedicineName + "\n Quantity: " + medication.Quantity + "\n\n\n";
-                content += "--------------------------------------------------------------------------------------------\n\n";
+                content += medication.GenerateStringForPdfWithoutDate();
             }
             return content;
 
