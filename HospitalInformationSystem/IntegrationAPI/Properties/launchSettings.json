@@ -14,11 +14,15 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
+        "EMAIL_PASSWORD": "pswFtnOrganisation8",
         "DB_USER": "postgres",
         "DB_NAME": "Integration",
         "DB_PORT": "5432",
         "DB_PASSWORD": "root",
         "SERVER": "localhost",
+        "EMAIL_HOST": "smtp-mail.outlook.com",
+        "EMAIL_PORT": "587",
+        "EMAIL_USERNAME": "psworganisation8@outlook.com",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
