@@ -5,7 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationAPI.Connection.Interface;
 using IntegrationAPI.Controllers;
+using IntegrationClassLib;
+using IntegrationClassLib.Parthership.Service;
+using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Tendering.Model;
+using IntegrationClassLib.Tendering.Repository;
 using IntegrationClassLib.Tendering.Service;
 using IntegrationClassLib.Tendering.Service.Interface;
 using IntegrationTests.InMemoryRepository;
@@ -48,7 +52,7 @@ namespace IntegrationTests.UnitTests
             stubPharmacyHttpConnection = new Mock<IPharmacyHTTPConnection>();
             stubPharmacyHttpConnection.Setup(m => m.SendTenderOutcomeToWinnerPharmacy(It.IsAny<PharmacyOffer>())).Returns(true);
 
-            tenderingController = new TenderingController(new TenderService(new TenderingTestRepository(), new TenderCommunicationRabbitMQService()),
+            tenderingController = new TenderingController(new TenderService(new TenderingTestRepository(), new TenderCommunicationRabbitMQService()), new EmailService(new TenderingTestRepository(), new PharmacyOfferRepository(new MyDbContext()), new PharmacyRepository(new MyDbContext())),
                     stubPharmacyOfferService.Object, stubHospitalHttpConnection.Object, stubPharmacyHttpConnection.Object);
         }
 
@@ -75,8 +79,8 @@ namespace IntegrationTests.UnitTests
             stubPharmacyHttpConnection = new Mock<IPharmacyHTTPConnection>();
             stubPharmacyHttpConnection.Setup(m => m.SendTenderOutcomeToWinnerPharmacy(It.IsAny<PharmacyOffer>())).Returns(false);
 
-            tenderingController = new TenderingController(new TenderService(new TenderingTestRepository(), new TenderCommunicationRabbitMQService()),
-                    stubPharmacyOfferService.Object, stubHospitalHttpConnection.Object, stubPharmacyHttpConnection.Object);
+            tenderingController = new TenderingController(new TenderService(new TenderingTestRepository(), new TenderCommunicationRabbitMQService()), new EmailService(new TenderingTestRepository(), new PharmacyOfferRepository(new MyDbContext()), new PharmacyRepository(new MyDbContext())),
+                stubPharmacyOfferService.Object, stubHospitalHttpConnection.Object, stubPharmacyHttpConnection.Object);
         }
 
         private List<PharmacyOffer> GetPharmacyOffers()

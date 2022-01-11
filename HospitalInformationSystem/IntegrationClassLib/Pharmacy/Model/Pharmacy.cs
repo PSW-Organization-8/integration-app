@@ -28,6 +28,7 @@ namespace IntegrationClassLib.Pharmacy.Model
         public String Notes { get; set; }
 
         public String Base64Image { get; set; }
+        public String EmailAddress { get; set; }
 
         public Pharmacy(){}
 
@@ -62,7 +63,7 @@ namespace IntegrationClassLib.Pharmacy.Model
             ComunicateWithGrpc = grpc;
         }
 
-        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes, string base64Image, bool grpc, bool sftp)
+        public Pharmacy(long id, string name, string apiKey, string url, string port, string notes, string base64Image, bool grpc, bool sftp, string emailAddress)
         {
             Id = id;
             Name = name;

@@ -7,6 +7,7 @@ using IntegrationAPI.Connection;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dto;
 using IntegrationClassLib;
+using IntegrationClassLib.Parthership.Service;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
 using IntegrationClassLib.Tendering.Repository;
@@ -65,11 +66,13 @@ namespace IntegrationTests.IntegrationTests
             TenderCommunicationRabbitMQService tenderCommunicationRabbitMqService =
                 new TenderCommunicationRabbitMQService();
             ITenderService tenderService = new TenderService(tenderingRepository, tenderCommunicationRabbitMqService);
+            EmailService emailService = new EmailService(tenderingRepository, new PharmacyOfferRepository(dbContext),
+                new PharmacyRepository(dbContext));
             IPharmacyOfferRepository offerRepository = new PharmacyOfferRepository(dbContext);
             IPharmacyOfferService pharmacyOfferService =
                 new PharmacyOfferService(offerRepository, tenderService, tenderCommunicationRabbitMqService);
             TenderingController controller =
-                new TenderingController(tenderService, pharmacyOfferService, new HospitalHttpConnection(), new PharmacyHTTPConnection(new PharmacyService(new PharmacyTestRepository())));
+                new TenderingController(tenderService, emailService, pharmacyOfferService, new HospitalHttpConnection(), new PharmacyHTTPConnection(new PharmacyService(new PharmacyTestRepository())));
             return controller;
         }
 

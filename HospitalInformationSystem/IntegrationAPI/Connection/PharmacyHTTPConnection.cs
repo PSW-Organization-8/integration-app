@@ -132,7 +132,8 @@ namespace IntegrationAPI.Connection
 
         public bool SendTenderOutcomeToWinnerPharmacy(PharmacyOffer pharmacyOffer)
         {
-            Pharmacy winnerPharmacy = pharmacyService.GetById(pharmacyOffer.PharmacyId);
+            Pharmacy winnerPharmacy = pharmacyService.GetByName(pharmacyOffer.PharmacyName);
+
             RestClient restClient = new RestClient(winnerPharmacy.Url + ":" + winnerPharmacy.Port + "/api/tender/receiveTenderOutcome");
             RestRequest request = new RestRequest();
             request.AddHeader("ApiKey", winnerPharmacy.ApiKey);
@@ -156,7 +157,7 @@ namespace IntegrationAPI.Connection
                 // sending to all pharmacies that did not win
                 if (!offer.Id.Equals(winnerOfferId))
                 {
-                    Pharmacy pharmacy = pharmacyService.GetById(offer.PharmacyId);
+                    Pharmacy pharmacy = pharmacyService.GetByName(offer.PharmacyName);
                     SendTenderOutcomeToLoserPharmacy(pharmacy, offer);
                 }
             }
