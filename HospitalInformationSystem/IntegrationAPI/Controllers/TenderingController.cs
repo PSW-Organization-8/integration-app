@@ -18,14 +18,16 @@ namespace IntegrationAPI.Controllers
     public class TenderingController : ControllerBase
     {
         private readonly ITenderService tenderService;
+        private readonly EmailService emailService;
         private readonly IPharmacyOfferService pharmacyOfferService;
         private readonly IHospitalHttpConnection hospitalHttpConnection;
         private readonly IPharmacyHTTPConnection pharmacyHttpConnection;
 
-        public TenderingController(ITenderService tenderService, IPharmacyOfferService pharmacyOfferService,
+        public TenderingController(ITenderService tenderService, EmailService emailService, IPharmacyOfferService pharmacyOfferService,
             IHospitalHttpConnection hospitalHttpConnection, IPharmacyHTTPConnection pharmacyHttpConnection)
         {
             this.tenderService = tenderService;
+            this.emailService = emailService;
             this.pharmacyOfferService = pharmacyOfferService;
             this.hospitalHttpConnection = hospitalHttpConnection;
             this.pharmacyHttpConnection = pharmacyHttpConnection;
@@ -93,7 +95,7 @@ namespace IntegrationAPI.Controllers
             try
             {
                 PharmacyOffer pharmacyOffer = TryOfferClosing(id);
-
+                emailService.SendTenderEmail(pharmacyOffer.TenderId);
                 foreach (PharmacyOfferComponent component in pharmacyOffer.Components)
                 {
                     hospitalHttpConnection.SaveMedication(new MedicationDto()
@@ -108,6 +110,15 @@ namespace IntegrationAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("sendEmail")]
+        public void SendEmail(long id)
+        {
+            emailService.SendTenderEmail(id);
+        }
+        
+        [HttpGet]
+        [Route("TryOfferClosing")]
         public PharmacyOffer TryOfferClosing(long id)
         {
             PharmacyOffer pharmacyOffer = pharmacyOfferService.GetPharmacyOfferById(id);

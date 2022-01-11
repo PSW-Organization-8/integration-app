@@ -90,6 +90,7 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IPharmacyOfferService, PharmacyOfferService>();
             services.AddScoped<TenderCommunicationRabbitMQService>();
+            services.AddScoped<EmailService>();
 
             services.AddScoped<IPharmacyHTTPConnection, PharmacyHTTPConnection>();
             services.AddScoped<IPharmacySFTPConnection, PharmacySFTPConnection>();
