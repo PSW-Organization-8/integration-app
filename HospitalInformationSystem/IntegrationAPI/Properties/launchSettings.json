@@ -23,7 +23,8 @@
         "EMAIL_HOST": "smtp-mail.outlook.com",
         "EMAIL_PORT": "587",
         "EMAIL_USERNAME": "psworganisation8@outlook.com",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "LOCAL_TEST": "true"
       }
     },
     "IntegrationAPI": {
