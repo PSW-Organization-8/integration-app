@@ -32,6 +32,13 @@ namespace IntegrationAPI.Controllers
             return pharmacyService.GetAll();
         }
 
+        [HttpGet]
+        [Route("pharmacyProfile")]
+        public Pharmacy GetPharmacyById(long id)
+        {
+            return pharmacyService.GetById(id);
+        }
+
         [HttpPost]
         public Pharmacy Add(PharmacyDto pharmacyDto)
         {
