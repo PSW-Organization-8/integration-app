@@ -25,7 +25,7 @@ namespace IntegrationClassLib.Parthership.Model
 
         }
 
-        public News(long idFromPharmacy, string title, string text, DateTime start, DateTime end)
+        public News(long idFromPharmacy, string title, string text, DateTime start, DateTime? end)
         {
             IdFromPharmacy = idFromPharmacy;
             Title = title;
@@ -34,7 +34,7 @@ namespace IntegrationClassLib.Parthership.Model
             Posted = false;
         }
 
-        public News(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime end)
+        public News(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime? end)
         {
             Id = id;
             IdFromPharmacy = idFromPharmacy;
@@ -44,7 +44,7 @@ namespace IntegrationClassLib.Parthership.Model
             Posted = false;
         }
 
-        public News(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime end, bool posted)
+        public News(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime? end, bool posted)
         {
             Id = id;
             IdFromPharmacy = idFromPharmacy;

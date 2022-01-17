@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class emailing : Migration
+    public partial class tender : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -145,8 +145,8 @@ namespace IntegrationAPI.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: true),
                     HospitalName = table.Column<string>(type: "text", nullable: true),
-                    StartDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DateRange_Start = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    DateRange_End = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     IsAceptedOffer = table.Column<bool>(type: "boolean", nullable: false),
                     WinnerOfferId = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -322,23 +322,14 @@ namespace IntegrationAPI.Migrations
                 columns: new[] { "Id", "OfferIdInPharmacy", "PharmacyId", "PharmacyName", "TenderId", "TenderIdInHospital", "TimePosted" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 1L, "Apoteka1", 1L, 1L, new DateTime(2022, 1, 11, 15, 8, 18, 302, DateTimeKind.Local).AddTicks(5131) },
-                    { 2L, 2L, 2L, "Apoteka2", 1L, 1L, new DateTime(2022, 1, 11, 15, 8, 18, 302, DateTimeKind.Local).AddTicks(5811) }
+                    { 1L, 1L, 1L, "Apoteka1", 1L, 1L, new DateTime(2022, 1, 17, 1, 32, 22, 348, DateTimeKind.Local).AddTicks(1731) },
+                    { 2L, 2L, 2L, "Apoteka2", 1L, 1L, new DateTime(2022, 1, 17, 1, 32, 22, 348, DateTimeKind.Local).AddTicks(3759) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Response",
                 columns: new[] { "Id", "ObjectionId", "TextResponse" },
                 values: new object[] { 1L, "1", "Nije tacno" });
-
-            migrationBuilder.InsertData(
-                table: "Tenders",
-                columns: new[] { "Id", "EndDate", "HospitalName", "IsAceptedOffer", "Name", "StartDate", "WinnerOfferId" },
-                values: new object[,]
-                {
-                    { 1L, new DateTime(2022, 1, 14, 15, 8, 18, 299, DateTimeKind.Local).AddTicks(2669), "Bolnica1", true, "Hitno", new DateTime(2022, 1, 11, 15, 8, 18, 298, DateTimeKind.Local).AddTicks(7852), 1L },
-                    { 2L, new DateTime(2022, 1, 16, 15, 8, 18, 299, DateTimeKind.Local).AddTicks(5978), "Bolnica1", false, "Veoma hitno", new DateTime(2022, 1, 11, 15, 8, 18, 299, DateTimeKind.Local).AddTicks(5945), 0L }
-                });
 
             migrationBuilder.InsertData(
                 table: "PharmacyOfferComponents",
@@ -348,16 +339,6 @@ namespace IntegrationAPI.Migrations
                     { 1L, "brufen", 1L, 120.0, 123L },
                     { 2L, "ventolin", 1L, 222.0, 321L },
                     { 3L, "brufen", 2L, 500.0, 455L }
-                });
-
-            migrationBuilder.InsertData(
-                table: "TenderMedications",
-                columns: new[] { "Id", "MedicationName", "Quantity", "TenderId" },
-                values: new object[,]
-                {
-                    { 1L, "brufen", 1, 1L },
-                    { 2L, "ventolin", 1, 1L },
-                    { 3L, "brufen", 1, 2L }
                 });
 
             migrationBuilder.CreateIndex(
