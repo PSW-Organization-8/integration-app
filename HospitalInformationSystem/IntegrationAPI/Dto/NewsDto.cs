@@ -12,7 +12,7 @@ namespace IntegrationAPI.Dto
         public string Title { get; set; }
         public string Text { get; set; }
         public DateTime DurationStart { get; set; }
-        public DateTime DurationEnd { get; set; }
+        public DateTime? DurationEnd { get; set; }
         public bool Posted { get; set; }
 
         public NewsDto()
@@ -20,7 +20,7 @@ namespace IntegrationAPI.Dto
 
         }
 
-        public NewsDto(long idFromPharmacy, string title, string text, DateTime start, DateTime end)
+        public NewsDto(long idFromPharmacy, string title, string text, DateTime start, DateTime? end)
         {
             IdFromPharmacy = idFromPharmacy;
             Title = title;
@@ -30,7 +30,7 @@ namespace IntegrationAPI.Dto
             Posted = false;
         }
 
-        public NewsDto(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime end)
+        public NewsDto(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime? end)
         {
             Id = id;
             IdFromPharmacy = idFromPharmacy;
@@ -41,7 +41,7 @@ namespace IntegrationAPI.Dto
             Posted = false;
         }
 
-        public NewsDto(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime end, bool posted)
+        public NewsDto(long id, long idFromPharmacy, string title, string text, DateTime start, DateTime? end, bool posted)
         {
             Id = id;
             IdFromPharmacy = idFromPharmacy;

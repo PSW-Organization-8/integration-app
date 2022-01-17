@@ -26,14 +26,14 @@ namespace IntegrationTests
         }
 
         [Fact]
-        /*public void SuccessSaveMedicationSpecification()
+        public void SuccessSaveMedicationSpecification()
         {
             MedicationSpecificationController medicationSpecificationController = GetMedicationSpecificationController();
 
-            string retVal = medicationSpecificationController.MakeReport(new IntegrationAPI.Dto.MedicationSpecificationDTO { PharmacyName = "Apoteka1", MedicationName="Ventolin" });
+            NotificationDTO retVal = medicationSpecificationController.MakeReport(new MedicationSpecificationDTO { PharmacyName = "Apoteka1", MedicationName="Ventolin" });
 
-            retVal.ShouldBe("\"OK\"");
-        }*/
+            retVal.FileName.ShouldNotBe(" ");
+        }
 
 
         private MedicationSpecificationController GetMedicationSpecificationController()

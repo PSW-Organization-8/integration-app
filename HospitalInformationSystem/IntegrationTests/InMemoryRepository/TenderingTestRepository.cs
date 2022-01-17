@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationClassLib.Model;
 using IntegrationClassLib.Tendering.Model;
 using IntegrationClassLib.Tendering.Repository;
 
@@ -14,7 +15,7 @@ namespace IntegrationTests.InMemoryRepository
 
         public TenderingTestRepository()
         {
-            allTender.Add(1, new Tender(){EndDate = null, Id = 1, Name = "tender1", TenderMedications = new List<TenderMedication>{ new TenderMedication() { Id = 1, TenderId = 1, Quantity = 1, MedicationName = "asd" } } });
+            allTender.Add(1, new Tender("tender1", new DateRange(DateTime.Now, null), new List<TenderMedication> { new TenderMedication() { Id = 1, TenderId = 1, Quantity = 1, MedicationName = "asd" } }) { Id = 1 });
         }
 
         public List<Tender> GetAll()

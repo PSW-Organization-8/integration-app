@@ -34,7 +34,7 @@ namespace IntegrationClassLib.Tendering.Service
             Tender tender = tenderingRepository.Get(id);
             if (tender != null)
             {
-                tender.EndDate = DateTime.Now;
+                tender.DateRange.End = DateTime.Now;
                 return tenderingRepository.Update(tender);
             }
             return null;
@@ -45,10 +45,8 @@ namespace IntegrationClassLib.Tendering.Service
             Tender tender = tenderingRepository.Get(tenderId);
             if (tender != null)
             {
-                tender.IsAceptedOffer = true;
-                tender.WinnerOfferId = pharmacyOfferId;
-                tenderingRepository.Update(tender);
-                return CloseTender(tenderId);
+                tender.AcceptOffer(pharmacyOfferId);
+                return tenderingRepository.Update(tender);
             }
             return null;
         }

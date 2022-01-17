@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationClassLib.Tendering.Model;
+using IntegrationClassLib.Model;
 
 namespace IntegrationAPI.Mapper
 {
@@ -27,13 +28,8 @@ namespace IntegrationAPI.Mapper
                 }
 
 
-                return new Tender()
-                {
-                    Name = tenderDto.tenderName,
-                    StartDate = DateTime.Now,
-                    EndDate = endDate,
-                    TenderMedications = GetTenderMedicationsFromDto(tenderDto)
-                };
+                return new Tender(tenderDto.tenderName, new DateRange(DateTime.Now, endDate), GetTenderMedicationsFromDto(tenderDto));
+               
             }
             catch (Exception)
             {

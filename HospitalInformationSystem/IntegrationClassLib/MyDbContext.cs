@@ -57,6 +57,10 @@ namespace IntegrationClassLib
         {
             modelBuilder.ApplyConfiguration(new NewsConfiguration());
 
+            modelBuilder.ApplyConfiguration(new TenderConfiguration());
+
+            modelBuilder.Entity<Tender>().HasMany(t => t.TenderMedications);
+
 
             modelBuilder.Entity<Pharmacy.Model.Pharmacy>().HasData(
                 new Pharmacy.Model.Pharmacy
@@ -108,21 +112,6 @@ namespace IntegrationClassLib
                     Quantity = 56
                 }
             );
-            modelBuilder.Entity<Tender>().HasData(
-                    new Tender { Id = 1, Name = "Hitno", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(3), WinnerOfferId = 1, IsAceptedOffer = true},
-                    new Tender
-                    {
-                        Id = 2, Name = "Veoma hitno", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(5)
-                    }
-                )
-                ;
-            modelBuilder.Entity<Tender>().Property(tender => tender.EndDate).IsRequired(false);
-
-
-            modelBuilder.Entity<TenderMedication>().HasData(
-                new TenderMedication { Id = 1, MedicationName = "brufen", Quantity = 1, TenderId = 1 },
-                new TenderMedication { Id = 2, MedicationName = "ventolin", Quantity = 1, TenderId = 1 },
-                new TenderMedication { Id = 3, MedicationName = "brufen", Quantity = 1, TenderId = 2 });
 
             modelBuilder.Entity<PharmacyOffer>().HasData(
                     new PharmacyOffer

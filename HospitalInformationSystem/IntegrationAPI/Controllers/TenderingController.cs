@@ -50,9 +50,9 @@ namespace IntegrationAPI.Controllers
                 return BadRequest("End date format is not good");
             }
 
-            if (tender.EndDate <= tender.StartDate)
+            if (tender.DateRange.End <= tender.DateRange.Start)
             {
-                return BadRequest("End date must be after " + tender.StartDate);
+                return BadRequest("End date must be after " + tender.DateRange.Start);
             }
 
             if (tender.TenderMedications.Count == 0)

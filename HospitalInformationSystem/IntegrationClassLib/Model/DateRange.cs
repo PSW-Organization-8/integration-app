@@ -9,7 +9,7 @@ namespace IntegrationClassLib.Model
     public class DateRange : ValueObject
     {
         public DateTime Start { get; set; }
-        public DateTime End { get; set; }
+        public DateTime? End { get; set; }
         
         public DateRange(){}
 
@@ -23,6 +23,27 @@ namespace IntegrationClassLib.Model
             else
             {
                 throw new Exception("DateRange is not valid");
+            }
+        }
+
+        public DateRange(DateTime start, DateTime? end)
+        {
+            if (end != null)
+            {
+                if (start < end)
+                {
+                    Start = start;
+                    End = end;
+                }
+                else
+                {
+                    throw new Exception("DateRange is not valid");
+                }
+            }
+            else
+            {
+                Start = start;
+                End = end;
             }
         }
 
