@@ -74,6 +74,7 @@ namespace IntegrationClassLib.Pharmacy.Model
             Base64Image = base64Image;
             ComunicateWithGrpc = grpc;
             Sftp = sftp;
+            EmailAddress = emailAddress;
         }
     }
 }

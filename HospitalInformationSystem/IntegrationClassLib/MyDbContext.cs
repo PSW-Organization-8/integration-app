@@ -112,6 +112,51 @@ namespace IntegrationClassLib
                     Quantity = 56
                 }
             );
+            modelBuilder.Entity<Tender>(
+                t =>
+                {
+                    t.HasData(
+                        new Tender
+                        {
+                            Id = 1,
+                            Name = "Hitno",
+                            WinnerOfferId = 1,
+                            IsAceptedOffer = true
+                        });
+                    t.OwnsOne(t => t.DateRange).HasData(
+                        new
+                        {
+                            TenderId = 1L,
+                            Start = DateTime.Now,
+                            End = DateTime.Now.AddDays(3)
+                        }
+                    );
+                });
+
+            modelBuilder.Entity<Tender>(
+                t =>
+                {
+                    t.HasData(
+                        new Tender
+                        {
+                            Id = 2,
+                            Name = "Veoma hitno"
+                        });
+                    t.OwnsOne(t => t.DateRange).HasData(
+                        new
+                        {
+                            TenderId = 2L,
+                            Start = DateTime.Now,
+                            End = DateTime.Now.AddDays(5)
+                        }
+                    );
+                });
+
+
+            modelBuilder.Entity<TenderMedication>().HasData(
+                new TenderMedication { Id = 1, MedicationName = "brufen", Quantity = 1, TenderId = 1 },
+                new TenderMedication { Id = 2, MedicationName = "ventolin", Quantity = 1, TenderId = 1 },
+                new TenderMedication { Id = 3, MedicationName = "brufen", Quantity = 1, TenderId = 2 });
 
             modelBuilder.Entity<PharmacyOffer>().HasData(
                     new PharmacyOffer

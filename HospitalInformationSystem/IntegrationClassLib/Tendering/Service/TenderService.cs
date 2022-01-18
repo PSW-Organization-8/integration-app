@@ -50,5 +50,13 @@ namespace IntegrationClassLib.Tendering.Service
             }
             return null;
         }
+
+        public void DeleteEndToEndTestTenders()
+        {
+            foreach (var tender in tenderingRepository.GetByName("EndToEndTest"))
+            {
+                tenderingRepository.Delete(tender.Id);
+            }
+        }
     }
 }

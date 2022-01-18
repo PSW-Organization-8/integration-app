@@ -17,6 +17,11 @@ namespace IntegrationClassLib.Tendering.Repository
             return this.context.Tenders.Include(tender => tender.TenderMedications).ToList();
         }
 
+        public List<Tender> GetByName(string name)
+        {
+            return this.context.Tenders.Where(tender => tender.Name.Contains(name)).ToList();
+        }
+
         protected override long GetId(Tender entity)
         {
             return entity.Id;

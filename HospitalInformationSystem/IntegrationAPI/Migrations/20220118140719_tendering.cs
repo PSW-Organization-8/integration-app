@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationAPI.Migrations
 {
-    public partial class tender : Migration
+    public partial class tendering : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -322,14 +322,23 @@ namespace IntegrationAPI.Migrations
                 columns: new[] { "Id", "OfferIdInPharmacy", "PharmacyId", "PharmacyName", "TenderId", "TenderIdInHospital", "TimePosted" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 1L, "Apoteka1", 1L, 1L, new DateTime(2022, 1, 17, 1, 32, 22, 348, DateTimeKind.Local).AddTicks(1731) },
-                    { 2L, 2L, 2L, "Apoteka2", 1L, 1L, new DateTime(2022, 1, 17, 1, 32, 22, 348, DateTimeKind.Local).AddTicks(3759) }
+                    { 1L, 1L, 1L, "Apoteka1", 1L, 1L, new DateTime(2022, 1, 18, 15, 7, 18, 901, DateTimeKind.Local).AddTicks(1651) },
+                    { 2L, 2L, 2L, "Apoteka2", 1L, 1L, new DateTime(2022, 1, 18, 15, 7, 18, 901, DateTimeKind.Local).AddTicks(2200) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Response",
                 columns: new[] { "Id", "ObjectionId", "TextResponse" },
                 values: new object[] { 1L, "1", "Nije tacno" });
+
+            migrationBuilder.InsertData(
+                table: "Tenders",
+                columns: new[] { "Id", "HospitalName", "IsAceptedOffer", "Name", "WinnerOfferId", "DateRange_End", "DateRange_Start" },
+                values: new object[,]
+                {
+                    { 1L, "Bolnica1", true, "Hitno", 1L, new DateTime(2022, 1, 21, 15, 7, 18, 899, DateTimeKind.Local).AddTicks(877), new DateTime(2022, 1, 18, 15, 7, 18, 898, DateTimeKind.Local).AddTicks(8226) },
+                    { 2L, "Bolnica1", false, "Veoma hitno", 0L, new DateTime(2022, 1, 23, 15, 7, 18, 900, DateTimeKind.Local).AddTicks(4449), new DateTime(2022, 1, 18, 15, 7, 18, 900, DateTimeKind.Local).AddTicks(4395) }
+                });
 
             migrationBuilder.InsertData(
                 table: "PharmacyOfferComponents",
@@ -339,6 +348,16 @@ namespace IntegrationAPI.Migrations
                     { 1L, "brufen", 1L, 120.0, 123L },
                     { 2L, "ventolin", 1L, 222.0, 321L },
                     { 3L, "brufen", 2L, 500.0, 455L }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TenderMedications",
+                columns: new[] { "Id", "MedicationName", "Quantity", "TenderId" },
+                values: new object[,]
+                {
+                    { 1L, "brufen", 1, 1L },
+                    { 2L, "ventolin", 1, 1L },
+                    { 3L, "brufen", 1, 2L }
                 });
 
             migrationBuilder.CreateIndex(

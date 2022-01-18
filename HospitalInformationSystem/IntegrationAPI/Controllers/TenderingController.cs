@@ -116,7 +116,14 @@ namespace IntegrationAPI.Controllers
         {
             emailService.SendTenderEmail(id);
         }
-        
+
+        [HttpDelete]
+        [Route("deleteEndToEndTestTenders")]
+        public void DeleteEndToEndTestTenders()
+        {
+            tenderService.DeleteEndToEndTestTenders();
+        }
+
         [HttpGet]
         [Route("TryOfferClosing")]
         public PharmacyOffer TryOfferClosing(long id)

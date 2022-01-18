@@ -54,5 +54,10 @@ namespace IntegrationTests.InMemoryRepository
         {
             return allTender.Values.ToList();
         }
+
+        public List<Tender> GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
