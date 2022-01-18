@@ -9,5 +9,6 @@ namespace IntegrationClassLib.Tendering.Service.Interface
         Tender Create(Tender tender);
         Tender CloseTender(long id);
         Tender AcceptOfferAndCloseTender(long tenderId, long pharmacyOfferId);
+        void DeleteEndToEndTestTenders();
     }
 }

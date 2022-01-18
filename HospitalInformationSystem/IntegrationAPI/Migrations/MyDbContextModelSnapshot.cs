@@ -391,7 +391,7 @@ namespace IntegrationAPI.Migrations
                             PharmacyName = "Apoteka1",
                             TenderId = 1L,
                             TenderIdInHospital = 1L,
-                            TimePosted = new DateTime(2022, 1, 17, 1, 32, 22, 348, DateTimeKind.Local).AddTicks(1731)
+                            TimePosted = new DateTime(2022, 1, 18, 15, 7, 18, 901, DateTimeKind.Local).AddTicks(1651)
                         },
                         new
                         {
@@ -401,7 +401,7 @@ namespace IntegrationAPI.Migrations
                             PharmacyName = "Apoteka2",
                             TenderId = 1L,
                             TenderIdInHospital = 1L,
-                            TimePosted = new DateTime(2022, 1, 17, 1, 32, 22, 348, DateTimeKind.Local).AddTicks(3759)
+                            TimePosted = new DateTime(2022, 1, 18, 15, 7, 18, 901, DateTimeKind.Local).AddTicks(2200)
                         });
                 });
 
@@ -479,6 +479,24 @@ namespace IntegrationAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            HospitalName = "Bolnica1",
+                            IsAceptedOffer = true,
+                            Name = "Hitno",
+                            WinnerOfferId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            HospitalName = "Bolnica1",
+                            IsAceptedOffer = false,
+                            Name = "Veoma hitno",
+                            WinnerOfferId = 0L
+                        });
                 });
 
             modelBuilder.Entity("IntegrationClassLib.Tendering.Model.TenderMedication", b =>
@@ -502,6 +520,29 @@ namespace IntegrationAPI.Migrations
                     b.HasIndex("TenderId");
 
                     b.ToTable("TenderMedications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            MedicationName = "brufen",
+                            Quantity = 1,
+                            TenderId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            MedicationName = "ventolin",
+                            Quantity = 1,
+                            TenderId = 1L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            MedicationName = "brufen",
+                            Quantity = 1,
+                            TenderId = 2L
+                        });
                 });
 
             modelBuilder.Entity("IntegrationClassLib.Parthership.Model.News", b =>
@@ -602,6 +643,20 @@ namespace IntegrationAPI.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("TenderId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    TenderId = 1L,
+                                    End = new DateTime(2022, 1, 21, 15, 7, 18, 899, DateTimeKind.Local).AddTicks(877),
+                                    Start = new DateTime(2022, 1, 18, 15, 7, 18, 898, DateTimeKind.Local).AddTicks(8226)
+                                },
+                                new
+                                {
+                                    TenderId = 2L,
+                                    End = new DateTime(2022, 1, 23, 15, 7, 18, 900, DateTimeKind.Local).AddTicks(4449),
+                                    Start = new DateTime(2022, 1, 18, 15, 7, 18, 900, DateTimeKind.Local).AddTicks(4395)
+                                });
                         });
 
                     b.Navigation("DateRange");
