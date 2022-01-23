@@ -27,11 +27,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-
-        
-
         [Route("createRooms")]
-
         public Room CreateRooms(Room room)
         {
             return roomService.CreateRooms(room);

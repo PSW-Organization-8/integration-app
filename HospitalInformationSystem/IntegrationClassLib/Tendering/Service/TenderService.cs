@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using IntegrationClassLib.Tendering.Model;
 using IntegrationClassLib.Tendering.Repository;
+using IntegrationClassLib.Tendering.Repository.Interface;
 using IntegrationClassLib.Tendering.Service.Interface;
 
 namespace IntegrationClassLib.Tendering.Service

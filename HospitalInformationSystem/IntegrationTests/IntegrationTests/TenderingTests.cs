@@ -11,6 +11,7 @@ using IntegrationClassLib.Parthership.Service;
 using IntegrationClassLib.Pharmacy.Repository.PharmacyRepo;
 using IntegrationClassLib.Pharmacy.Service;
 using IntegrationClassLib.Tendering.Repository;
+using IntegrationClassLib.Tendering.Repository.Interface;
 using IntegrationClassLib.Tendering.Service;
 using IntegrationClassLib.Tendering.Service.Interface;
 using IntegrationTests.InMemoryRepository;

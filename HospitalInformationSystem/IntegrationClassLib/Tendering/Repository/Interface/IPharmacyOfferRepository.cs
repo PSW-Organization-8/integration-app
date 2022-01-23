@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using IntegrationClassLib.Tendering.Model;
 using SIMS.Repositories;
 
-namespace IntegrationClassLib.Tendering.Repository
+namespace IntegrationClassLib.Tendering.Repository.Interface
 {
     public interface IPharmacyOfferRepository : IGenericRepository<PharmacyOffer, long>
     {

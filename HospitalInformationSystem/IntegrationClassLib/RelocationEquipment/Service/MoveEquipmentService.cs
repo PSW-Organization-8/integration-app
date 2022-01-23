@@ -43,9 +43,9 @@ namespace IntegrationClassLib.RelocationEquipment.Service
             return moveEquipmentRepository.Get(id);
         }
 
-        public bool SubmitRelocation(long id,IntegrationClassLib.SharedModel.Equipment equipment, double amount, Room destination, DateTime time, String durationRel )
+        public bool SubmitRelocation(long id, IntegrationClassLib.SharedModel.Equipment equipment, double amount, Room destination, DateTime time, String durationRel)
         {
-           if(equipment.Amount < amount)
+            if (equipment.Amount < amount)
             {
                 return false;
             }
@@ -53,10 +53,7 @@ namespace IntegrationClassLib.RelocationEquipment.Service
             MoveEquipment me = new MoveEquipment(id, equipment, destination, time, durationRel);
             moveEquipmentRepository.Create(me);
 
-
             return true;
-
-
         }
 
     }

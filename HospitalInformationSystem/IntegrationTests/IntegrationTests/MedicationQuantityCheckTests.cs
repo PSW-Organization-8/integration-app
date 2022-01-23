@@ -20,18 +20,15 @@ namespace IntegrationTests
         [MemberData(nameof(MedicationQuantityTestData))]
         public void Conection_with_pharmacy_formed(string medication, string quantity, string pharmacyName)
         {
-            
-
             Skip.IfNot(localTest.Equals("true"));
             MyDbContext dbContext = new MyDbContext();
-                IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
-                PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
-                MedicationController contoller = new MedicationController(pharmacyService, new PharmacyHTTPConnection(pharmacyService), new PharmacyGrpcConnection(), new HospitalHttpConnection());
+            IPharmacyRepository pharmacyRepository = new PharmacyRepository(dbContext);
+            PharmacyService pharmacyService = new PharmacyService(pharmacyRepository);
+            MedicationController contoller = new MedicationController(pharmacyService, new PharmacyHTTPConnection(pharmacyService), new PharmacyGrpcConnection(), new HospitalHttpConnection());
 
-                List<PharmacyWithInventoryDTO> retVal = contoller.CheckMedicationQuantity(medication, quantity, pharmacyName);
+            List<PharmacyWithInventoryDTO> retVal = contoller.CheckMedicationQuantity(medication, quantity, pharmacyName);
 
-                retVal.ShouldNotBeNull();
-           
+            retVal.ShouldNotBeNull();
         }
 
         public static IEnumerable<object[]> MedicationQuantityTestData()
@@ -43,7 +40,5 @@ namespace IntegrationTests
 
             return retVal;
         }
-
-
     }
 }

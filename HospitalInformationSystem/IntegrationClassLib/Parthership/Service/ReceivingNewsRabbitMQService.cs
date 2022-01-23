@@ -37,19 +37,26 @@ namespace IntegrationClassLib.Parthership.Service
                     var body = basicGetResult.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
                     News arrivedNews = JsonConvert.DeserializeObject<News>(message);
-                    newNews = new News()
-                    {
-                        IdFromPharmacy = arrivedNews.Id,
-                        Title = arrivedNews.Title,
-                        Text = arrivedNews.Text,
-                        DateRange = new IntegrationClassLib.Model.DateRange(arrivedNews.DateRange.Start, arrivedNews.DateRange.End),
-                        Posted = false
-                    };
+                    newNews = CreateNewNewsFromArrivedNews(arrivedNews);
                     receivedNews.Add(newNews);
                 } while (newNews != null);
             }
 
             return receivedNews;
+        }
+
+        private News CreateNewNewsFromArrivedNews(News arrivedNews)
+        {
+            News newNews = new News()
+            {
+                IdFromPharmacy = arrivedNews.Id,
+                Title = arrivedNews.Title,
+                Text = arrivedNews.Text,
+                DateRange = new IntegrationClassLib.Model.DateRange(arrivedNews.DateRange.Start, arrivedNews.DateRange.End),
+                Posted = false
+            };
+
+            return newNews;
         }
     }
 }

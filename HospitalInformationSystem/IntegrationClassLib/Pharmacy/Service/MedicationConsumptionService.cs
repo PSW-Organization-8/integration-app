@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationClassLib.Pharmacy.Service
 {
-   public class MedicationConsumptionService
+    public class MedicationConsumptionService
     {
         private readonly IMedicationConsumptionRepository medicationConsumptionRepository;
 
@@ -38,26 +38,25 @@ namespace IntegrationClassLib.Pharmacy.Service
             String fileName = "MedicationConsumptionReport.pdf";
             PdfDocument doc = new PdfDocument();
             PdfPageBase page = doc.Pages.Add();
-            page.Canvas.DrawString(WriteContent(duration), new PdfFont(PdfFontFamily.Helvetica, 11f), new PdfSolidBrush(Color.Black),10, 10);
+            page.Canvas.DrawString(WriteContent(duration), new PdfFont(PdfFontFamily.Helvetica, 11f), new PdfSolidBrush(Color.Black), 10, 10);
             if (System.IO.File.Exists(Path.Combine(filePath, fileName)))
             {
                 System.IO.File.Delete(Path.Combine(filePath, fileName));
             }
             StreamWriter File = new StreamWriter(Path.Combine(filePath, fileName), true);
             doc.SaveToStream(File.BaseStream);
-           // File.Write(WriteContent(duration));
-
+            // File.Write(WriteContent(duration));
             File.Close();
             doc.Close();
 
             SendReport(Path.Combine(filePath, fileName));
-
         }
+
         public string WriteContent(MedicationConsumptionDuration duration)
         {
             string content = "\n\n\nThis is a  report on medication consumption from " + duration.DurationStart.Date + " to " + duration.DurationEnd.Date + "\n\n\n\n";
             List<MedicationConsumption> medicationConsumptions = AllMedicationConsumptionInDuration(duration);
-            foreach(MedicationConsumption medication in medicationConsumptions)
+            foreach (MedicationConsumption medication in medicationConsumptions)
             {
                 content += medication.GenerateStringForPdf();
             }
@@ -69,14 +68,14 @@ namespace IntegrationClassLib.Pharmacy.Service
         {
             List<MedicationConsumption> medicationConsumptions = AllMedicationConsumptionInDuration(duration);
             List<MedicationConsumption> medications = new List<MedicationConsumption>();
-            foreach(MedicationConsumption medication in medicationConsumptions)
+            foreach (MedicationConsumption medication in medicationConsumptions)
             {
-                if(!isExist(medication.MedicineName,medications))
+                if (!isExist(medication.MedicineName, medications))
                 {
-                    MedicationConsumption newMedicationConsumption = new MedicationConsumption(medication.MedicineID,medication.MedicineName,medication.DateTime, medication.Quantity);
+                    MedicationConsumption newMedicationConsumption = new MedicationConsumption(medication.MedicineID, medication.MedicineName, medication.DateTime, medication.Quantity);
                     medications.Add(newMedicationConsumption);
                 }
-                
+
             }
             return medications;
         }
@@ -85,9 +84,9 @@ namespace IntegrationClassLib.Pharmacy.Service
         {
             List<MedicationConsumption> medications = AllMedicationConsumptionInDuration(duration);
             List<MedicationConsumption> newMedicationConsumptions = new List<MedicationConsumption>();
-            foreach(MedicationConsumption medication in medicationConsumptions)
+            foreach (MedicationConsumption medication in medicationConsumptions)
             {
-                if(!isExist(medication.MedicineName,newMedicationConsumptions))
+                if (!isExist(medication.MedicineName, newMedicationConsumptions))
                 {
                     double totalQuantity = TotalQuantityForOneMedication(medication, medications);
                     MedicationConsumption newMedicationConsumption = new MedicationConsumption(medication.MedicineName, totalQuantity);
@@ -123,9 +122,9 @@ namespace IntegrationClassLib.Pharmacy.Service
 
         public bool isExist(string medicationName, List<MedicationConsumption> medicationConsumptions)
         {
-            foreach(MedicationConsumption medication in medicationConsumptions)
+            foreach (MedicationConsumption medication in medicationConsumptions)
             {
-                if(medication.MedicineName.Equals(medicationName))
+                if (medication.MedicineName.Equals(medicationName))
                 {
                     return true;
                 }
@@ -137,13 +136,13 @@ namespace IntegrationClassLib.Pharmacy.Service
 
             List<MedicationConsumption> medicationConsumptions = new List<MedicationConsumption>();
             List<MedicationConsumption> allMedicationConsumptions = GetAll();
-            foreach(MedicationConsumption medication in allMedicationConsumptions)
+            foreach (MedicationConsumption medication in allMedicationConsumptions)
             {
-                if (DateTime.Compare(duration.DurationStart,medication.DateTime.Date)<=0 && DateTime.Compare(duration.DurationEnd, medication.DateTime.Date) >=0)
+                if (DateTime.Compare(duration.DurationStart, medication.DateTime.Date) <= 0 && DateTime.Compare(duration.DurationEnd, medication.DateTime.Date) >= 0)
                 {
                     medicationConsumptions.Add(medication);
                 }
-            }    
+            }
             return medicationConsumptions;
         }
 
@@ -159,8 +158,6 @@ namespace IntegrationClassLib.Pharmacy.Service
                 client.Disconnect();
             }
         }
-
-
 
     }
 }
