@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationClassLib.Parthership.Model;
 using IntegrationClassLib.Parthership.Repository;
+using IntegrationClassLib.Parthership.Repository.Interface;
 using IntegrationClassLib.Parthership.Service;
 using IntegrationClassLib.Parthership.Service.Interface;
 using IntegrationTests.InMemoryRepository;

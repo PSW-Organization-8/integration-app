@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IntegrationClassLib.Model;
 using IntegrationClassLib.Tendering.Model;
 using IntegrationClassLib.Tendering.Repository;
+using IntegrationClassLib.Tendering.Repository.Interface;
 
 namespace IntegrationTests.InMemoryRepository
 {

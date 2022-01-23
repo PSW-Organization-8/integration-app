@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using IntegrationClassLib.Tendering.Repository.Interface;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace IntegrationClassLib.Parthership.Service
@@ -118,13 +119,13 @@ namespace IntegrationClassLib.Parthership.Service
             }
 
             body += "</table>";
-            body += "<h1 align=\"right\">Total price: " + countTotalPrice(pharmacyOffer.Components) + "</h1>";
+            body += "<h1 align=\"right\">Total price: " + CountTotalPrice(pharmacyOffer.Components) + "</h1>";
             body += "<h1>Best wishes, Bolnica1</h1>";
             body += "</body></html>";
             return body;
         }
 
-        private double countTotalPrice(IEnumerable<PharmacyOfferComponent> pharmacyOfferComponents)
+        private double CountTotalPrice(IEnumerable<PharmacyOfferComponent> pharmacyOfferComponents)
         {
             double retVal = 0.0;
             foreach (var pharmacyOfferComponent in pharmacyOfferComponents)

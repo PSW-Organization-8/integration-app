@@ -18,25 +18,27 @@ namespace IntegrationAPI.Controllers
     {
         private readonly INotificationService notificationService;
         private NotificationMapper mapper = new NotificationMapper();
+
         public NotificationController(INotificationService notificationService)
         {
             this.notificationService = notificationService;
-       
+
         }
+
         [HttpPost]
-         public Notification Add(NotificationDTO notification)
+        public Notification Add(NotificationDTO notification)
         {
-             return notificationService.Add(mapper.NotificationDTOToNotification(notification));
+            return notificationService.Add(mapper.NotificationDTOToNotification(notification));
         }
+
         [HttpGet]
         [Route("number")]
-
         public int GetNumberNotification()
         {
-           return notificationService.GetNumberNotification(); 
+            return notificationService.GetNumberNotification();
         }
-        [HttpGet]
 
+        [HttpGet]
         public List<Notification> GetAllNotification()
         {
 

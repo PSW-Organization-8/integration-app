@@ -26,11 +26,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-
         [Route("buildings")]
-
-       
-
         public Building CreateBuildings(Building building)
         {
             return buildingService.CreateBuildings(building);
@@ -42,6 +38,5 @@ namespace IntegrationAPI.Controllers
         {
             buildingService.CreateAllBuildings(buildings);
         }
-
     }
 }

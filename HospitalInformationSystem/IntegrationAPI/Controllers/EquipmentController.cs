@@ -13,8 +13,6 @@ namespace IntegrationAPI.Controllers
 
     public class EquipmentController : ControllerBase
     {
-
-
         private readonly EquipmentService equipmentService;
         public EquipmentController(EquipmentService equipmentService)
         {
@@ -27,10 +25,8 @@ namespace IntegrationAPI.Controllers
             return equipmentService.GetAllEquipments();
         }
 
-       [HttpPost]
-
+        [HttpPost]
         [Route("equipmentsst")]
-
         public Equipment CreateEquipments(Equipment equipment)
         {
             return equipmentService.CreateEquipments(equipment);
@@ -40,7 +36,7 @@ namespace IntegrationAPI.Controllers
         [Route("/api/allEquipments")]
         public void CreateAllEquipments(List<IntegrationClassLib.SharedModel.Equipment> equipments)
         {
-           equipmentService.CreateAllEquipments(equipments);
+            equipmentService.CreateAllEquipments(equipments);
         }
 
         [HttpGet]
@@ -49,9 +45,5 @@ namespace IntegrationAPI.Controllers
         {
             return equipmentService.Get(id);
         }
-
-
-
-
     }
 }

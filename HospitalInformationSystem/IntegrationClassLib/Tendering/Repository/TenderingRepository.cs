@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using IntegrationClassLib.Tendering.Model;
+using IntegrationClassLib.Tendering.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationClassLib.Tendering.Repository

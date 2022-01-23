@@ -27,15 +27,14 @@ namespace IntegrationAPI.Mapper
                     endDate = new DateTime(year, month, day, 23, 59, 59);
                 }
 
-
                 return new Tender(tenderDto.tenderName, new DateRange(DateTime.Now, endDate), GetTenderMedicationsFromDto(tenderDto));
-               
             }
             catch (Exception)
             {
                 return null;
             }
         }
+
         private static List<TenderMedication> GetTenderMedicationsFromDto(TenderDto tenderDto)
         {
             List<TenderMedication> tenderMedications = new List<TenderMedication>();

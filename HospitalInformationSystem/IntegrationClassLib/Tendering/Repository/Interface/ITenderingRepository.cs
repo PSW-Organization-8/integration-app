@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using IntegrationClassLib.Tendering.Model;
 using SIMS.Repositories;
 
-namespace IntegrationClassLib.Tendering.Repository
+namespace IntegrationClassLib.Tendering.Repository.Interface
 {
     public interface ITenderingRepository: IGenericRepository<Tender, long>
     {

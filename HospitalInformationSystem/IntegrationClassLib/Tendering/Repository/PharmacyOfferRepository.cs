@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationClassLib.Tendering.Model;
+using IntegrationClassLib.Tendering.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationClassLib.Tendering.Repository

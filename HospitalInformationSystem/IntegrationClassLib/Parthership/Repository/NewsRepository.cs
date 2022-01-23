@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationClassLib.Parthership.Model;
+using IntegrationClassLib.Parthership.Repository.Interface;
 
 namespace IntegrationClassLib.Parthership.Repository
 {

@@ -29,8 +29,8 @@ namespace IntegrationClassLib.Pharmacy.Service
             }
             fileName = "Receipt" + name[0] + name[1] + ".jpg";
             string pathQR = Path.Combine(filePath, fileName);
-            return CreateQRCode(receipt, pathQR, path); ;
 
+            return CreateQRCode(receipt, pathQR, path); ;
         }
 
 
@@ -67,8 +67,8 @@ namespace IntegrationClassLib.Pharmacy.Service
 
             File.Close();
             doc.Close();
-            return pdfPath;
 
+            return pdfPath;
         }
 
 

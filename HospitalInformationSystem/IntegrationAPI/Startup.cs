@@ -24,8 +24,10 @@ using IntegrationClassLib.Equipment.Repository;
 using IntegrationClassLib.Pharmacy.Service.Interface;
 using IntegrationAPI.Connection.Interface;
 using IntegrationAPI.Connection;
+using IntegrationClassLib.Parthership.Repository.Interface;
 using IntegrationClassLib.Pharmacy.Repository.NotificationRepository;
 using IntegrationClassLib.Tendering.Repository;
+using IntegrationClassLib.Tendering.Repository.Interface;
 using IntegrationClassLib.Tendering.Service;
 using IntegrationClassLib.Tendering.Service.Interface;
 

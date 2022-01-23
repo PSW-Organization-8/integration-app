@@ -50,22 +50,29 @@ namespace IntegrationClassLib.Tendering.Service
                     var body = basicGetResult.Body.ToArray();
                     var message = Encoding.UTF8.GetString(body);
                     PharmacyOffer arrivedPharmacyOffer = JsonConvert.DeserializeObject<PharmacyOffer>(message);
-                    newTenderOffer = new PharmacyOffer()
-                    {
-                        OfferIdInPharmacy = arrivedPharmacyOffer.Id,
-                        PharmacyId = arrivedPharmacyOffer.PharmacyId,
-                        TenderId = arrivedPharmacyOffer.TenderIdInHospital,
-                        PharmacyName = arrivedPharmacyOffer.PharmacyName,
-                        TimePosted = arrivedPharmacyOffer.TimePosted,
-                        Components = arrivedPharmacyOffer.Components
-                    };
-                    newTenderOffer.Components.ToList().ForEach(component => component.Id = 0);
+                    newTenderOffer = CreateNewPharmacyOfferFromArrivedOffer(arrivedPharmacyOffer);
 
                     receivedTenderOffers.Add(newTenderOffer);
                 } while (newTenderOffer != null);
             }
 
             return receivedTenderOffers;
+        }
+
+        private PharmacyOffer CreateNewPharmacyOfferFromArrivedOffer(PharmacyOffer arrivedPharmacyOffer)
+        {
+            PharmacyOffer newTenderOffer = new PharmacyOffer()
+            {
+                OfferIdInPharmacy = arrivedPharmacyOffer.Id,
+                PharmacyId = arrivedPharmacyOffer.PharmacyId,
+                TenderId = arrivedPharmacyOffer.TenderIdInHospital,
+                PharmacyName = arrivedPharmacyOffer.PharmacyName,
+                TimePosted = arrivedPharmacyOffer.TimePosted,
+                Components = arrivedPharmacyOffer.Components
+            };
+            newTenderOffer.Components.ToList().ForEach(component => component.Id = 0);
+
+            return newTenderOffer;
         }
     }
 }

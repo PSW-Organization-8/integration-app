@@ -62,8 +62,7 @@ namespace IntegrationAPI.Controllers
         [Route("uploadPharmacyImage")]
         public IActionResult UploadPharmacyImage([FromForm] IFormFile image, long id = 0)
         {
-            if (id <= 0) return BadRequest();
-            if (image == null || image.Length == 0) return BadRequest();
+            if (id <= 0 || image == null || image.Length == 0) return BadRequest();
 
             string base64Image;
             using (var memoryStream = new MemoryStream())
@@ -74,7 +73,6 @@ namespace IntegrationAPI.Controllers
             }
 
             Pharmacy updatedPharmacy = pharmacyService.SavePharmacyImage(base64Image, id);
-
             return Ok(updatedPharmacy);
         }
     }

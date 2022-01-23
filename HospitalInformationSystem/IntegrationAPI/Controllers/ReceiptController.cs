@@ -27,7 +27,8 @@ namespace IntegrationAPI.Controllers
         private readonly IPharmacySFTPConnection sFTPConnection;
         private readonly IPharmacyHTTPConnection hTTPConnection;
 
-        public ReceiptController(IReceiptService receiptService, PharmacyService pharmacyService, IPharmacySFTPConnection sFTPConnection, IPharmacyHTTPConnection hTTPConnection) {
+        public ReceiptController(IReceiptService receiptService, PharmacyService pharmacyService, IPharmacySFTPConnection sFTPConnection, IPharmacyHTTPConnection hTTPConnection)
+        {
             this.receiptService = receiptService;
             this.pharmacyService = pharmacyService;
             this.hTTPConnection = hTTPConnection;
@@ -46,13 +47,11 @@ namespace IntegrationAPI.Controllers
                 sFTPConnection.SendReceiptToPharmacy(path);
                 hTTPConnection.DownloadReceiptToPharmacy(pharmacy, receipt);
             }
-            else {
+            else
+            {
                 hTTPConnection.SendQRCodeToPharmacy(pharmacy, receipt, path);
             }
             return Ok();
         }
-
     }
-
- 
 }

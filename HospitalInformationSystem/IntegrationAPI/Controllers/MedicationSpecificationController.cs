@@ -24,6 +24,7 @@ namespace IntegrationAPI.Controllers
             this.medicationSpecificationService = medicationSpecificationService;
             this.pharmacyService = pharmacyService;
         }
+
         [HttpPost]
         public NotificationDTO MakeReport(MedicationSpecificationDTO medicationSpecificationDTO)
         {
@@ -41,12 +42,12 @@ namespace IntegrationAPI.Controllers
             var response = restClient.Post(request);
             if (response.Content.ToString().Equals("\"OK\""))
             {
-                NotificationDTO notification= new NotificationDTO (medicationSpecificationService.GetSpecificationnReport(medicationSpecificationDTO.MedicationName));
+                NotificationDTO notification = new NotificationDTO(medicationSpecificationService.GetSpecificationnReport(medicationSpecificationDTO.MedicationName));
                 return notification;
             }
             NotificationDTO notificationDTO = new NotificationDTO("");
+
             return notificationDTO;
-            
         }
     }
 }
