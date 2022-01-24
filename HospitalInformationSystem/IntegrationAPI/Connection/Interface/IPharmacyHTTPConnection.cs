@@ -18,7 +18,7 @@ namespace IntegrationAPI.Connection.Interface
 
         bool SendQRCodeToPharmacy(Pharmacy pharmacy, ReceiptDto receipt, string path);
 
-        void SendObjectionToPharmacy(Pharmacy pharmacy, Objection newObjection);
+        bool SendObjectionToPharmacy(Pharmacy pharmacy, Objection newObjection);
 
         List<PharmacyWithInventoryDTO> GetPharmaciesWithAvailableMedicine(Pharmacy pharmacy, string name, string quantity);
 

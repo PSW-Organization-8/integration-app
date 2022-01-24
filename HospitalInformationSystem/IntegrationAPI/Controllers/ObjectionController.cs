@@ -43,12 +43,19 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public Objection Add(ObjectionDTO objectionDTO)
+        public IActionResult Add(ObjectionDTO objectionDTO)
         {
             Objection newObjection = objectionService.Add(ObjectionMapper.ObjectionDTOToObjection(objectionDTO));
+            if (newObjection == null)
+            {
+                return StatusCode(500, "Error! Objection not created!");
+            }
             Pharmacy pharmacy = pharmacyService.GetByName(objectionDTO.PharmacyName);
-            hTTPConnection.SendObjectionToPharmacy(pharmacy, newObjection);
-            return newObjection;
+            bool flag = hTTPConnection.SendObjectionToPharmacy(pharmacy, newObjection);
+            if (flag) {
+                return Ok(newObjection);
+            }
+            return StatusCode(502,"Error! Objection not sent to pharmacy!");
         }
 
     }

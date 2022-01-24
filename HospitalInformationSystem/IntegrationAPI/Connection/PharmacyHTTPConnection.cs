@@ -101,13 +101,17 @@ namespace IntegrationAPI.Connection
             return true;
         }
 
-        public void SendObjectionToPharmacy(Pharmacy pharmacy, Objection newObjection)
+        public bool SendObjectionToPharmacy(Pharmacy pharmacy, Objection newObjection)
         {
             RestClient restClient = new RestClient(pharmacy.Url + ":" + pharmacy.Port + "/api/Objection");
             RestRequest request = new RestRequest();
             request.AddJsonBody(newObjection);
             request.AddHeader("ApiKey", pharmacy.ApiKey);
-            restClient.Post(request);
+            var data = restClient.Post(request);
+            if (data.StatusCode != System.Net.HttpStatusCode.OK) {
+                return false;
+            }
+            return true;
         }
 
         public bool SendQRCodeToPharmacy(Pharmacy pharmacy, ReceiptDto receipt, string path)
@@ -127,6 +131,10 @@ namespace IntegrationAPI.Connection
             request.AddJsonBody(file);
             
             var data =  restClient.Post(request);
+            if (data.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                return false;
+            }
             return true;
         }
 
