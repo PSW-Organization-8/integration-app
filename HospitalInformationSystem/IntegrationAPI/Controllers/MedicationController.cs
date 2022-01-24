@@ -3,6 +3,7 @@ using IntegrationAPI.Dto;
 using IntegrationClassLib.Pharmacy.Model;
 using IntegrationClassLib.Pharmacy.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 
 namespace IntegrationAPI.Controllers
@@ -28,15 +29,16 @@ namespace IntegrationAPI.Controllers
         [Route("check_medication_availability")]
         public List<PharmacyWithInventoryDTO> CheckMedicationQuantity([FromQuery(Name = "Name")] string Name, [FromQuery(Name = "Quantity")] string Quantity, [FromQuery(Name = "Pharmacy")] string Pharmacy)
         {
-            Pharmacy pharmacy = pharmacyService.GetByName(Pharmacy);
-            if (pharmacy.ComunicateWithGrpc)
-            {
-                return grpcConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
-            }
-            else
-            {
-                return hTTPConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
-            }
+                Pharmacy pharmacy = pharmacyService.GetByName(Pharmacy);
+                if (pharmacy.ComunicateWithGrpc)
+                {
+                    return grpcConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
+                }
+                else
+                {
+                    return hTTPConnection.GetPharmaciesWithAvailableMedicine(pharmacy, Name, Quantity);
+                }
+         
         }
 
         [HttpPut]
@@ -46,7 +48,7 @@ namespace IntegrationAPI.Controllers
             Pharmacy pharmacy = pharmacyService.GetByName(orderMedicationDto.PharmacyName);
             if (pharmacy == null)
             {
-                return BadRequest();
+                return BadRequest("Error! Pharmacy not available!");
             }
 
             MedicationDto medicationDto = new MedicationDto { Name = orderMedicationDto.MedicationName, Quantity = orderMedicationDto.Quantity };
@@ -62,6 +64,7 @@ namespace IntegrationAPI.Controllers
                     else
                     {
                         hTTPConnection.ReturnMedication(pharmacy, orderMedicationDto);
+                        return StatusCode(500, "Error! Medication not available anymore!");
                     }
                 }
 
@@ -77,11 +80,13 @@ namespace IntegrationAPI.Controllers
                     else
                     {
                         hTTPConnection.ReturnMedication(pharmacy, orderMedicationDto);
+                        return StatusCode(500, "Error! Medication not available anymore!");
                     }
                 }
+                
             }
 
-            return BadRequest();
+            return StatusCode(500, "Error! Order wasn't processed");
         }
     }
 }

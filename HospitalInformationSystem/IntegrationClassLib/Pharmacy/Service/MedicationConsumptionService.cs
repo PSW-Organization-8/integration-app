@@ -32,7 +32,7 @@ namespace IntegrationClassLib.Pharmacy.Service
             return medicationConsumptionRepository.GetAll();
         }
 
-        public void CreateReport(MedicationConsumptionDuration duration)
+        public bool CreateReport(MedicationConsumptionDuration duration)
         {
             String filePath = Directory.GetCurrentDirectory();
             String fileName = "MedicationConsumptionReport.pdf";
@@ -49,7 +49,7 @@ namespace IntegrationClassLib.Pharmacy.Service
             File.Close();
             doc.Close();
 
-            SendReport(Path.Combine(filePath, fileName));
+            return SendReport(Path.Combine(filePath, fileName));
         }
 
         public string WriteContent(MedicationConsumptionDuration duration)
@@ -146,17 +146,24 @@ namespace IntegrationClassLib.Pharmacy.Service
             return medicationConsumptions;
         }
 
-        public void SendReport(String filePath)
+        public bool SendReport(String filePath)
         {
-            using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
+            try
             {
-                client.Connect();
-                using (Stream stream = File.OpenRead(filePath))
+                using (SftpClient client = new SftpClient(new PasswordConnectionInfo("192.168.56.1", "tester", "password")))
                 {
-                    client.UploadFile(stream, @"\public\" + Path.GetFileName(filePath), null);
+                    client.Connect();
+                    using (Stream stream = File.OpenRead(filePath))
+                    {
+                        client.UploadFile(stream, @"\public\" + Path.GetFileName(filePath), null);
+                    }
+                    client.Disconnect();
                 }
-                client.Disconnect();
             }
+            catch (Exception) {
+                return false;
+            }
+            return true;
         }
 
     }
