@@ -28,14 +28,17 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public Response Add(Response response)
+        public IActionResult Add(Response response)
         {
             HttpContext.Request.Headers.TryGetValue("ApiKey", out var apiKey);
             Objection objection = objectionService.GetObjection(long.Parse(response.ObjectionId));
             if (!objection.PharmacyName.Equals(pharmacyService.GetByApiKey(apiKey).Name)) {
-                return null;
+                return Unauthorized();
             }
-            return responseService.Add(response);
+            if (responseService.Add(response) == null) {
+                return StatusCode(500, "Error! Response not sent to hospital!");
+            }
+            return Ok();
         }
 
 

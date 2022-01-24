@@ -29,9 +29,15 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public void MakeReport(MedicationConsumptionDTO period)
+        public IActionResult MakeReport(MedicationConsumptionDTO period)
         {
-            medicationConsumptionService.CreateReport(MedicationConsumptionMapper.MedicationConsumptionDTOToMedicationConsumptionDuration(period));
+            if (medicationConsumptionService.CreateReport(MedicationConsumptionMapper.MedicationConsumptionDTOToMedicationConsumptionDuration(period)))
+            {
+                return Ok();
+            }
+            else {
+                return StatusCode(500, "Error! Report not sent to pharmacy!");
+            }
         }
 
     }

@@ -14,15 +14,20 @@ namespace IntegrationTests
 {
     public class MedicationOrderTests
     {
-        [Theory]
+        string localTest = Environment.GetEnvironmentVariable("LOCAL_TEST") ?? "false";
+
+        [SkippableTheory]
         [MemberData(nameof(MedicationOrderTestData))]
-        public void Ordering_medication(string PharmacyName, int PharmacyId, int MedicationId, int Quantity, StatusCodeResult ResultType)
+        public void Ordering_medication(string PharmacyName, int PharmacyId, int MedicationId, int Quantity, int statusCode)
         {
+            Skip.IfNot(localTest.Equals("true") || statusCode != 200);
+
             MedicationController medicationController = GetMedicationController();
 
-            IActionResult retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = PharmacyName, PharmacyId = PharmacyId, MedicationId = MedicationId, Quantity = Quantity });
+            var retVal = medicationController.OrderMedication(new IntegrationAPI.Dto.OrderMedicationDto() { PharmacyName = PharmacyName, PharmacyId = PharmacyId, MedicationId = MedicationId, Quantity = Quantity });
+            var result = retVal as ObjectResult;
 
-            retVal.ShouldBeOfType(ResultType.GetType());
+            Assert.Equal(statusCode, result.StatusCode);
         }
 
         private MedicationController GetMedicationController()
@@ -38,10 +43,10 @@ namespace IntegrationTests
         {
             var retVal = new List<object[]>();
 
-            retVal.Add(new object[] { "asdasdasfas", 0, 0, 0, new BadRequestResult() });
-            retVal.Add(new object[] { "Apoteka1", -1, 0, 0, new BadRequestResult() });
-            //retVal.Add(new object[] { "Apoteka1", 1, 1, 0, new OkResult() });
-            //retVal.Add(new object[] { "Apoteka2", 1, 1, 0, new OkResult() });
+            retVal.Add(new object[] { "asdasdasfas", 0, 0, 0, 400 });
+            retVal.Add(new object[] { "Apoteka1", -1, 0, 0, 500});
+            retVal.Add(new object[] { "Apoteka1", 1, 1, 0, 200 });
+            retVal.Add(new object[] { "Apoteka2", 1, 1, 0, 200 });
 
             return retVal;
         }

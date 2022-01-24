@@ -45,13 +45,14 @@ namespace IntegrationAPI.Controllers
             if (pharmacy.Sftp == true)
             {
                 sFTPConnection.SendReceiptToPharmacy(path);
-                hTTPConnection.DownloadReceiptToPharmacy(pharmacy, receipt);
+                return hTTPConnection.DownloadReceiptToPharmacy(pharmacy, receipt);
             }
             else
             {
-                hTTPConnection.SendQRCodeToPharmacy(pharmacy, receipt, path);
+                if(!hTTPConnection.SendQRCodeToPharmacy(pharmacy, receipt, path)) return StatusCode(500, "Error! Receipt not sent to pharmacy!");
+                return Ok();
             }
-            return Ok();
+    
         }
     }
 }
