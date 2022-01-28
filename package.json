@@ -1,0 +1,24 @@
+{
+  "name": "hospital-information-system",
+  "version": "1.0.0",
+  "description": "PSW academic team project",
+  "main": "commitlint.config.js",
+  "dependencies": {
+    "husky": "^7.0.4",
+    "tslib": "^2.3.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PSW-Organization-8/hospital-information-system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PSW-Organization-8/hospital-information-system/issues"
+  },
+  "homepage": "https://github.com/PSW-Organization-8/hospital-information-system#readme"
+}

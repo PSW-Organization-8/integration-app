@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "IntegrationTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "USERNAME_DB": "postgres",
+        "SERVER": "localhost",
+        "DATABASE": "Integration",
+        "LOCAL_TEST": "false",
+        "PORT": "5432",
+        "PASSWORD": "saska"
+      }
+    }
+  }
+}

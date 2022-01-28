@@ -1,0 +1,41 @@
+version: "3.4"
+services:
+  database-integration:
+    image: postgres:13
+    restart: always
+    container_name: database-integration
+    networks:
+      - integrations_database_net
+    environment:
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_USER: "postgres"
+    ports:
+      - "7001:5432"
+  integration-tests:
+      container_name: integration-tests
+      environment:
+        DB_USER: "postgres"
+        DB_PASSWORD: "root"
+        DB_PORT: "5432"
+        DB_NAME: "integration"
+        SERVER: "database-integration"
+      networks:
+      - integrations_database_net
+      image: mcr.microsoft.com/dotnet/sdk:5.0
+      working_dir: /HospitalInformationSystem
+      volumes:
+      - .:/HospitalInformationSystem
+      command: bash -c "
+        dotnet new tool-manifest --force && 
+        dotnet tool install --local dotnet-ef --version 5.0.11 &&
+        dotnet restore HospitalInformationSystem &&
+        dotnet dotnet-ef migrations add PatientsTestingMigration --project HospitalInformationSystem/IntegrationAPI &&
+        dotnet dotnet-ef database update --project HospitalInformationSystem/IntegrationAPI &&
+        dotnet test HospitalInformationSystem
+        "
+      depends_on:
+        - database-integration
+networks:
+  integrations_database_net:
+    name: integrations_database_net
+    driver: bridge

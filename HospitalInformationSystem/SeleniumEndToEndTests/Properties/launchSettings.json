@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "SeleniumEndToEndTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "INTEGRATION_API_URL": "http://localhost:7313",
+        "FRONTEND_ADDRESS": "http://localhost:4200/",
+        "LOCAL_TEST": "true"
+      }
+    }
+  }
+}
